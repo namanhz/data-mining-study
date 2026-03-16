@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Mining Study Hub | Ôn Thi Giữa Kỳ</title>
+  <meta name="description" content="Ứng dụng ôn thi giữa kỳ môn Khai phá Dữ liệu - ĐH KTQD">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <div class="logo-icon">⛏️</div>
+          <h1>Data Mining<span>Ôn Thi Giữa Kỳ</span></h1>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-label">
+            <span>Tiến độ ôn tập</span>
+            <span id="progress-pct">0%</span>
+          </div>
+          <div class="progress-bar-outer">
+            <div class="progress-bar-inner" id="progress-bar"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mode-tabs">
+        <button class="mode-tab active" data-mode="theory">📖 Lý thuyết</button>
+        <button class="mode-tab" data-mode="practice">💻 Bài tập</button>
+      </div>
+
+      <nav class="nav-list" id="nav-list">
+        <div class="nav-item active" data-section="home" data-mode="both">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-text">Tổng quan</span>
+        </div>
+        <!-- Dynamically generated -->
+      </nav>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main-content">
+      <header class="content-header">
+        <h2 id="header-title">Tổng quan</h2>
+        <div class="header-meta">
+          <span class="header-badge badge-theory" id="header-badge"></span>
+        </div>
+      </header>
+
+      <div class="content-body" id="content-body">
+        <!-- HOME -->
+        <div class="section active" id="home">
+          <div class="hero-section">
+            <h1>🎓 Data Mining Study Hub</h1>
+            <p>Ôn thi giữa kỳ môn Khai phá Dữ liệu – Tuần 1 đến 7. Lý thuyết + Bài tập code R.</p>
+          </div>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon">📖</div>
+              <div class="stat-number" style="color:var(--accent-purple)">8</div>
+              <div class="stat-label">Chương lý thuyết</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">💻</div>
+              <div class="stat-number" style="color:var(--accent-green)">5</div>
+              <div class="stat-label">Bộ bài tập</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">✅</div>
+              <div class="stat-number" style="color:var(--accent-blue)">30+</div>
+              <div class="stat-label">Bài tập có lời giải</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">📊</div>
+              <div class="stat-number" style="color:var(--accent-orange)">7</div>
+              <div class="stat-label">Tuần ôn tập</div>
+            </div>
+          </div>
+
+          <div class="info-card" style="margin-top:32px">
+            <h3><span class="card-icon">📋</span> Checklist Ôn Tập</h3>
+            <ul class="checklist" id="main-checklist">
+              <li data-key="c1"><span class="check-box">✓</span>R cơ bản: nhập/xem/lưu dữ liệu</li>
+              <li data-key="c2"><span class="check-box">✓</span>dplyr: select, filter, mutate, summarise</li>
+              <li data-key="c3"><span class="check-box">✓</span>dplyr: group_by + summarise + case_when</li>
+              <li data-key="c4"><span class="check-box">✓</span>dplyr: JOIN (inner/left/right/full)</li>
+              <li data-key="c5"><span class="check-box">✓</span>dplyr: set operations + bind</li>
+              <li data-key="c6"><span class="check-box">✓</span>tidyr: gather, spread, unite, separate</li>
+              <li data-key="c7"><span class="check-box">✓</span>Bảng: table, tabular, prop.table</li>
+              <li data-key="c8"><span class="check-box">✓</span>ggplot2: bar, scatter, boxplot, histogram</li>
+              <li data-key="c9"><span class="check-box">✓</span>KPDL: khái niệm, quy trình, phân loại</li>
+              <li data-key="c10"><span class="check-box">✓</span>Missing data: MCAR/MAR/MNAR + xử lý</li>
+              <li data-key="c11"><span class="check-box">✓</span>Outlier: Z-score, Hampel, Grubbs, Dixon</li>
+              <li data-key="c12"><span class="check-box">✓</span>Làm BT air-quality (Bài 4)</li>
+              <li data-key="c13"><span class="check-box">✓</span>Làm BT gapminder (Bài 4)</li>
+              <li data-key="c14"><span class="check-box">✓</span>Làm BT JOIN + billboard (Bài 6)</li>
+              <li data-key="c15"><span class="check-box">✓</span>Làm BT diamonds + midwest (Bài 7)</li>
+            </ul>
+          </div>
+        </div>
+        <!-- Dynamic sections rendered here -->
+      </div>
+    </main>
+  </div>
+
+  <button class="mobile-menu-btn" id="mobile-menu-btn">☰</button>
+
+  <script src="data.js"></script>
+  <script>
+  // ============ RENDER ENGINE ============
+  (function() {
+    const navList = document.getElementById('nav-list');
+    const contentBody = document.getElementById('content-body');
+    let editorCounter = 0;
+
+    function extractCode(solutionHtml) {
+      const tmp = document.createElement('div');
+      tmp.innerHTML = solutionHtml;
+      const pre = tmp.querySelector('pre');
+      return pre ? pre.textContent : '';
+    }
+
+    // Build nav + sections from CHAPTERS
+    Object.entries(CHAPTERS).forEach(([id, ch]) => {
+      const nav = document.createElement('div');
+      nav.className = 'nav-item';
+      nav.dataset.section = 'ch-' + id;
+      nav.dataset.mode = ch.mode;
+      nav.innerHTML = `
+        <span class="nav-icon">${ch.icon}</span>
+        <span class="nav-text">${ch.title}</span>
+        <span class="nav-badge">${ch.badge}</span>
+      `;
+      navList.appendChild(nav);
+
+      const sec = document.createElement('div');
+      sec.className = 'section';
+      sec.id = 'ch-' + id;
+      let html = '';
+
+      if (ch.cards) {
+        ch.cards.forEach(card => {
+          html += `<div class="info-card">
+            <h3><span class="card-icon">${card.icon}</span> ${card.title}</h3>
+            ${card.html}
+          </div>`;
+        });
+      }
+
+      if (ch.exercises) {
+        ch.exercises.forEach(ex => {
+          const eid = 'editor-' + (editorCounter++);
+          const code = extractCode(ex.solution);
+          html += `<div class="exercise-card">
+            <div class="exercise-header">
+              <div class="exercise-number" style="background:${ex.color}20;color:${ex.color}">
+                ${ex.num}
+              </div>
+              <div class="exercise-title">${ex.title}</div>
+              <span class="exercise-toggle">▼</span>
+            </div>
+            <div class="exercise-body">
+              <div class="exercise-task">${ex.task}</div>
+              <div class="r-editor-wrap">
+                <div class="r-editor-toolbar">
+                  <span class="toolbar-label"><span class="dot"></span> R Console</span>
+                  <button class="r-btn r-btn-load" onclick="loadSolution('${eid}')">📋 Load đáp án</button>
+                  <button class="r-btn r-btn-run" onclick="handleRun('${eid}')">▶ Run All</button>
+                  <button class="r-btn r-btn-step" onclick="handleStep('${eid}')">⏭ Step</button>
+                  <button class="r-btn r-btn-clear" onclick="handleClear('${eid}')">✕ Clear</button>
+                </div>
+                <textarea class="r-editor-textarea" id="${eid}-textarea"
+                  placeholder="Viết code R ở đây... (hoặc nhấn 'Load đáp án' để tải code mẫu)"
+                  spellcheck="false"></textarea>
+                <div class="console-status" id="${eid}-status"></div>
+                <div class="r-console-output" id="${eid}-output"></div>
+              </div>
+              <div style="display:none" id="${eid}-solution">${code.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
+            </div>
+          </div>`;
+        });
+      }
+
+      sec.innerHTML = html;
+      contentBody.appendChild(sec);
+    });
+
+    document.querySelectorAll('.nav-item[data-mode="practice"]').forEach(item => {
+      item.style.display = 'none';
+    });
+
+    // Tab key support in textareas
+    document.querySelectorAll('.r-editor-textarea').forEach(ta => {
+      ta.addEventListener('keydown', (e) => {
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          const start = ta.selectionStart;
+          const end = ta.selectionEnd;
+          ta.value = ta.value.substring(0, start) + '  ' + ta.value.substring(end);
+          ta.selectionStart = ta.selectionEnd = start + 2;
+        }
+      });
+    });
+  })();
+
+  // ============ EDITOR ACTIONS ============
+  function loadSolution(eid) {
+    const sol = document.getElementById(eid + '-solution');
+    const ta = document.getElementById(eid + '-textarea');
+    if (sol && ta) {
+      const tmp = document.createElement('div');
+      tmp.innerHTML = sol.innerHTML;
+      ta.value = tmp.textContent;
+      ta.style.minHeight = Math.max(180, ta.value.split('\n').length * 22 + 32) + 'px';
+    }
+  }
+
+  function handleRun(eid) {
+    const ta = document.getElementById(eid + '-textarea');
+    const out = document.getElementById(eid + '-output');
+    const status = document.getElementById(eid + '-status');
+    if (ta && out && status) {
+      runRCode(ta.value, out, status);
+    }
+  }
+
+  function handleStep(eid) {
+    const ta = document.getElementById(eid + '-textarea');
+    const out = document.getElementById(eid + '-output');
+    const status = document.getElementById(eid + '-status');
+    if (ta && out && status) {
+      runRCodeStepByStep(ta.value, out, status, ta);
+    }
+  }
+
+  function handleClear(eid) {
+    const out = document.getElementById(eid + '-output');
+    if (out) out.textContent = '';
+  }
+  </script>
+  <script src="webr-engine.js"></script>
+  <script src="autocomplete.js"></script>
+  <script src="app.js"></script>
+
+  <div class="webr-status-bar" id="webr-status">
+    <span class="status-dot"></span>
+    <span id="webr-status-text">Đang tải R engine...</span>
+  </div>
+</body>
+</html>
+
