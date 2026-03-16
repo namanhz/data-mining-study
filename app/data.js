@@ -72,9 +72,10 @@ summary(dat)     # Thống kê mô tả</pre></div>
 
 <h4>Lưu dữ liệu</h4>
 <div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
-<pre>save(dat, file = "data.rda")           # File R
+<pre>export(dat, "output.xlsx")            # rio package
 write_xlsx(dat, "output.xlsx")         # Excel (writexl)
-write_sav(dat, "output.sav")          # SPSS (haven)</pre></div>`
+write_sav(dat, "output.sav")          # SPSS (haven)
+write_dta(dat, "output.dta")          # Stata (haven)</pre></div>`
       },
       {
         title: "Toán tử & Ký hiệu quan trọng",
@@ -146,6 +147,7 @@ arrange(dat, desc(col1))      # giảm dần
 
 # TẠO BIẾN MỚI
 mutate(dat, bmi = weight / height^2)
+transmute(dat, bmi = weight / height^2)  # chỉ giữ biến mới
 mutate(dat, level = case_when(
   score &lt; 5  ~ "Low",
   score &lt; 8  ~ "Medium",
@@ -159,7 +161,11 @@ summarise(dat, tb = mean(x, na.rm=TRUE), n = n())
 dat %&gt;%
   group_by(nhom) %&gt;%
   summarise(tb = mean(x, na.rm=TRUE),
-            tv = median(x, na.rm=TRUE))</pre></div>
+            tv = median(x, na.rm=TRUE)) %&gt;%
+  ungroup()
+
+# ĐẾM
+count(dat, col1)              # đếm theo nhóm</pre></div>
 <div class="alert alert-warn"><span class="alert-icon">⚠️</span>Nếu dữ liệu có NA, thêm <code>na.rm = TRUE</code> vào hàm thống kê!</div>
 <h4>Các hàm thống kê</h4>
 <table class="kv-table">
@@ -169,7 +175,9 @@ dat %&gt;%
 <tr><td><code>sd()</code>, <code>var()</code></td><td>Độ lệch chuẩn, Phương sai</td></tr>
 <tr><td><code>min()</code>, <code>max()</code></td><td>Nhỏ nhất, Lớn nhất</td></tr>
 <tr><td><code>n()</code></td><td>Số quan sát</td></tr>
+<tr><td><code>n_distinct()</code></td><td>Số giá trị duy nhất</td></tr>
 <tr><td><code>sum()</code></td><td>Tổng</td></tr>
+<tr><td><code>first()</code>, <code>last()</code>, <code>nth()</code></td><td>Phần tử đầu/cuối/thứ n</td></tr>
 </table>`
       }
     ]
@@ -200,6 +208,14 @@ full_join(d1, d2, by = "key")   # giữ tất cả</pre></div>
 </table>`
       },
       {
+        title: "Filtering Joins",
+        icon: "🔎",
+        html: `<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
+<pre># Filtering joins (không thêm cột mới)
+semi_join(d1, d2, by = "key")   # giữ dòng d1 match d2
+anti_join(d1, d2, by = "key")   # giữ dòng d1 KHÔNG match d2</pre></div>`
+      },
+      {
         title: "Set Operations & Bind",
         icon: "🔄",
         html: `<p>Yêu cầu: cùng cấu trúc cột.</p>
@@ -223,24 +239,34 @@ bind_cols(d1, d2)    # nối cột (cùng số dòng!)</pre></div>`
     mode: "theory",
     cards: [
       {
-        title: "gather, spread, unite, separate, gsub",
+        title: "pivot_longer, pivot_wider",
         icon: "🔀",
         html: `<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
-<pre># GATHER – cột → dòng (wide → long)
-gather(dat, key_col, value_col, col1, col2, ...)
+<pre># PIVOT_LONGER – cột → dòng (wide → long)
+pivot_longer(dat, cols = col1:colN,
+  names_to = "key", values_to = "value")
 
-# SPREAD – dòng → cột (long → wide)
-spread(dat, key_col, value_col)
+# PIVOT_WIDER – dòng → cột (long → wide)
+pivot_wider(dat, names_from = key_col,
+  values_from = value_col)</pre></div>`
+      },
+      {
+        title: "separate, unite, replace_na, fill",
+        icon: "✂️",
+        html: `<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
+<pre># SEPARATE – tách 1 cột thành nhiều
+separate(dat, col, into = c("a","b"),
+  sep = "-", convert = TRUE)
 
 # UNITE – gộp nhiều cột thành 1
 unite(dat, col = "new", col1, col2, sep = "_")
 
-# SEPARATE – tách 1 cột thành nhiều
-separate(dat, col, into = c("a","b"), sep = "-")
+# REPLACE_NA – thay thế NA
+dat %&gt;% replace_na(list(col1 = 0, col2 = "unknown"))
 
-# GSUB – thay thế ký tự
-gsub("old", "new", dat$col)
-# VD: xóa "wk" → gsub("wk", "", dat$week)</pre></div>`
+# FILL – điền NA theo hướng
+dat %&gt;% fill(col1, .direction = "down")
+dat %&gt;% fill(col1, .direction = "up")</pre></div>`
       }
     ]
   },
@@ -281,10 +307,18 @@ tabular(col1 + 1 ~ col2 + 1)    # có tổng</pre></div>`
 ggplot(dat, aes(x = cut)) +
   geom_bar(fill = "steelblue") +
   labs(title = "Title", x = "X", y = "Y")
+ggplot(dat, aes(x = name, y = value)) +
+  geom_col()                        # cột với giá trị y
 
-# Phân tán (scatter)
+# Phân tán (scatter) + đường xu hướng
 ggplot(dat, aes(x = col1, y = col2)) +
-  geom_point(alpha = 0.5)
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "lm")         # hồi quy tuyến tính
+  # geom_smooth(method = "loess")    # đường cong
+
+# Đường (line)
+ggplot(dat, aes(x = year, y = value)) +
+  geom_line()
 
 # Boxplot theo nhóm
 ggplot(dat, aes(x = group, y = value)) +
@@ -294,17 +328,21 @@ ggplot(dat, aes(x = group, y = value)) +
 ggplot(dat, aes(x = price)) +
   geom_histogram(bins = 30)
 
-# Tương tác: ggplotly(p)  # package plotly
-# Tương quan: ggcorrplot(cor(dat))  # package ggcorrplot</pre></div>
+# Lưu đồ thị
+ggsave("plot.png")
+
+# Tương tác: ggplotly(p)  # package plotly</pre></div>
 <h4>Layers ggplot2</h4>
 <table class="kv-table">
 <tr><th>Layer</th><th>Chức năng</th></tr>
-<tr><td><code>aes()</code></td><td>Xác định trục x, y</td></tr>
+<tr><td><code>aes(x, y, color, fill, size, shape, alpha)</code></td><td>Ánh xạ dữ liệu</td></tr>
 <tr><td><code>geom_*()</code></td><td>Loại biểu đồ</td></tr>
-<tr><td><code>facet_wrap()</code></td><td>Chia nhỏ theo nhóm</td></tr>
+<tr><td><code>facet_wrap(~ var)</code></td><td>Chia nhỏ theo 1 biến</td></tr>
+<tr><td><code>facet_grid(var_y ~ var_x)</code></td><td>Chia theo 2 biến</td></tr>
 <tr><td><code>labs()</code></td><td>Tiêu đề, nhãn</td></tr>
-<tr><td><code>theme_*()</code></td><td>Hình nền</td></tr>
-<tr><td><code>coord_*()</code></td><td>Hệ tọa độ</td></tr>
+<tr><td><code>theme_minimal()</code>, <code>theme_bw()</code>, <code>theme_classic()</code></td><td>Hình nền</td></tr>
+<tr><td><code>coord_flip()</code></td><td>Đổi trục X ↔ Y</td></tr>
+<tr><td><code>ggsave()</code></td><td>Lưu đồ thị</td></tr>
 </table>`
       }
     ]
@@ -367,27 +405,27 @@ ggplot(dat, aes(x = price)) +
         icon: "💻",
         html: `<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
 <pre># KIỂM TRA
-anyNA(dat); sum(is.na(dat))
-colSums(is.na(dat))
+is.na(dat)                     # ma trận TRUE/FALSE
+sum(is.na(dat))                # tổng số NA
+any(is.na(dat))                # có NA không?
+mean(is.na(dat))               # tỷ lệ NA
+colSums(is.na(dat))            # đếm NA theo cột
 
-# ĐỒ THỊ (visdat, VIM)
-vis_dat(dat); vis_miss(dat)
-aggr(dat, numbers=TRUE, prop=FALSE, sortVars=TRUE)
-
-# KIỂM ĐỊNH MCAR (naniar)
-mcar_test(dat)  # H0: MCAR, H1: MAR
+# ĐỒ THỊ
+vis_miss(dat)                  # visdat package
+aggr(dat, numbers=TRUE, prop=FALSE,
+  sortVars=TRUE)               # VIM package
 
 # XÓA
-na.omit(dat)           # xóa dòng có NA
-drop_na(dat, col1)     # xóa NA ở 1 cột
+na.omit(dat)                   # xóa dòng có NA
+drop_na(dat, col1)             # xóa NA ở 1 cột
 
-# THAY THẾ (package mice)
-complete(mice(dat, method = "mean"))           # trung bình
-complete(mice(dat, method = "sample"))         # ngẫu nhiên
-complete(mice(dat, method = "norm.predict"))   # hồi quy
-complete(mice(dat, method = "norm.nob"))       # hồi quy ngẫu nhiên
-complete(mice(dat, method = "cart"))           # cây quyết định
-complete(mice(dat, method = "rf"))             # rừng ngẫu nhiên</pre></div>`
+# THAY THẾ THỦ CÔNG
+dat$x[is.na(dat$x)] &lt;- mean(dat$x, na.rm=TRUE)
+
+# THAY THẾ NÂNG CAO (package mice)
+mice(dat, method = "...")      # tạo imputation
+complete(mice_obj)             # lấy data đã thay thế</pre></div>`
       }
     ]
   },
@@ -412,24 +450,31 @@ complete(mice(dat, method = "rf"))             # rừng ngẫu nhiên</pre></div
         title: "Code R – Xác định Outlier",
         icon: "🔬",
         html: `<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
-<pre># Z-SCORE (mean ± 3*sd)
+<pre># BOXPLOT (phương pháp IQR)
+boxplot(dat$x)
+bp &lt;- boxplot.stats(dat$x)
+bp$out                        # giá trị outlier
+
+# Tính thủ công IQR
+Q1 &lt;- quantile(dat$x, 0.25)
+Q3 &lt;- quantile(dat$x, 0.75)
+iqr &lt;- IQR(dat$x)
+LB &lt;- Q1 - 1.5 * iqr
+UB &lt;- Q3 + 1.5 * iqr
+which(dat$x &lt; LB | dat$x &gt; UB)  # vị trí outlier
+dat[dat$x &lt; LB | dat$x &gt; UB, ]  # dòng outlier
+
+# Z-SCORE (mean ± 3*sd)
 LB &lt;- mean(dat$x) - 3*sd(dat$x)
 UB &lt;- mean(dat$x) + 3*sd(dat$x)
-filter(dat, x &lt; LB | x &gt; UB)
+dat[dat$x &lt; LB | dat$x &gt; UB, ]</pre></div>
+<h4>Chuẩn hóa dữ liệu</h4>
+<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
+<pre># Standardization (Z-score)
+scale(dat$x, center=TRUE, scale=TRUE)
 
-# HAMPEL (median ± 3*MAD)
-LB &lt;- median(dat$x) - 3*mad(dat$x)
-UB &lt;- median(dat$x) + 3*mad(dat$x)
-
-# BOXPLOT
-bp &lt;- boxplot(dat$x); bp$out
-
-# KIỂM ĐỊNH (package outliers)
-grubbs.test(dat$x, type = 10)  # 1 outlier, 1 phía
-dixon.test(dat$x)              # mẫu nhỏ &lt; 25
-
-# ROSNER (package EnvStats, mẫu &gt; 20)
-rosnerTest(dat$x, k = 3, alpha = 0.05)</pre></div>`
+# Min-Max (thủ công)
+(dat$x - min(dat$x)) / (max(dat$x) - min(dat$x))</pre></div>`
       }
     ]
   },
@@ -597,7 +642,8 @@ bind_rows(band, band_instruments2)</pre></div>`
 <pre>library(tidyr); library(dplyr)
 data("billboard")
 bb &lt;- billboard %&gt;%
-  gather(week, rank, wk1:wk76) %&gt;%
+  pivot_longer(cols = wk1:wk76,
+    names_to = "week", values_to = "rank") %&gt;%
   drop_na(rank) %&gt;%
   arrange(rank)
 bb$week &lt;- gsub("wk", "", bb$week)
