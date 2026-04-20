@@ -1,0 +1,649 @@
+id,gestation,wt,parity,race,age,ed,drace,dage,ded,marital,inc,smoke,time,number,ht,dwt,dht,wt0
+1,284,3401.94,1,asian,27,16,asian,31,16,married,2500-5000,never,never,never,157.48,49.9,165.1,45.36
+2,282,3203.49,2,white,33,16,white,38,16,married,10000-12500,never,never,never,162.56,67.13,177.8,61.23
+3,286,3855.53,4,white,25,12,white,28,12,married,10000-12500,until pregnancy,during preg,5-9,157.48,58.97,162.56,42.18
+4,245,3742.13,2,black,23,8-<12,black,23,12+some college,married,5000-7500,never,never,never,165.1,87.09,180.34,63.5
+5,289,3401.94,3,white,25,12+some college,white,26,8-<12,#N/A,5000-7500,never,never,never,157.48,81.65,177.8,56.7
+6,282,4082.33,4,white,32,12,white,36,8-<12,married,5000-7500,yes now,still,1-4,162.56,83.91,187.96,56.25
+7,285,3260.19,4,black,38,12,black,37,<8,married,2500-5000,never,never,never,160.02,92.99,180.34,58.97
+8,261,3260.19,3,white,33,12,white,33,12,married,10000-12500,yes now,still,20-29,152.4,63.5,177.8,56.7
+9,288,3373.59,3,white,43,12,white,45,12,married,12500-15000,yes now,still,30-39,167.64,88.45,185.42,64.41
+10,274,3260.19,1,white,27,12+some college,white,26,12+some college,married,7500-10000,yes now,still,smoke but don't know,170.18,81.65,185.42,79.38
+11,287,3883.88,1,white,25,12+some college,white,25,16,married,5000-7500,until pregnancy,during preg,20-29,167.64,68.04,177.8,65.77
+12,276,3458.64,6,black,30,8-<12,mix,38,8-<12,married,5000-7500,never,never,never,172.72,88.9,185.42,82.55
+13,280,4139.03,1,mex,26,<8,mex,29,12,married,5000-7500,until pregnancy,during preg,1-4,147.32,90.72,172.72,48.08
+14,292,3543.69,3,white,32,12,white,29,16,married,2500-5000,never,never,never,165.1,61.23,170.18,56.7
+15,274,3231.84,2,white,28,16,white,31,16,married,15000-17500,yes now,still,20-29,167.64,76.2,177.8,59.87
+16,278,2636.5,3,black,34,8-<12,black,37,12,married,10000-12500,until pregnancy,during preg,1-4,154.94,63.5,177.8,66.22
+17,268,3685.44,2,white,30,12,white,46,12,married,17500-20000,once did not now,up to 2 yr,1-4,167.64,95.25,167.64,55.79
+18,275,3373.59,1,mix,23,12,mix,25,12,married,5000-7500,never,never,never,152.4,86.18,177.8,47.63
+19,283,3798.83,1,white,22,12,white,22,12,married,5000-7500,never,never,never,170.18,83.91,180.34,58.97
+20,279,3033.4,1,white,24,16,white,31,16,married,10000-12500,once did not now,up to 2 yr,20-29,160.02,72.57,180.34,52.16
+21,288,3798.83,2,white,23,12,white,26,8-<12,married,2500-5000,yes now,still,20-29,160.02,80.74,180.34,41.73
+22,267,3458.64,1,white,27,12+some college,white,29,16,married,17500-20000,yes now,still,1-4,165.1,90.72,180.34,45.81
+23,293,3657.09,2,white,30,12+some college,white,29,12+some college,married,7500-10000,never,never,never,154.94,58.97,170.18,72.57
+24,270,3146.79,4,mex,27,8-<12,mex,33,12,married,5000-7500,until pregnancy,during preg,1-4,154.94,80.74,167.64,53.98
+25,248,2466.41,10,white,37,8-<12,white,40,12,married,20000-22500,yes now,still,20-29,165.1,70.31,182.88,58.97
+26,294,4394.17,6,black,32,12,mix,35,12,married,2500-5000,once did not now,up to 1 yr,1-4,167.64,68.04,175.26,68.04
+27,272,3118.45,2,asian,25,8-<12,asian,34,12,married,5000-7500,never,never,never,152.4,68.04,167.64,40.82
+28,275,3458.64,1,white,26,16,white,25,16,married,2500-5000,never,never,never,167.64,77.11,180.34,66.68
+29,291,4110.68,4,mix,26,12+some college,white,29,12+some college,married,10000-12500,yes now,still,1-4,160.02,74.84,170.18,53.98
+30,283,3061.75,6,white,31,8-<12,white,32,12,married,15000-17500,yes now,still,20-29,165.1,74.84,182.88,67.13
+31,286,4053.98,5,white,31,12,white,36,12+some college,married,10000-12500,never,never,never,162.56,90.72,175.26,57.15
+32,267,4139.03,2,white,30,16,white,31,16,married,10000-12500,until pregnancy,during preg,5-9,170.18,72.57,180.34,59.87
+33,275,3515.34,3,white,22,8-<12,white,27,12,married,10000-12500,never,never,never,152.4,74.84,177.8,58.97
+34,278,3515.34,2,white,26,12+some college,white,34,12,married,7500-10000,yes now,still,20-29,177.8,86.18,185.42,65.77
+35,257,4110.68,5,black,33,12+some college,black,43,8-<12,married,7500-10000,once did not now,up to 1 yr,5-9,165.1,88.45,175.26,63.5
+36,273,3005.05,2,mex,28,<8,mex,29,8-<12,married,#N/A,never,never,never,152.4,85.73,182.88,52.62
+37,273,3033.4,1,mex,24,12,mex,32,12,married,2500-5000,never,never,never,154.94,77.11,180.34,43.54
+38,288,3515.34,1,white,22,12+some college,white,25,16,married,2500-5000,never,never,never,170.18,88.45,193.04,53.52
+39,245,2863.3,1,white,23,12,white,24,12,married,5000-7500,yes now,still,15-19,160.02,78.93,182.88,58.97
+40,283,3628.74,4,white,28,12,white,30,16,married,20000-22500,yes now,still,10-14,160.02,81.65,180.34,56.7
+41,282,2948.35,5,white,36,16,white,41,12,married,17500-20000,yes now,still,5-9,165.1,87.09,172.72,52.16
+42,246,2749.9,6,black,37,12,black,52,12,married,5000-7500,never,never,never,160.02,76.2,187.96,68.04
+43,274,3883.88,2,white,26,12+some college,white,25,16,married,2500-5000,yes now,still,20-29,175.26,77.11,182.88,62.14
+44,273,2920,5,black,31,8-<12,black,31,12,married,10000-12500,yes now,still,30-39,160.02,77.11,180.34,77.11
+45,276,4025.63,5,mix,38,8-<12,mix,49,8-<12,married,7500-10000,once did not now,up to 4 yr,1-4,160.02,74.84,175.26,77.11
+46,292,4422.52,2,white,26,12,white,27,8-<12,married,#N/A,never,never,never,160.02,86.18,175.26,53.52
+47,284,3770.48,1,black,25,12,black,27,12,married,5000-7500,yes now,still,5-9,167.64,74.84,177.8,56.7
+48,274,3401.94,3,white,24,12+some college,white,27,16,married,7500-10000,never,never,never,157.48,79.38,182.88,54.43
+49,274,3600.39,2,black,21,12,black,24,8-<12,married,5000-7500,never,never,never,157.48,73.94,175.26,49.9
+50,286,4337.47,4,black,26,12+some college,black,26,12+some college,married,5000-7500,yes now,still,20-29,160.02,72.57,165.1,48.53
+51,276,3430.29,2,white,39,12,white,44,16,married,#N/A,never,never,never,160.02,70.31,185.42,58.97
+52,272,2806.6,5,white,27,12,white,27,12,married,5000-7500,yes now,still,20-29,157.48,89.81,182.88,46.72
+53,293,4224.08,5,white,35,12+some college,white,42,12+some college,married,12500-15000,until pregnancy,during preg,1-4,165.1,76.2,167.64,52.62
+54,280,3657.09,2,white,23,12+some college,mix,25,12,married,5000-7500,never,never,never,162.56,81.65,177.8,47.17
+55,292,3940.58,2,white,25,16,white,25,16,married,5000-7500,once did not now,up to 3 yr,5-9,172.72,72.57,185.42,61.23
+56,268,3798.83,2,white,28,16,white,31,16,married,17500-20000,never,never,never,157.48,68.04,167.64,50.8
+57,278,2409.71,3,white,23,8-<12,white,28,8-<12,married,7500-10000,yes now,still,20-29,154.94,65.77,180.34,46.72
+58,282,3827.18,1,white,22,12,white,24,12,married,7500-10000,never,never,never,162.56,95.25,180.34,45.36
+59,254,2976.7,7,black,29,12,black,36,12+some college,married,20000-22500,until pregnancy,during preg,15-19,162.56,83.91,177.8,62.14
+60,274,3373.59,3,white,33,16,white,36,16,married,unknown,never,never,never,162.56,70.31,187.96,54.43
+61,287,4394.17,2,white,33,16,white,38,12+trade,married,7500-10000,never,never,never,167.64,81.65,177.8,64.86
+62,279,2693.2,1,white,22,12+some college,white,28,16,married,10000-12500,yes now,still,30-39,167.64,71.21,180.34,65.77
+63,276,3345.24,1,white,29,12,white,32,#N/A,married,5000-7500,until pregnancy,during preg,1-4,162.56,68.04,177.8,51.71
+64,283,3713.78,2,white,25,12+some college,white,27,12,married,5000-7500,never,never,never,170.18,75.75,185.42,97.52
+65,264,3430.29,6,white,32,12+some college,white,36,12+some college,married,20000-22500,once did not now,up to 1 yr,40-60,167.64,83.91,182.88,65.77
+66,284,3345.24,1,white,26,12,white,26,12,married,5000-7500,never,never,never,167.64,77.11,185.42,60.33
+67,288,4309.12,3,white,35,12+some college,mix,33,16,married,10000-12500,never,never,never,170.18,79.38,177.8,58.97
+68,284,3430.29,6,white,34,16,white,36,12+some college,married,17500-20000,never,never,never,175.26,77.11,180.34,70.31
+69,276,3316.89,2,white,31,16,white,32,16,married,20000-22500,never,never,never,175.26,68.04,187.96,68.04
+70,283,3260.19,2,white,25,12,white,25,12,married,5000-7500,yes now,still,5-9,154.94,68.04,170.18,68.04
+71,267,2664.85,3,white,30,12+some college,white,33,16,married,12500-15000,yes now,still,30-39,157.48,84.37,170.18,54.43
+72,272,3090.1,2,white,35,12,white,44,12,married,12500-15000,never,never,never,167.64,79.38,175.26,69.85
+73,278,3316.89,2,white,25,12+some college,mex,30,12,married,7500-10000,never,never,never,157.48,71.67,172.72,46.72
+74,283,3628.74,1,mix,24,12,mex,24,12,married,#N/A,never,never,never,152.4,69.4,180.34,45.36
+75,265,2834.95,6,white,39,12,white,39,16,married,7500-10000,yes now,still,15-19,157.48,58.06,172.72,48.53
+76,293,4167.38,3,white,32,12+some college,mix,32,12+some college,married,12500-15000,until pregnancy,during preg,10-14,165.1,81.65,177.8,55.79
+77,277,4082.33,3,white,30,16,white,36,16,married,17500-20000,never,never,never,160.02,72.57,167.64,57.61
+78,276,3855.53,1,white,23,12,white,33,12,married,5000-7500,never,never,never,167.64,74.84,180.34,70.31
+79,262,2891.65,3,black,24,12,black,27,<8,married,5000-7500,never,never,never,160.02,74.84,182.88,56.7
+80,275,3203.49,1,white,24,12+trade,white,26,12,married,12500-15000,yes now,still,10-14,172.72,83.91,185.42,63.5
+81,271,3572.04,2,white,29,16,white,34,16,married,5000-7500,never,never,never,172.72,74.84,182.88,67.13
+82,284,3373.59,1,black,20,12,black,23,12,married,2500-5000,never,never,never,167.64,77.11,177.8,59.87
+83,290,3798.83,1,mex,22,12,mex,23,12+trade,married,10000-12500,never,never,never,152.4,81.65,170.18,54.88
+84,273,3146.79,4,black,43,<8,black,53,8-<12,married,5000-7500,never,never,never,157.48,83.91,180.34,62.6
+85,296,3827.18,2,white,30,12,white,34,12+some college,married,10000-12500,never,never,never,160.02,75.75,180.34,55.79
+86,289,3288.54,1,white,22,12,white,22,8-<12,married,5000-7500,yes now,still,10-14,165.1,70.76,170.18,72.57
+87,291,3657.09,1,white,29,16,white,29,16,married,2500-5000,once did not now,up to 2 yr,20-29,175.26,65.77,182.88,55.79
+88,295,3713.78,1,white,23,12,white,26,12+some college,married,7500-10000,yes now,still,20-29,165.1,72.57,177.8,55.79
+89,272,3430.29,1,white,22,12,black,28,12,married,7500-10000,never,never,never,157.48,74.84,177.8,49.44
+90,287,3912.23,1,white,24,12+some college,white,26,16,married,5000-7500,never,never,never,165.1,74.84,185.42,52.16
+91,278,3855.53,1,mix,23,12+some college,white,24,12+some college,married,7500-10000,never,never,never,154.94,62.6,167.64,47.63
+92,279,3401.94,3,white,30,12+some college,white,36,16,married,7500-10000,never,never,never,167.64,78.02,182.88,59.42
+93,288,3175.14,5,black,32,16,black,37,12+some college,married,15000-17500,never,never,never,157.48,67.59,175.26,56.7
+94,290,3742.13,2,white,25,12+some college,white,25,16,married,7500-10000,until pregnancy,during preg,10-14,162.56,74.84,175.26,54.43
+95,271,2721.55,2,black,23,12+some college,black,24,12+some college,married,5000-7500,never,never,never,162.56,83.91,170.18,52.62
+96,277,3515.34,3,black,29,12,black,36,8-<12,married,17500-20000,never,never,never,160.02,99.79,187.96,99.79
+97,258,3883.88,1,white,25,16,white,26,16,married,10000-12500,until pregnancy,during preg,1-4,160.02,79.38,182.88,53.07
+98,268,3770.48,1,asian,24,16,asian,30,16,married,17500-20000,never,never,never,154.94,74.84,172.72,42.18
+99,244,3033.4,1,white,20,12,white,20,12+some college,married,2500-5000,never,never,never,147.32,87.09,187.96,44
+100,265,2721.55,4,black,28,12,black,28,12,married,2500-5000,yes now,still,20-29,149.86,74.84,172.72,61.23
+101,275,3855.53,1,mex,22,12,white,23,8-<12,married,7500-10000,until pregnancy,during preg,1-4,160.02,88.45,182.88,49.9
+102,239,2126.21,3,white,26,12,white,26,12+some college,married,10000-12500,yes now,still,20-29,160.02,71.21,185.42,56.25
+103,295,2948.35,4,black,26,12+some college,black,27,12+some college,married,5000-7500,yes now,still,5-9,165.1,74.39,182.88,70.31
+104,274,3685.44,5,black,30,8-<12,black,32,12,married,2500-5000,never,never,never,160.02,63.5,167.64,68.04
+105,290,2551.46,3,black,22,12,black,32,12,married,2500-5000,once did not now,up to 1 yr,1-4,160.02,70.76,167.64,76.2
+106,276,3345.24,3,white,22,12,white,23,12+some college,married,7500-10000,yes now,still,5-9,167.64,94.35,185.42,66.68
+107,291,3883.88,6,white,34,16,white,39,16,married,10000-12500,never,never,never,154.94,81.65,152.4,49.9
+108,268,2863.3,2,black,19,8-<12,black,23,12,married,7500-10000,never,never,never,160.02,68.04,167.64,63.5
+109,275,4025.63,3,white,25,12,white,29,12+trade,married,#N/A,never,never,never,162.56,83.91,185.42,59.87
+110,281,3090.1,1,white,23,12+some college,white,27,16,married,10000-12500,never,never,never,154.94,63.5,175.26,47.63
+111,282,3373.59,2,black,26,12+some college,black,25,12+some college,married,7500-10000,yes now,still,1-4,172.72,87.09,182.88,68.04
+112,280,3713.78,5,white,38,12+some college,white,37,16,married,10000-12500,until pregnancy,during preg,1-4,165.1,68.04,182.88,56.7
+113,272,2863.3,1,black,29,12+some college,black,39,#N/A,married,12500-15000,yes now,still,20-29,160.02,65.77,172.72,68.04
+114,282,3316.89,4,white,28,12+some college,white,29,12+some college,married,5000-7500,never,never,never,162.56,78.02,180.34,52.16
+115,290,4252.43,1,white,21,8-<12,white,25,12+some college,married,7500-10000,never,never,never,165.1,72.57,182.88,56.7
+116,269,2551.46,4,white,26,12,white,27,16,married,20000-22500,unknown,#N/A,#N/A,170.18,99.79,190.5,56.7
+117,274,3260.19,1,white,22,12,white,23,12,married,10000-12500,yes now,still,30-39,165.1,79.38,180.34,58.97
+118,290,3033.4,2,white,28,12,white,29,16,married,10000-12500,until pregnancy,during preg,5-9,157.48,72.57,172.72,61.23
+119,275,3430.29,1,white,24,12+trade,white,27,12+trade,married,17500-20000,yes now,still,20-29,160.02,65.77,172.72,54.88
+120,275,3316.89,2,black,20,8-<12,black,22,12,married,2500-5000,yes now,still,1-4,162.56,80.29,167.64,65.77
+121,264,3798.83,1,white,26,16,white,35,16,married,17500-20000,never,never,never,172.72,65.77,175.26,61.69
+122,282,3685.44,3,white,21,12+trade,white,19,8-<12,married,#N/A,yes now,still,15-19,157.48,61.23,170.18,48.08
+123,249,2636.5,3,black,33,<8,black,38,8-<12,married,#N/A,never,never,never,167.64,96.16,187.96,53.07
+124,290,3543.69,1,white,19,8-<12,white,21,12,married,5000-7500,until pregnancy,during preg,1-4,162.56,77.11,185.42,57.61
+125,267,3657.09,3,mex,22,<8,mex,33,8-<12,married,#N/A,never,never,never,160.02,90.72,172.72,72.57
+126,276,3572.04,1,white,23,12+some college,white,26,16,married,15000-17500,never,never,never,160.02,72.57,175.26,54.43
+127,278,3231.84,2,white,25,12+some college,white,27,12+some college,married,2500-5000,yes now,still,20-29,165.1,81.65,180.34,63.5
+128,287,4365.82,2,white,27,12+trade,white,28,16,married,5000-7500,yes now,still,1-4,165.1,96.16,187.96,56.7
+129,274,4252.43,1,white,25,12,white,25,12,married,7500-10000,yes now,still,5-9,170.18,96.16,193.04,53.07
+130,278,3146.79,1,white,21,12,white,22,12,married,5000-7500,never,never,never,157.48,77.11,180.34,56.7
+131,261,3458.64,3,white,28,12,white,30,8-<12,married,10000-12500,once did not now,up to 3 yr,1-4,165.1,52.16,157.48,56.25
+132,282,3997.28,3,white,24,12,white,27,12,married,7500-10000,once did not now,up 5 to 9 yr,1-4,172.72,90.72,187.96,76.66
+133,274,4025.63,3,black,24,8-<12,black,25,<8,married,2500-5000,never,never,never,160.02,74.84,182.88,56.7
+134,275,3005.05,3,white,31,12+some college,white,38,16,married,20000-22500,unknown,#N/A,#N/A,165.1,96.16,175.26,64.41
+135,290,3628.74,1,white,22,12+some college,white,27,12+some college,married,7500-10000,once did not now,up to 3 yr,15-19,162.56,71.21,180.34,53.52
+136,286,3543.69,1,mix,21,12,mix,28,12,married,15000-17500,never,never,never,162.56,68.04,167.64,63.05
+137,290,3231.84,3,mix,30,12,black,33,8-<12,married,2500-5000,never,never,never,167.64,72.57,175.26,72.57
+138,256,2296.31,4,white,30,8-<12,white,31,12,married,12500-15000,yes now,still,20-29,162.56,86.18,185.42,67.13
+139,292,3543.69,1,black,22,12+some college,black,23,12,married,15000-17500,never,never,never,165.1,81.65,177.8,55.34
+140,262,3118.45,1,white,25,16,white,27,12+some college,married,15000-17500,once did not now,up to 1 yr,5-9,167.64,71.21,180.34,63.5
+141,284,4025.63,5,white,39,12,white,38,16,married,12500-15000,never,never,never,167.64,76.2,180.34,59.87
+142,280,2891.65,3,white,38,12+some college,white,45,12+trade,married,15000-17500,once did not now,up 5 to 9 yr,20-29,170.18,73.48,180.34,63.5
+143,294,3968.93,2,white,25,12+some college,white,25,12,married,#N/A,never,never,never,154.94,68.04,182.88,46.72
+144,290,3600.39,3,white,35,12,white,35,16,married,10000-12500,until pregnancy,during preg,10-14,167.64,86.18,180.34,74.84
+145,274,2948.35,0,white,20,12,white,23,12,married,12500-15000,yes now,still,15-19,157.48,65.77,170.18,52.16
+146,282,3203.49,0,white,36,12,white,34,12+trade,married,17500-20000,once did not now,10+ yr,1-4,149.86,63.5,172.72,63.5
+147,280,2948.35,0,white,27,16,white,27,16,married,17500-20000,yes now,still,1-4,172.72,88,182.88,66.22
+148,283,3316.89,2,white,27,12+some college,white,32,16,married,5000-7500,never,never,never,160.02,78.47,182.88,48.99
+149,280,2778.25,2,mix,35,12,mix,#NULL!,16,married,17500-20000,yes now,still,10-14,162.56,88.45,175.26,55.34
+150,276,3430.29,0,white,23,16,white,23,16,married,2500-5000,yes now,still,20-29,180.34,78.47,180.34,68.95
+151,264,2579.8,2,black,36,12+trade,black,34,12+some college,married,17500-20000,yes now,still,5-9,152.4,65.77,172.72,45.36
+152,266,2267.96,0,white,25,12,white,28,12+some college,married,5000-7500,never,never,never,157.48,88.45,180.34,56.7
+153,286,3090.1,1,white,24,12,white,25,12,married,10000-12500,yes now,still,10-14,162.56,89.36,190.5,56.7
+154,290,3855.53,1,white,26,12+some college,white,30,12+some college,married,15000-17500,until pregnancy,during preg,1-4,167.64,72.57,165.1,61.23
+155,295,2863.3,1,black,18,8-<12,black,29,12,married,10000-12500,yes now,still,5-9,157.48,67.59,167.64,65.77
+156,292,3515.34,2,black,29,12+trade,black,29,12,married,under 2500,yes now,still,5-9,172.72,89.36,185.42,79.83
+157,276,3005.05,3,white,30,12+some college,white,37,16,married,17500-20000,once did not now,up to 4 yr,20-29,167.64,68.04,170.18,58.97
+158,277,2834.95,2,white,31,12,white,31,12,married,15000-17500,yes now,still,10-14,157.48,58.06,175.26,45.36
+159,269,2948.35,4,white,35,12,white,37,12+some college,married,17500-20000,yes now,still,10-14,160.02,66.22,172.72,49.9
+160,283,3118.45,0,white,21,12,white,27,12,married,12500-15000,until pregnancy,during preg,1-4,167.64,79.38,175.26,58.51
+161,285,4025.63,0,white,24,12+trade,white,30,16,married,15000-17500,never,never,never,167.64,98.43,185.42,61.69
+162,260,2948.35,1,white,33,12,white,36,12+some college,married,17500-20000,never,never,never,162.56,74.84,177.8,65.77
+163,296,3912.23,1,white,34,16,white,36,16,married,17500-20000,never,never,never,167.64,74.84,187.96,54.43
+164,278,3175.14,0,white,21,16,mix,29,16,married,#N/A,never,never,never,160.02,70.31,177.8,54.43
+165,293,3316.89,3,black,39,8-<12,black,40,8-<12,married,2500-5000,yes now,still,10-14,152.4,63.5,154.94,54.43
+166,266,3713.78,0,white,28,16,white,28,16,married,7500-10000,never,never,never,170.18,74.84,182.88,61.23
+167,270,3288.54,1,white,29,16,white,30,16,married,5000-7500,never,never,never,160.02,77.11,175.26,59.87
+168,279,3401.94,0,white,23,16,white,23,12+some college,married,5000-7500,once did not now,up to 1 yr,smoke but don't know,170.18,83.91,190.5,61.23
+169,260,3940.58,0,asian,32,12,asian,34,16,married,#N/A,never,never,never,162.56,74.84,170.18,57.61
+170,270,3146.79,1,white,22,12+some college,white,24,8-<12,married,17500-20000,never,never,never,149.86,72.57,167.64,46.72
+171,277,3458.64,5,black,32,12+some college,black,36,12,married,7500-10000,yes now,still,5-9,160.02,77.11,180.34,71.21
+172,271,3288.54,0,white,30,16,white,31,16,married,12500-15000,yes now,still,1-4,170.18,79.38,187.96,65.32
+173,277,3657.09,1,white,27,16,white,27,12+some college,married,15000-17500,yes now,still,30-39,172.72,72.57,180.34,58.97
+174,277,3118.45,1,white,25,8-<12,white,29,12,married,2500-5000,once did not now,up 5 to 9 yr,20-29,154.94,92.99,182.88,58.97
+175,276,2976.7,2,black,22,12+trade,black,24,8-<12,married,2500-5000,never,never,never,170.18,88.45,182.88,58.97
+176,246,2636.5,3,white,37,12,white,41,12+some college,married,12500-15000,never,never,never,165.1,81.65,185.42,58.97
+177,281,3458.64,3,white,42,12+trade,white,43,12+some college,married,5000-7500,yes now,still,5-9,160.02,77.11,172.72,46.72
+178,293,3770.48,2,white,23,12+trade,white,25,12,married,12500-15000,yes now,still,20-29,162.56,99.79,185.42,49.9
+179,276,3345.24,0,black,18,12,black,18,12,married,#N/A,until pregnancy,during preg,1-4,160.02,88.45,180.34,58.06
+180,290,3968.93,0,white,19,12,white,23,8-<12,married,#N/A,yes now,still,20-29,170.18,92.99,187.96,59.87
+181,268,3231.84,2,black,22,12,black,25,12,married,#N/A,never,never,never,162.56,92.99,185.42,47.17
+182,284,3657.09,2,white,24,12+some college,white,25,16,married,7500-10000,never,never,never,162.56,87.54,185.42,52.16
+183,286,3401.94,2,mex,22,12,mex,24,12,married,2500-5000,yes now,still,5-9,157.48,79.38,172.72,52.16
+184,234,2012.81,4,asian,32,12,asian,38,12+some college,married,12500-15000,yes now,still,5-9,162.56,74.84,175.26,49.9
+185,274,2494.76,4,white,30,12,white,31,12,married,5000-7500,never,never,never,167.64,73.48,175.26,58.97
+186,285,3827.18,3,white,30,12+some college,white,30,16,married,5000-7500,never,never,never,167.64,90.72,177.8,58.97
+187,294,3657.09,3,white,32,12,white,35,8-<12,married,7500-10000,yes now,still,20-29,157.48,81.19,182.88,77.11
+188,274,3572.04,4,white,39,16,white,36,16,married,12500-15000,never,never,never,157.48,77.11,187.96,55.34
+189,294,3515.34,1,black,26,16,black,27,12+trade,married,15000-17500,until pregnancy,during preg,1-4,157.48,71.67,187.96,55.34
+190,272,3118.45,1,mix,28,trade,mix,28,16,married,17500-20000,never,never,never,152.4,72.57,160.02,48.99
+191,278,2863.3,0,white,20,12+some college,white,26,16,married,7500-10000,never,never,never,157.48,63.5,170.18,47.63
+192,266,2721.55,1,white,26,16,white,27,16,married,15000-17500,never,never,never,165.1,74.84,180.34,56.7
+193,249,2834.95,3,black,24,12+some college,black,25,12+some college,married,7500-10000,never,never,never,170.18,86.18,187.96,45.36
+194,293,3600.39,1,white,31,16,white,27,12+some college,married,7500-10000,never,never,never,170.18,90.72,190.5,62.14
+195,282,3572.04,0,white,23,12+some college,white,23,16,married,7500-10000,yes now,still,5-9,167.64,86.18,182.88,52.16
+196,275,2778.25,1,white,25,16,white,25,16,married,10000-12500,yes now,still,20-29,165.1,77.11,180.34,50.8
+197,288,3600.39,0,white,21,12,white,22,12,married,#N/A,never,never,never,167.64,79.38,180.34,58.97
+198,299,3657.09,1,black,22,12+some college,black,22,12,married,2500-5000,never,never,never,172.72,86.18,187.96,65.77
+199,290,3260.19,1,white,30,16,mix,36,16,married,20000-22500,yes now,still,15-19,162.56,90.72,185.42,63.5
+200,286,3401.94,1,black,25,12+some college,black,30,12+some college,married,5000-7500,never,never,never,157.48,78.47,180.34,47.63
+201,261,3345.24,1,asian,26,12,asian,37,trade,married,2500-5000,never,never,never,152.4,65.77,162.56,47.17
+202,277,3345.24,2,asian,25,12+trade,asian,27,12+trade,married,17500-20000,never,never,never,157.48,66.68,165.1,54.43
+203,280,4620.97,6,black,35,12+some college,black,40,8-<12,married,5000-7500,never,never,never,175.26,68.04,175.26,63.05
+204,294,3742.13,1,white,32,16,white,30,16,married,7500-10000,once did not now,quit and don't know,1-4,162.56,81.65,190.5,52.62
+205,288,3912.23,0,white,19,12+some college,white,21,12,married,12500-15000,never,never,never,167.64,80.74,187.96,56.25
+206,279,3940.58,1,white,20,12,white,21,12,married,5000-7500,never,never,never,162.56,79.38,185.42,64.86
+207,298,3742.13,0,white,23,12,mix,33,16,married,7500-10000,until pregnancy,during preg,40-60,154.94,72.57,187.96,62.14
+208,297,3713.78,3,white,30,16,white,30,16,married,17500-20000,never,never,never,170.18,97.52,190.5,59.87
+209,286,3373.59,0,white,20,12,white,25,12,married,7500-10000,never,never,never,170.18,92.99,182.88,58.97
+210,282,4082.33,1,white,33,12+some college,white,43,12+trade,married,17500-20000,yes now,still,5-9,167.64,78.47,175.26,70.31
+211,272,3288.54,4,black,#NULL!,12+trade,black,31,12+some college,married,7500-10000,yes now,still,1-4,160.02,77.11,170.18,62.6
+212,283,3175.14,0,white,21,12+trade,white,23,12,married,12500-15000,yes now,still,1-4,157.48,74.84,182.88,46.27
+213,269,3260.19,2,mex,30,12,white,29,8-<12,married,2500-5000,unknown,#N/A,#N/A,157.48,58.97,170.18,52.16
+214,275,3458.64,2,white,30,16,white,31,16,married,7500-10000,never,never,never,172.72,77.11,180.34,63.5
+215,278,3827.18,1,white,27,8-<12,white,33,8-<12,married,7500-10000,never,never,never,167.64,74.84,167.64,67.13
+216,235,3657.09,3,black,24,12+some college,black,26,12,married,2500-5000,never,never,never,167.64,70.31,187.96,61.23
+217,288,3203.49,0,white,21,12,white,25,12+some college,married,5000-7500,until pregnancy,during preg,5-9,154.94,86.18,182.88,54.43
+218,269,3401.94,0,asian,40,16,white,40,12,married,10000-12500,never,never,never,160.02,65.77,170.18,58.97
+219,283,3231.84,0,white,20,12+some college,white,22,12+some college,married,7500-10000,never,never,never,165.1,74.84,177.8,52.16
+220,285,4025.63,2,white,33,12+trade,white,34,16,married,17500-20000,once did not now,up 5 to 9 yr,smoke but don't know,160.02,70.31,172.72,56.25
+221,273,4082.33,2,white,27,8-<12,black,25,12,married,#N/A,yes now,still,20-29,157.48,86.18,185.42,53.52
+222,258,2409.71,1,white,41,12+trade,white,36,12+trade,married,17500-20000,never,never,never,170.18,74.84,177.8,62.14
+223,274,2806.6,3,white,28,12+trade,white,27,12,married,17500-20000,yes now,still,5-9,167.64,92.99,180.34,53.52
+224,281,3175.14,0,black,23,12,black,35,8-<12,married,5000-7500,never,never,never,154.94,77.11,177.8,68.04
+225,283,2891.65,0,white,19,12,white,20,12,married,2500-5000,yes now,still,5-9,165.1,83.01,175.26,57.61
+226,273,3090.1,9,white,37,8-<12,white,38,12,married,2500-5000,yes now,still,20-29,165.1,86.18,177.8,62.6
+227,267,2891.65,0,white,25,16,white,32,16,married,7500-10000,yes now,still,5-9,152.4,81.65,190.5,42.18
+228,275,2806.6,2,black,23,12+some college,black,24,12+some college,married,5000-7500,yes now,still,1-4,154.94,79.38,172.72,56.7
+229,256,2211.26,0,asian,29,16,asian,27,16,married,17500-20000,never,never,never,165.1,68.04,180.34,55.79
+230,284,3628.74,0,white,19,12,white,22,8-<12,married,#N/A,yes now,still,20-29,167.64,95.25,182.88,50.35
+231,275,2834.95,0,white,25,12,asian,30,12,married,15000-17500,never,never,never,162.56,83.91,185.42,56.7
+232,252,2494.76,0,white,21,12+some college,white,24,12+some college,married,10000-12500,yes now,still,10-14,152.4,68.04,172.72,52.16
+233,291,3600.39,0,white,24,12+trade,white,25,12,married,17500-20000,yes now,still,20-29,167.64,80.74,182.88,61.23
+234,278,2778.25,4,black,27,12+some college,black,24,12+some college,married,2500-5000,yes now,still,10-14,160.02,90.72,193.04,49.9
+235,241,2721.55,1,white,23,12,white,25,12+some college,married,2500-5000,yes now,still,20-29,162.56,63.5,177.8,58.97
+236,273,3770.48,0,mex,33,12,mex,30,12,married,12500-15000,never,never,never,160.02,86.18,182.88,61.23
+237,288,3543.69,2,mix,22,8-<12,mix,23,8-<12,married,#N/A,yes now,still,5-9,160.02,81.65,180.34,58.06
+238,290,3260.19,0,black,19,12+some college,black,22,12+some college,married,under 2500,never,never,never,165.1,68.04,175.26,53.52
+239,293,3685.44,2,white,26,12,white,26,16,married,15000-17500,never,never,never,160.02,88.45,180.34,55.79
+240,277,3231.84,0,mix,31,16,white,32,16,married,15000-17500,never,never,never,162.56,70.31,177.8,56.7
+241,278,2976.7,1,black,21,12+some college,black,24,16,married,7500-10000,once did not now,up to 1 yr,5-9,162.56,65.77,175.26,54.43
+242,286,3742.13,2,black,26,12+some college,black,29,12+some college,married,10000-12500,yes now,still,1-4,170.18,73.94,172.72,55.34
+243,232,1956.12,2,black,31,12+some college,black,32,12+some college,married,10000-12500,yes now,still,20-29,149.86,64.41,162.56,46.72
+244,264,3231.84,2,white,26,16,white,29,16,married,2500-5000,yes now,still,5-9,160.02,86.18,182.88,49.9
+245,284,3657.09,0,white,20,12,white,24,12,married,5000-7500,yes now,still,1-4,167.64,83.01,185.42,58.97
+246,283,3231.84,0,white,15,8-<12,white,20,12+some college,married,2500-5000,yes now,still,20-29,162.56,76.2,182.88,53.07
+247,290,3260.19,6,white,31,16,white,32,16,married,17500-20000,never,never,never,157.48,68.04,170.18,43.09
+248,283,3628.74,2,black,27,12+some college,black,27,12+some college,married,2500-5000,never,never,never,170.18,86.18,180.34,57.15
+249,288,4365.82,3,white,25,12+trade,white,36,12,married,10000-12500,never,never,never,165.1,65.77,172.72,66.68
+250,247,3600.39,0,mex,21,12,mex,35,<8,married,10000-12500,never,never,never,160.02,68.04,167.64,63.5
+251,263,3713.78,5,black,29,8-<12,black,32,8-<12,married,2500-5000,yes now,still,5-9,162.56,81.65,182.88,81.65
+252,288,3657.09,2,asian,28,16,asian,29,16,married,10000-12500,never,never,never,149.86,73.94,167.64,46.27
+253,286,3231.84,0,white,22,12+some college,white,23,12+some college,married,#N/A,yes now,still,1-4,162.56,88.45,190.5,52.62
+254,280,3118.45,1,asian,29,12+trade,asian,33,12+trade,married,17500-20000,yes now,still,10-14,157.48,54.43,167.64,49.9
+255,287,3316.89,1,white,20,12,white,23,12,married,7500-10000,yes now,still,20-29,165.1,68.04,182.88,52.16
+256,271,3515.34,1,white,23,12+some college,white,25,16,married,17500-20000,never,never,never,167.64,97.52,187.96,65.77
+257,240,2920,1,white,26,12,white,25,12,married,17500-20000,once did not now,up to 4 yr,5-9,165.1,74.84,175.26,63.5
+258,290,3742.13,2,white,26,12,white,28,12,married,2500-5000,until pregnancy,during preg,30-39,167.64,92.99,182.88,56.7
+259,293,3231.84,0,white,20,12,mix,23,8-<12,married,under 2500,yes now,still,5-9,167.64,63.5,172.72,81.65
+260,282,3288.54,2,white,19,12,white,21,12+some college,married,5000-7500,never,never,never,162.56,81.65,170.18,54.43
+261,298,3486.99,4,white,25,12,white,27,8-<12,married,5000-7500,yes now,still,5-9,162.56,89.36,182.88,51.26
+262,289,3657.09,3,white,37,12,white,52,#N/A,married,10000-12500,never,never,never,160.02,81.65,187.96,59.87
+263,282,3798.83,1,white,24,12,white,31,16,married,15000-17500,never,never,never,157.48,65.77,172.72,49.9
+264,277,3486.99,0,white,20,12,white,21,12,married,10000-12500,never,never,never,165.1,74.84,185.42,72.57
+265,270,3430.29,0,white,20,12+some college,white,22,12+some college,married,#N/A,until pregnancy,during preg,20-29,157.48,79.38,177.8,46.72
+266,277,3260.19,0,white,25,12,white,35,8-<12,married,15000-17500,never,never,never,167.64,73.48,182.88,58.06
+267,289,2863.3,5,white,27,12+some college,mex,#NULL!,12,married,5000-7500,never,never,never,149.86,77.11,180.34,43.54
+268,275,3090.1,3,white,33,12+some college,white,37,8-<12,married,5000-7500,once did not now,up 5 to 9 yr,5-9,167.64,77.11,180.34,54.43
+269,276,3657.09,3,black,26,12,black,27,16,married,2500-5000,never,never,never,167.64,81.65,177.8,65.77
+270,290,3515.34,1,white,26,12+some college,white,31,12+some college,married,7500-10000,once did not now,up 5 to 9 yr,1-4,149.86,86.18,182.88,63.5
+271,287,3657.09,0,white,29,12,white,39,12+some college,married,17500-20000,never,never,never,167.64,87.09,177.8,61.23
+272,264,2976.7,5,black,30,12+some college,black,45,12,married,15000-17500,yes now,still,5-9,165.1,70.76,175.26,47.63
+273,291,2920,0,asian,26,16,asian,29,16,married,5000-7500,never,never,never,160.02,61.23,170.18,46.27
+274,265,2976.7,6,white,43,16,white,51,16,married,20000-22500,once did not now,up to 1 yr,1-4,165.1,77.11,180.34,56.25
+275,297,4337.47,1,white,27,12,white,33,12,married,2500-5000,never,never,never,167.64,74.84,170.18,65.77
+276,280,3770.48,0,asian,25,16,asian,28,16,married,under 2500,never,never,never,154.94,79.38,180.34,58.97
+277,271,3628.74,2,white,41,12,white,35,8-<12,married,17500-20000,yes now,still,5-9,165.1,85.28,182.88,61.23
+278,265,3316.89,2,white,40,12+some college,white,48,12,married,15000-17500,yes now,still,5-9,172.72,86.18,187.96,60.78
+279,284,3997.28,0,white,17,8-<12,white,19,8-<12,married,2500-5000,until pregnancy,during preg,20-29,162.56,99.79,185.42,47.63
+280,255,3288.54,3,black,24,12,black,33,16,married,#N/A,never,never,never,165.1,81.65,170.18,59.87
+281,283,3345.24,1,white,24,12,white,27,12+some college,married,5000-7500,never,never,never,165.1,83.91,180.34,68.04
+282,286,2778.25,2,white,31,12,white,36,12+some college,married,5000-7500,yes now,still,20-29,157.48,77.11,172.72,47.63
+283,278,3260.19,1,white,21,12,white,26,12,married,17500-20000,never,never,never,152.4,72.57,167.64,51.26
+284,281,2920,0,white,22,12,white,23,8-<12,married,12500-15000,yes now,still,10-14,149.86,66.22,175.26,44.45
+285,270,3316.89,2,white,30,8-<12,white,40,8-<12,married,10000-12500,yes now,still,20-29,170.18,67.13,177.8,58.97
+286,265,3288.54,11,black,36,8-<12,black,37,8-<12,married,5000-7500,never,never,never,160.02,70.31,175.26,54.43
+287,250,2806.6,0,white,26,16,white,34,16,married,7500-10000,never,never,never,167.64,74.39,170.18,52.16
+288,263,2749.9,0,black,25,12+some college,black,26,12+some college,married,12500-15000,never,never,never,160.02,86.18,182.88,48.53
+289,284,4025.63,5,white,37,8-<12,white,41,12+trade,married,10000-12500,unknown,#N/A,#N/A,172.72,78.93,175.26,70.31
+290,275,3316.89,3,black,22,8-<12,black,26,12+some college,married,5000-7500,yes now,still,1-4,157.48,83.91,175.26,52.16
+291,285,4167.38,2,white,24,16,white,26,12+some college,married,2500-5000,until pregnancy,during preg,1-4,162.56,74.39,180.34,62.14
+292,281,2976.7,0,white,23,16,white,25,12+some college,married,5000-7500,until pregnancy,during preg,1-4,162.56,77.11,177.8,52.16
+293,278,3827.18,0,white,27,12,white,25,12,married,17500-20000,yes now,still,20-29,172.72,83.91,190.5,63.05
+294,280,3486.99,2,white,23,8-<12,white,28,8-<12,married,5000-7500,yes now,still,20-29,165.1,72.57,172.72,63.5
+295,274,2976.7,0,asian,26,16,asian,28,16,married,17500-20000,never,never,never,154.94,58.97,182.88,45.36
+296,271,4365.82,6,white,36,12,white,38,16,married,20000-22500,yes now,still,5-9,175.26,91.63,185.42,72.57
+297,285,3373.59,0,black,26,12+some college,black,47,#N/A,married,unknown,never,never,never,157.48,83.91,172.72,48.99
+298,292,2920,0,white,28,16,white,31,12+some college,married,15000-17500,never,never,never,157.48,66.68,170.18,59.87
+299,289,3401.94,2,black,23,12,black,25,12+some college,married,2500-5000,never,never,never,175.26,90.72,177.8,74.84
+300,278,4110.68,3,white,24,12,white,24,8-<12,married,5000-7500,until pregnancy,during preg,5-9,157.48,61.23,175.26,49.44
+301,268,3486.99,0,mex,18,8-<12,mex,23,12,married,2500-5000,yes now,still,1-4,157.48,74.84,162.56,49.9
+302,248,2579.8,9,black,33,12+some college,black,42,8-<12,married,7500-10000,until pregnancy,during preg,20-29,160.02,77.11,175.26,91.63
+303,268,3061.75,2,white,22,12,white,23,12,married,2500-5000,yes now,still,10-14,147.32,70.76,172.72,50.8
+304,273,3628.74,4,white,34,16,white,34,16,married,17500-20000,never,never,never,154.94,99.79,193.04,56.7
+305,292,3600.39,0,white,21,12+some college,white,22,12+some college,married,7500-10000,yes now,still,20-29,172.72,70.76,182.88,58.97
+306,256,3033.4,1,white,28,8-<12,white,33,12,married,2500-5000,yes now,still,1-4,149.86,67.13,182.88,40.82
+307,279,3005.05,0,white,21,12,white,24,16,married,#N/A,yes now,still,5-9,157.48,83.91,182.88,53.52
+308,285,4309.12,2,white,24,12,white,29,8-<12,married,unknown,yes now,still,1-4,154.94,81.65,172.72,54.43
+309,275,4252.43,4,black,29,8-<12,black,33,12,married,10000-12500,until pregnancy,during preg,1-4,165.1,97.52,190.5,65.77
+310,279,3515.34,5,white,35,8-<12,white,44,8-<12,married,10000-12500,never,never,never,167.64,74.84,182.88,58.51
+311,284,3486.99,0,white,18,8-<12,white,18,8-<12,married,2500-5000,yes now,still,20-29,162.56,77.11,180.34,50.8
+312,291,3458.64,5,black,40,12+some college,mix,41,8-<12,married,17500-20000,never,never,never,162.56,79.38,180.34,70.31
+313,250,3175.14,1,black,34,16,black,35,12,married,17500-20000,until pregnancy,during preg,1-4,170.18,82.55,180.34,56.25
+314,274,3657.09,1,white,19,8-<12,white,22,8-<12,married,17500-20000,yes now,still,5-9,165.1,66.22,165.1,45.81
+315,292,3543.69,1,white,27,12+some college,white,31,16,married,7500-10000,yes now,still,15-19,165.1,74.84,177.8,53.07
+316,282,3600.39,3,white,28,12,white,33,12,married,7500-10000,never,never,never,170.18,81.65,180.34,60.78
+317,297,2920,3,white,31,12,white,37,16,married,17500-20000,never,never,never,162.56,87.54,182.88,56.7
+318,274,3203.49,3,white,23,12,white,24,12,married,2500-5000,yes now,still,10-14,160.02,81.65,193.04,48.99
+319,275,3288.54,0,white,20,12,white,24,12,married,5000-7500,never,never,never,172.72,81.65,177.8,65.77
+320,256,3316.89,3,white,37,12,white,38,16,married,#N/A,yes now,still,20-29,165.1,81.65,185.42,59.87
+321,275,2834.95,3,black,26,12,black,29,12,married,2500-5000,until pregnancy,during preg,10-14,152.4,68.04,175.26,52.16
+322,274,3713.78,4,black,28,12,black,28,12,married,#N/A,yes now,still,5-9,162.56,86.18,180.34,53.52
+323,284,3345.24,4,black,28,12,black,30,12+some college,married,15000-17500,yes now,still,20-29,177.8,74.84,177.8,65.77
+324,292,2579.8,0,white,19,12,white,29,16,married,5000-7500,never,never,never,154.94,72.57,177.8,56.7
+325,255,3175.14,9,black,39,<8,black,47,<8,married,5000-7500,once did not now,10+ yr,5-9,152.4,79.38,167.64,52.16
+326,268,3090.1,0,white,29,12,white,36,12+some college,married,#N/A,yes now,still,30-39,165.1,67.13,177.8,54.43
+327,267,2806.6,1,mex,22,12,mex,24,12,married,2500-5000,never,never,never,157.48,72.12,170.18,42.64
+328,291,3855.53,0,white,25,12+some college,white,33,12+some college,married,10000-12500,never,never,never,154.94,71.67,172.72,47.63
+329,298,3685.44,1,white,20,12,white,20,8-<12,married,5000-7500,until pregnancy,during preg,20-29,157.48,82.55,185.42,54.43
+330,296,3798.83,5,white,35,16,white,37,16,married,10000-12500,yes now,still,1-4,152.4,68.04,170.18,53.07
+331,271,3628.74,2,white,29,12+some college,white,30,16,married,7500-10000,yes now,still,30-39,165.1,65.77,182.88,57.15
+332,286,4252.43,3,white,38,12+some college,white,42,16,married,unknown,never,never,never,170.18,67.13,154.94,79.38
+333,270,3288.54,1,black,25,16,black,26,12+some college,married,7500-10000,never,never,never,172.72,88.45,193.04,76.66
+334,271,3118.45,0,white,26,12+some college,white,30,12,married,17500-20000,until pregnancy,during preg,1-4,167.64,92.99,182.88,61.23
+335,283,3090.1,4,black,34,12,black,38,<8,married,2500-5000,never,never,never,162.56,70.31,182.88,54.43
+336,273,3430.29,0,white,34,12,white,38,12,married,20000-22500,never,never,never,154.94,73.48,167.64,56.7
+337,294,3401.94,0,white,23,12+some college,white,26,12+some college,married,7500-10000,yes now,still,10-14,167.64,77.11,180.34,58.06
+338,286,2693.2,1,white,26,12,white,25,12,married,17500-20000,yes now,still,20-29,167.64,77.11,172.72,53.52
+339,299,3883.88,2,white,24,12,white,26,16,married,#N/A,until pregnancy,during preg,5-9,157.48,74.84,172.72,52.16
+340,270,3515.34,1,white,20,12,white,23,8-<12,married,#N/A,never,never,never,162.56,72.57,175.26,55.34
+341,281,3855.53,0,white,27,12+some college,white,33,12+some college,married,#N/A,never,never,never,162.56,90.72,182.88,57.61
+342,298,3316.89,0,black,22,12,black,30,12,married,#N/A,until pregnancy,during preg,1-4,162.56,90.72,175.26,72.57
+343,269,3430.29,1,white,23,12,white,28,12,married,7500-10000,never,never,never,157.48,86.18,185.42,58.97
+344,280,3288.54,5,black,34,12+some college,black,35,<8,married,5000-7500,never,never,never,172.72,65.77,175.26,89.81
+345,279,2381.36,4,black,34,12,black,35,8-<12,married,2500-5000,never,never,never,160.02,97.52,180.34,86.18
+346,279,3855.53,3,white,30,12+some college,white,35,12+trade,married,10000-12500,yes now,still,20-29,175.26,81.65,185.42,58.97
+347,270,2608.15,2,asian,34,16,asian,39,16,married,10000-12500,yes now,still,5-9,157.48,63.5,180.34,45.36
+348,298,3231.84,0,black,28,12+some college,black,30,12,married,7500-10000,never,never,never,170.18,80.74,185.42,51.71
+349,274,3657.09,3,white,33,12+some college,white,36,16,married,15000-17500,yes now,still,10-14,175.26,79.38,187.96,61.69
+350,283,3543.69,0,white,22,16,white,24,12+some college,married,under 2500,never,never,never,149.86,76.2,175.26,43.54
+351,290,3600.39,2,white,35,12+some college,white,35,12,married,10000-12500,never,never,never,167.64,88.45,182.88,55.34
+352,262,3203.49,1,white,24,8-<12,white,30,12+some college,married,2500-5000,never,never,never,152.4,86.18,#VALUE!,47.63
+353,285,4053.98,1,white,30,12,white,29,12,married,5000-7500,yes now,still,20-29,162.56,79.38,182.88,61.23
+354,279,4394.17,3,white,33,12,white,34,12,married,2500-5000,never,never,never,154.94,78.47,175.26,56.7
+355,290,3430.29,1,white,31,16,white,33,16,married,17500-20000,never,never,never,162.56,81.65,180.34,57.61
+356,282,3118.45,0,white,21,12,white,22,8-<12,married,7500-10000,yes now,still,1-4,167.64,79.38,190.5,56.7
+357,277,2466.41,4,white,31,12,white,33,16,married,7500-10000,yes now,still,1-4,157.48,68.04,177.8,54.43
+358,279,2579.8,0,asian,27,12+some college,asian,31,12,married,17500-20000,never,never,never,157.48,86.18,175.26,53.52
+359,286,4167.38,4,white,30,12+some college,white,33,12+some college,married,7500-10000,once did not now,up 5 to 9 yr,20-29,172.72,79.38,177.8,66.68
+360,292,3628.74,3,white,30,12,white,31,12+some college,married,12500-15000,once did not now,up to 1 yr,smoke but don't know,162.56,82.55,193.04,57.61
+361,285,3798.83,1,mix,35,16,mix,59,<8,married,10000-12500,never,never,never,157.48,62.6,162.56,60.78
+362,275,3118.45,2,white,25,8-<12,white,24,12,married,5000-7500,never,never,never,160.02,74.84,172.72,54.43
+363,288,3175.14,0,white,20,12,white,23,12,married,17500-20000,never,never,never,157.48,81.65,187.96,49.9
+364,286,4195.73,2,white,38,16,white,34,16,married,7500-10000,once did not now,up 5 to 9 yr,5-9,172.72,61.23,175.26,72.57
+365,269,3118.45,2,black,38,16,black,43,12,married,17500-20000,yes now,still,5-9,160.02,74.84,182.88,65.77
+366,272,3543.69,1,mix,30,12+some college,mix,51,12+some college,married,12500-15000,never,never,never,152.4,65.77,165.1,43.54
+367,252,3855.53,2,mex,27,12,mex,33,<8,married,12500-15000,never,never,never,160.02,63.5,175.26,58.97
+368,283,3600.39,0,white,29,16,white,34,16,married,12500-15000,once did not now,up to 2 yr,20-29,162.56,79.38,177.8,53.98
+369,278,3713.78,3,black,22,12+some college,black,23,12+trade,married,2500-5000,never,never,never,167.64,70.76,182.88,56.25
+370,286,3486.99,0,white,21,12,white,26,12,married,12500-15000,yes now,still,5-9,170.18,81.65,195.58,58.97
+371,282,3486.99,2,white,29,12,white,33,12,married,7500-10000,never,never,never,172.72,83.01,180.34,74.39
+372,288,3600.39,1,white,28,12,white,25,8-<12,married,5000-7500,never,never,never,165.1,77.11,190.5,70.31
+373,269,3316.89,0,white,21,12,white,27,12,married,10000-12500,yes now,still,10-14,162.56,64.41,180.34,67.59
+374,277,3543.69,2,white,29,12+some college,white,38,12+some college,married,5000-7500,yes now,still,10-14,167.64,72.57,180.34,63.05
+375,273,3940.58,2,white,29,16,white,28,16,married,17500-20000,never,never,never,172.72,88.45,187.96,58.97
+376,289,3515.34,3,black,29,12,black,32,16,married,2500-5000,never,never,never,160.02,83.91,175.26,49.9
+377,272,3033.4,3,white,30,12+some college,white,38,12+some college,married,17500-20000,yes now,still,10-14,162.56,86.18,180.34,63.5
+378,292,2778.25,0,white,20,12+some college,white,29,8-<12,married,#N/A,yes now,still,10-14,165.1,72.57,175.26,56.25
+379,276,4082.33,1,white,23,12,white,25,12+some college,married,12500-15000,yes now,still,20-29,170.18,81.65,185.42,58.51
+380,268,3855.53,2,white,30,16,white,32,16,married,12500-15000,yes now,still,20-29,160.02,61.23,180.34,59.87
+381,278,3430.29,1,white,28,12+some college,white,29,16,married,12500-15000,never,never,never,175.26,81.65,182.88,59.87
+382,282,4677.67,1,white,29,16,white,29,12,married,5000-7500,never,never,never,167.64,56.7,170.18,65.77
+383,279,3401.94,6,white,38,12,white,38,12+some college,married,17500-20000,never,never,never,162.56,74.84,182.88,56.25
+384,280,3543.69,3,white,30,12,white,32,12+some college,married,12500-15000,yes now,still,10-14,165.1,74.84,182.88,58.97
+385,285,3883.88,1,black,29,12,black,29,12,married,12500-15000,until pregnancy,during preg,1-4,165.1,77.11,170.18,49.9
+386,288,2834.95,0,white,28,8-<12,white,35,8-<12,married,12500-15000,yes now,still,15-19,154.94,57.61,162.56,48.99
+387,277,3997.28,3,white,38,12+some college,white,50,12,married,5000-7500,never,never,never,167.64,73.48,182.88,73.48
+388,270,3685.44,0,white,19,12+some college,white,24,12+some college,married,#N/A,never,never,never,167.64,83.01,182.88,58.97
+389,283,3685.44,3,black,32,12,black,38,12+some college,married,2500-5000,never,never,never,165.1,70.31,170.18,53.52
+390,238,2182.91,0,mix,23,12+some college,white,26,12+some college,married,17500-20000,yes now,still,20-29,160.02,72.57,180.34,46.72
+391,228,1757.67,1,black,24,12+some college,black,25,12+some college,married,10000-12500,until pregnancy,during preg,20-29,154.94,75.75,185.42,48.53
+392,275,3090.1,0,white,37,12,white,31,12,married,17500-20000,yes now,still,20-29,160.02,84.82,177.8,50.8
+393,284,3827.18,1,white,39,8-<12,white,43,8-<12,married,17500-20000,once did not now,up to 2 yr,1-4,170.18,77.11,177.8,63.96
+394,287,3203.49,4,white,36,16,white,40,12,married,12500-15000,once did not now,up 5 to 9 yr,5-9,160.02,65.77,177.8,53.52
+395,270,4053.98,0,white,27,16,white,32,16,married,17500-20000,once did not now,up to 2 yr,1-4,177.8,92.99,190.5,67.13
+396,282,3628.74,0,white,25,16,white,33,16,married,20000-22500,never,never,never,162.56,99.79,190.5,56.7
+397,262,2778.25,2,white,22,12+some college,white,22,12+some college,married,10000-12500,never,never,never,170.18,83.91,185.42,54.43
+398,284,4592.62,4,mex,27,8-<12,mex,29,12,married,5000-7500,never,never,never,162.56,94.35,170.18,57.15
+399,275,3146.79,0,white,18,8-<12,white,19,12,married,2500-5000,yes now,still,1-4,154.94,69.85,172.72,48.99
+400,280,3883.88,3,asian,34,16,asian,34,16,married,12500-15000,never,never,never,152.4,61.23,175.26,48.53
+401,271,4535.92,3,white,32,12+some college,white,34,16,married,17500-20000,never,never,never,170.18,77.11,182.88,97.52
+402,278,3572.04,4,white,26,8-<12,white,31,8-<12,married,2500-5000,yes now,still,20-29,162.56,69.4,180.34,68.04
+403,285,3146.79,2,white,29,16,white,30,16,married,17500-20000,never,never,never,165.1,72.57,180.34,58.97
+404,291,3090.1,3,white,39,12,white,41,12+some college,married,7500-10000,never,never,never,162.56,68.04,170.18,48.53
+405,291,3855.53,3,white,41,12+trade,white,43,12,married,10000-12500,never,never,never,167.64,67.13,167.64,86.64
+406,284,3515.34,0,white,17,8-<12,white,21,12,married,2500-5000,never,never,never,157.48,68.04,177.8,50.8
+407,282,3458.64,0,white,21,12+some college,white,25,12+some college,married,5000-7500,once did not now,quit and don't know,smoke but don't know,167.64,87.54,187.96,49.9
+408,285,3203.49,2,white,26,8-<12,white,35,12,married,7500-10000,once did not now,up to 4 yr,5-9,167.64,70.31,172.72,63.5
+409,273,3458.64,1,white,26,12+some college,white,27,12+some college,married,7500-10000,once did not now,up 5 to 9 yr,1-4,167.64,81.65,180.34,95.25
+410,285,3770.48,0,black,30,16,black,34,16,married,15000-17500,never,never,never,162.56,92.99,182.88,72.57
+411,286,4649.32,0,white,32,12,white,31,16,married,7500-10000,never,never,never,167.64,72.57,177.8,64.86
+412,297,3770.48,3,black,36,8-<12,black,38,12,married,12500-15000,never,never,never,154.94,65.77,172.72,56.7
+413,271,3430.29,0,white,34,16,white,27,16,married,#N/A,yes now,still,5-9,160.02,70.31,180.34,58.51
+414,272,2834.95,2,black,30,12+some college,black,31,12,married,17500-20000,yes now,still,5-9,162.56,95.25,175.26,68.04
+415,276,2438.06,0,white,23,12,white,24,12+some college,married,7500-10000,yes now,still,20-29,165.1,58.97,182.88,56.7
+416,282,3486.99,1,white,30,12+some college,white,29,16,married,15000-17500,once did not now,up to 1 yr,1-4,160.02,71.67,177.8,53.52
+417,284,3288.54,0,white,24,16,white,29,16,married,12500-15000,never,never,never,167.64,84.82,180.34,53.07
+418,262,3713.78,1,white,22,12+some college,white,26,8-<12,married,2500-5000,until pregnancy,during preg,5-9,170.18,88.45,187.96,61.23
+419,286,4280.77,0,white,22,12+some college,white,23,16,married,2500-5000,until pregnancy,during preg,1-4,167.64,85.28,185.42,58.97
+420,273,2494.76,1,white,20,8-<12,white,23,12,married,12500-15000,yes now,still,20-29,167.64,72.57,172.72,49.9
+421,284,3883.88,4,black,30,12+some college,black,31,12+some college,married,12500-15000,never,never,never,170.18,74.84,177.8,49.9
+422,289,3600.39,1,white,23,16,white,26,16,married,#N/A,until pregnancy,during preg,40-60,170.18,72.57,167.64,63.5
+423,278,2721.55,0,white,18,8-<12,white,22,8-<12,married,2500-5000,yes now,still,15-19,152.4,54.43,165.1,54.43
+424,281,3657.09,2,black,31,12,black,37,8-<12,married,7500-10000,never,never,never,170.18,79.38,182.88,70.31
+425,281,3146.79,0,white,27,16,white,31,16,married,unknown,never,never,never,162.56,72.57,180.34,50.8
+426,281,3260.19,4,white,28,12+some college,white,30,12,married,7500-10000,yes now,still,20-29,154.94,96.16,185.42,58.06
+427,271,2041.16,7,white,39,12+some college,mix,57,trade,married,10000-12500,never,never,never,154.94,63.5,167.64,61.69
+428,291,3288.54,6,black,26,8-<12,black,30,12+trade,married,under 2500,never,never,never,167.64,80.74,185.42,69.4
+429,266,2551.46,2,black,23,8-<12,black,24,8-<12,married,under 2500,yes now,still,5-9,154.94,66.68,170.18,44.91
+430,273,2806.6,0,white,27,16,white,28,16,married,20000-22500,never,never,never,149.86,76.2,167.64,52.16
+431,265,3090.1,0,white,24,12,white,25,12,married,15000-17500,yes now,still,20-29,160.02,83.46,182.88,48.53
+432,277,3118.45,0,white,19,12+some college,white,23,12,married,7500-10000,never,never,never,157.48,76.2,175.26,72.57
+433,278,3657.09,1,black,27,12+some college,black,39,8-<12,married,17500-20000,never,never,never,160.02,81.65,185.42,58.06
+434,284,4252.43,4,black,40,8-<12,black,40,12,married,17500-20000,never,never,never,170.18,78.47,177.8,58.97
+435,268,3260.19,0,white,31,12+some college,white,35,16,married,12500-15000,once did not now,up to 2 yr,1-4,162.56,83.91,182.88,56.7
+436,283,3061.75,1,asian,35,12+some college,asian,34,16,married,2500-5000,never,never,never,157.48,62.6,162.56,48.99
+437,275,3260.19,3,black,25,8-<12,black,33,12+some college,married,2500-5000,yes now,still,20-29,154.94,74.84,175.26,70.31
+438,238,2182.91,3,white,38,12,white,39,16,married,unknown,yes now,still,20-29,170.18,74.84,177.8,61.23
+439,270,2948.35,0,white,26,16,white,28,12+some college,married,7500-10000,never,never,never,157.48,81.65,177.8,52.16
+440,268,2664.85,4,white,30,8-<12,white,32,8-<12,married,5000-7500,yes now,still,5-9,157.48,79.38,170.18,47.63
+441,275,3175.14,0,black,21,12,mix,27,12,married,10000-12500,yes now,still,5-9,172.72,72.57,180.34,64.86
+442,252,2806.6,1,white,21,12,white,22,8-<12,married,12500-15000,until pregnancy,during preg,5-9,162.56,81.65,182.88,54.43
+443,264,3260.19,0,black,23,12+some college,black,27,12+some college,married,5000-7500,yes now,still,1-4,170.18,86.18,190.5,60.78
+444,284,3940.58,9,mex,37,12+trade,mex,37,8-<12,married,17500-20000,never,never,never,154.94,72.57,167.64,54.88
+445,270,3657.09,10,black,43,<8,black,46,<8,married,#N/A,never,never,never,170.18,81.65,160.02,72.57
+446,270,3373.59,0,white,20,12,white,21,12,married,15000-17500,once did not now,up to 3 yr,5-9,162.56,68.04,180.34,49.44
+447,292,3458.64,0,white,34,12,white,36,16,married,7500-10000,until pregnancy,during preg,1-4,165.1,68.04,167.64,60.33
+448,295,2976.7,0,white,20,12,white,23,12,married,#N/A,yes now,still,1-4,162.56,86.18,182.88,50.8
+449,276,3685.44,6,white,41,12+some college,white,48,12,married,12500-15000,never,never,never,172.72,86.18,187.96,58.97
+450,290,3770.48,1,white,21,12,white,22,12,married,2500-5000,never,never,never,162.56,73.94,172.72,65.77
+451,296,4167.38,0,white,19,12,white,23,8-<12,married,7500-10000,never,never,never,170.18,78.47,182.88,56.25
+452,286,3458.64,2,white,23,12,white,27,12+trade,married,7500-10000,yes now,still,10-14,162.56,68.04,172.72,54.43
+453,260,3827.18,4,white,43,12+trade,white,45,12,married,12500-15000,never,never,never,165.1,99.79,182.88,61.23
+454,284,3912.23,3,white,30,12+some college,white,34,16,married,7500-10000,yes now,still,10-14,167.64,72.57,180.34,60.33
+455,283,3401.94,2,white,28,12,white,29,12,married,under 2500,yes now,still,40-60,162.56,77.11,177.8,55.34
+456,273,3373.59,2,white,35,12,white,50,8-<12,married,5000-7500,yes now,still,10-14,165.1,72.57,180.34,56.7
+457,278,3345.24,0,black,19,12,black,37,<8,married,7500-10000,never,never,never,157.48,81.65,#VALUE!,57.15
+458,291,4195.73,0,white,21,12,white,21,12,married,12500-15000,never,never,never,160.02,81.65,193.04,52.16
+459,281,3968.93,0,white,22,12+some college,white,30,16,married,2500-5000,never,never,never,175.26,74.84,175.26,61.23
+460,287,3798.83,0,white,33,12+some college,white,37,16,married,unknown,never,never,never,170.18,76.2,180.34,59.42
+461,275,2891.65,2,mex,43,12,mex,47,12,married,7500-10000,never,never,never,162.56,65.77,170.18,72.57
+462,276,2920,0,white,19,12,white,22,12+some college,married,#N/A,yes now,still,20-29,160.02,90.72,180.34,67.59
+463,283,3486.99,2,white,21,12,white,23,12,married,7500-10000,never,never,never,165.1,83.91,175.26,49.9
+464,270,2976.7,0,white,27,16,white,26,16,married,15000-17500,yes now,still,1-4,165.1,81.65,#VALUE!,60.78
+465,289,3912.23,3,white,33,16,white,52,16,married,20000-22500,once did not now,up to 2 yr,1-4,165.1,83.01,180.34,70.31
+466,281,3628.74,3,mix,28,12+trade,mix,31,16,married,5000-7500,never,never,never,160.02,74.84,172.72,68.04
+467,285,3940.58,3,white,30,8-<12,white,32,8-<12,married,17500-20000,yes now,still,20-29,165.1,81.65,180.34,58.51
+468,288,2948.35,0,white,27,12,white,30,16,married,12500-15000,yes now,still,20-29,154.94,68.04,185.42,55.34
+469,296,4507.57,0,white,27,12+trade,white,36,16,married,17500-20000,once did not now,up to 2 yr,1-4,162.56,68.04,170.18,50.8
+470,276,3345.24,3,white,29,12,white,31,12+some college,married,unknown,yes now,still,20-29,157.48,77.11,172.72,58.97
+471,285,2806.6,2,white,25,12,white,30,12,married,12500-15000,yes now,still,10-14,175.26,65.77,175.26,58.06
+472,281,4082.33,1,white,20,12,white,23,8-<12,married,2500-5000,never,never,never,160.02,65.77,172.72,54.43
+473,265,3316.89,0,black,24,12+some college,black,22,12+some college,married,2500-5000,never,never,never,167.64,72.57,180.34,44.45
+474,293,3373.59,0,white,23,12+some college,white,28,16,married,2500-5000,once did not now,up to 4 yr,1-4,165.1,67.13,170.18,57.61
+475,283,3543.69,6,white,37,12+trade,white,40,8-<12,married,2500-5000,yes now,still,10-14,160.02,79.38,185.42,65.77
+476,259,3373.59,6,mix,37,8-<12,mix,51,8-<12,married,#N/A,never,never,never,157.48,79.38,167.64,58.97
+477,273,2863.3,5,mix,39,12,black,44,12,married,7500-10000,never,never,never,152.4,68.04,165.1,51.26
+478,277,2976.7,0,black,25,12,black,28,12,married,#N/A,never,never,never,162.56,79.38,170.18,70.76
+479,281,3118.45,1,black,27,12+trade,black,25,12+some college,married,15000-17500,never,never,never,152.4,68.04,175.26,49.9
+480,270,2834.95,0,black,21,12+some college,black,24,12+some college,married,10000-12500,yes now,still,20-29,165.1,72.12,182.88,59.87
+481,284,2778.25,1,white,29,16,white,37,16,married,17500-20000,never,never,never,172.72,73.94,180.34,63.5
+482,281,3345.24,0,black,36,8-<12,black,42,12+trade,married,10000-12500,yes now,still,10-14,167.64,92.99,198.12,63.5
+483,275,3401.94,2,white,32,16,white,31,16,married,2500-5000,yes now,still,20-29,160.02,77.11,177.8,52.16
+484,285,4053.98,2,black,27,12+some college,black,36,12,married,7500-10000,never,never,never,172.72,83.91,182.88,83.91
+485,270,3061.75,2,white,29,12,white,25,12,married,12500-15000,yes now,still,30-39,170.18,90.72,177.8,56.25
+486,284,3713.78,0,white,19,12,white,20,12,married,5000-7500,yes now,still,20-29,154.94,83.91,177.8,51.71
+487,277,3118.45,2,asian,36,16,asian,37,16,married,17500-20000,never,never,never,154.94,64.86,167.64,52.62
+488,255,3543.69,2,black,23,12+some college,black,21,12+trade,married,15000-17500,once did not now,up to 2 yr,5-9,160.02,85.28,177.8,60.33
+489,289,3231.84,3,white,36,16,white,37,16,married,unknown,never,never,never,152.4,68.04,182.88,52.16
+490,250,2920,5,white,40,8-<12,white,40,<8,married,5000-7500,never,never,never,149.86,74.84,154.94,63.5
+491,276,3231.84,1,black,26,12+some college,black,27,12,married,10000-12500,until pregnancy,during preg,1-4,157.48,90.72,180.34,57.61
+492,247,2126.21,9,white,36,8-<12,white,29,8-<12,married,7500-10000,yes now,still,20-29,162.56,70.31,177.8,54.43
+493,271,2664.85,4,white,36,8-<12,white,38,8-<12,married,10000-12500,yes now,still,5-9,154.94,81.65,182.88,58.97
+494,287,4252.43,6,white,36,12,white,36,12,married,7500-10000,never,never,never,157.48,78.47,190.5,61.23
+495,248,4082.33,1,white,30,12,white,31,12+some college,married,10000-12500,once did not now,up to 4 yr,5-9,177.8,86.18,190.5,65.77
+496,285,3430.29,2,white,34,16,white,36,16,married,17500-20000,never,never,never,162.56,63.5,180.34,49.9
+497,294,3657.09,0,white,21,12+some college,white,21,8-<12,married,15000-17500,never,never,never,165.1,74.84,185.42,59.87
+498,265,2749.9,2,white,30,12,white,30,12+some college,married,12500-15000,once did not now,up 5 to 9 yr,1-4,154.94,75.3,172.72,49.9
+499,292,4535.92,2,white,28,16,white,29,16,married,2500-5000,never,never,never,162.56,83.91,193.04,54.43
+500,237,1842.72,3,white,31,12+some college,white,32,16,married,10000-12500,once did not now,up to 3 yr,20-29,170.18,90.72,185.42,58.97
+501,293,3940.58,0,white,21,12+some college,white,32,16,married,17500-20000,never,never,never,175.26,86.18,182.88,58.97
+502,288,3486.99,1,white,27,16,white,34,16,married,10000-12500,never,never,never,160.02,78.47,182.88,56.7
+503,283,3090.1,1,white,23,12,white,24,16,married,7500-10000,yes now,still,10-14,165.1,80.74,182.88,50.8
+504,296,3458.64,0,white,24,16,white,25,12+some college,married,10000-12500,never,never,never,165.1,76.2,177.8,59.87
+505,279,3061.75,0,white,19,12,white,29,12,married,15000-17500,never,never,never,162.56,63.5,175.26,52.16
+506,287,3401.94,2,black,23,12,black,29,8-<12,married,12500-15000,yes now,still,20-29,170.18,89.81,190.5,52.62
+507,269,3713.78,3,white,36,12,black,29,8-<12,married,7500-10000,never,never,never,172.72,65.77,172.72,65.77
+508,283,3855.53,0,white,24,16,white,23,12+some college,married,5000-7500,never,never,never,160.02,74.84,180.34,53.98
+509,290,3543.69,4,white,32,12,white,36,8-<12,married,7500-10000,never,never,never,160.02,66.22,167.64,61.23
+510,285,2721.55,0,white,20,12,white,29,8-<12,married,#N/A,yes now,still,1-4,167.64,74.84,172.72,53.07
+511,288,2891.65,0,white,18,12,white,20,12,married,under 2500,until pregnancy,during preg,10-14,165.1,55.79,162.56,53.07
+512,277,3175.14,0,white,22,12+some college,white,23,12+some college,married,2500-5000,never,never,never,170.18,95.25,182.88,54.43
+513,272,3827.18,2,black,30,12+some college,black,39,12,married,#N/A,never,never,never,165.1,86.18,187.96,58.97
+514,266,2579.8,3,black,23,8-<12,black,26,12,married,2500-5000,yes now,still,1-4,152.4,68.04,162.56,54.43
+515,276,3657.09,1,white,31,16,white,33,16,married,10000-12500,once did not now,up to 4 yr,20-29,160.02,77.11,185.42,56.7
+516,290,4394.17,1,white,26,12,white,27,12,married,5000-7500,yes now,still,10-14,167.64,83.01,185.42,58.51
+517,274,3090.1,2,white,33,12,white,38,12+some college,married,12500-15000,yes now,still,20-29,175.26,85.28,177.8,65.32
+518,273,3543.69,4,black,30,12,black,34,12,married,12500-15000,never,never,never,162.56,93.44,172.72,65.77
+519,284,2664.85,5,white,24,12,black,24,8-<12,married,17500-20000,yes now,still,10-14,160.02,83.91,185.42,47.17
+520,281,4195.73,2,white,27,12,white,27,12+trade,married,#N/A,yes now,still,20-29,160.02,84.82,185.42,49.9
+521,277,2069.51,1,black,29,12,black,30,12,married,7500-10000,never,never,never,165.1,86.18,185.42,65.77
+522,232,1842.72,1,black,24,12+trade,black,28,12+some college,married,7500-10000,yes now,still,5-9,167.64,72.57,175.26,56.7
+523,279,3345.24,0,white,21,12,white,22,12,married,#N/A,never,never,never,162.56,75.3,170.18,48.99
+524,283,2891.65,2,white,39,12,white,37,12,married,17500-20000,never,never,never,152.4,67.59,170.18,53.98
+525,280,3401.94,3,black,24,12,black,28,12+some college,married,#N/A,once did not now,up to 1 yr,1-4,154.94,70.31,177.8,53.52
+526,270,3061.75,0,black,21,12+some college,black,23,12,married,2500-5000,yes now,still,5-9,165.1,90.72,185.42,58.97
+527,268,2920,4,white,32,12,white,33,12,married,2500-5000,yes now,still,20-29,157.48,68.04,185.42,44
+528,273,3572.04,0,white,25,16,white,25,16,married,12500-15000,never,never,never,172.72,74.84,180.34,61.23
+529,293,3940.58,1,white,34,12,white,37,12,married,12500-15000,until pregnancy,during preg,5-9,167.64,77.11,177.8,59.42
+530,290,3515.34,1,white,26,12+some college,white,25,12+some college,married,12500-15000,never,never,never,165.1,72.57,172.72,74.84
+531,282,3430.29,3,white,30,8-<12,white,37,8-<12,married,7500-10000,never,never,never,165.1,68.95,175.26,55.34
+532,299,3572.04,0,white,21,12,white,27,12+some college,married,17500-20000,never,never,never,152.4,72.57,170.18,51.71
+533,286,3373.59,0,white,33,16,white,#NULL!,#N/A,married,5000-7500,until pregnancy,during preg,1-4,170.18,77.11,187.96,62.14
+534,272,3345.24,1,white,23,12,white,23,12,married,17500-20000,never,never,never,162.56,79.38,190.5,51.26
+535,295,3600.39,6,black,36,12+some college,black,34,12+some college,married,#N/A,never,never,never,165.1,77.11,180.34,65.77
+536,290,3316.89,0,white,22,12,white,26,12,married,17500-20000,never,never,never,170.18,99.79,180.34,49.9
+537,277,3883.88,4,white,41,16,white,37,16,married,17500-20000,never,never,never,165.1,76.2,180.34,57.15
+538,292,3770.48,4,black,29,12+some college,black,31,12+some college,married,15000-17500,never,never,never,165.1,74.84,172.72,61.23
+539,273,3033.4,0,white,26,12+some college,white,27,16,married,10000-12500,never,never,never,165.1,72.57,180.34,61.23
+540,276,3260.19,0,white,20,12+some college,white,21,12+some college,married,#N/A,yes now,still,5-9,157.48,63.5,172.72,47.63
+541,292,2579.8,0,black,26,12,black,30,12,married,17500-20000,yes now,still,30-39,154.94,83.91,182.88,51.26
+542,287,3175.14,1,white,27,16,white,31,16,married,10000-12500,yes now,still,30-39,162.56,70.31,182.88,49.9
+543,289,3543.69,0,white,31,16,white,29,8-<12,married,12500-15000,never,never,never,154.94,83.91,#VALUE!,54.43
+544,291,4450.87,6,black,33,12,black,35,12,married,2500-5000,until pregnancy,during preg,5-9,165.1,77.11,180.34,54.88
+545,256,3061.75,0,white,26,16,white,24,12+some college,married,7500-10000,never,never,never,170.18,81.65,187.96,58.97
+546,279,3685.44,5,black,31,12,black,31,12+some college,married,12500-15000,never,never,never,157.48,86.18,185.42,55.34
+547,289,3827.18,4,black,25,12,black,25,12,married,#N/A,never,never,never,162.56,81.65,187.96,57.61
+548,277,3486.99,1,mix,24,12+some college,mix,23,12+some college,married,12500-15000,never,never,never,167.64,83.91,175.26,55.34
+549,281,2834.95,2,asian,24,12,asian,32,12,married,17500-20000,never,never,never,154.94,49.9,154.94,52.16
+550,277,3515.34,0,mex,23,12,white,22,8-<12,married,12500-15000,never,never,never,162.56,85.28,182.88,47.17
+551,278,3657.09,3,white,26,12+some college,white,30,16,married,12500-15000,never,never,never,170.18,86.18,180.34,66.22
+552,275,3373.59,1,white,27,12,white,29,8-<12,married,7500-10000,yes now,still,5-9,149.86,79.38,177.8,51.26
+553,272,3572.04,0,white,35,12,white,33,12,married,unknown,yes now,still,20-29,154.94,60.78,165.1,54.43
+554,267,3628.74,4,black,37,12+trade,black,42,12+some college,married,17500-20000,never,never,never,154.94,76.66,175.26,64.41
+555,282,3288.54,0,white,19,8-<12,asian,19,8-<12,married,under 2500,until pregnancy,during preg,20-29,162.56,63.5,182.88,56.25
+556,285,2834.95,1,mix,18,8-<12,black,22,12,married,#N/A,yes now,still,5-9,172.72,97.52,187.96,57.61
+557,285,2721.55,2,white,37,16,white,31,16,married,10000-12500,yes now,still,40-60,167.64,68.04,172.72,61.23
+558,279,3713.78,0,white,20,12+some college,white,24,12+some college,married,#N/A,yes now,still,20-29,172.72,63.5,182.88,55.34
+559,292,3118.45,2,white,35,12+some college,white,37,16,married,12500-15000,once did not now,up to 2 yr,20-29,157.48,63.5,165.1,57.61
+560,278,3061.75,3,white,28,12,white,31,12+some college,married,17500-20000,yes now,still,20-29,160.02,71.67,187.96,56.7
+561,275,3657.09,1,white,24,12,white,29,12+some college,married,17500-20000,never,never,never,165.1,74.84,177.8,61.23
+562,285,3997.28,1,white,23,12+some college,white,22,12+some college,married,#N/A,never,never,never,170.18,94.35,177.8,68.04
+563,276,3118.45,5,black,31,12+some college,black,34,12,married,5000-7500,never,never,never,177.8,83.91,177.8,70.31
+564,273,3345.24,2,black,21,8-<12,black,26,12+some college,married,10000-12500,until pregnancy,during preg,5-9,160.02,83.91,175.26,54.43
+565,267,3146.79,0,mix,24,12+some college,white,26,12+some college,married,12500-15000,until pregnancy,during preg,5-9,152.4,74.84,175.26,52.16
+566,297,4535.92,1,mix,20,8-<12,mix,31,12+some college,married,7500-10000,once did not now,up to 2 yr,10-14,172.72,74.84,175.26,61.69
+567,280,3401.94,1,white,30,12,white,33,12,married,10000-12500,never,never,never,152.4,61.69,167.64,52.16
+568,282,3203.49,2,white,30,12+trade,white,30,12+some college,married,5000-7500,yes now,still,30-39,162.56,97.52,180.34,53.52
+569,277,3628.74,2,white,39,12,white,41,12,married,7500-10000,never,never,never,154.94,72.57,172.72,54.43
+570,282,3628.74,0,mix,19,12+some college,white,21,12+some college,married,10000-12500,never,never,never,167.64,68.04,170.18,53.52
+571,271,3572.04,0,black,21,12+some college,black,21,12+some college,married,2500-5000,until pregnancy,during preg,1-4,152.4,63.5,165.1,47.63
+572,283,3600.39,5,black,42,8-<12,black,48,<8,married,5000-7500,yes now,still,5-9,157.48,90.26,175.26,69.85
+573,287,3798.83,5,white,40,12,white,41,16,married,15000-17500,never,never,never,160.02,79.38,172.72,53.52
+574,274,3968.93,5,mix,41,12+some college,mix,43,12+some college,married,20000-22500,never,never,never,160.02,88.45,195.58,55.34
+575,285,2891.65,2,white,29,12,white,34,16,married,17500-20000,yes now,still,10-14,160.02,68.04,167.64,53.07
+576,252,2834.95,1,black,24,12,black,25,12,married,2500-5000,never,never,never,154.94,68.04,175.26,68.04
+577,279,2778.25,0,white,18,8-<12,white,19,12,married,#N/A,yes now,still,5-9,165.1,77.11,190.5,52.16
+578,246,3685.44,1,white,19,12,white,21,8-<12,married,2500-5000,never,never,never,157.48,92.99,180.34,53.52
+579,285,3458.64,1,white,31,12+some college,white,27,16,married,2500-5000,yes now,still,30-39,157.48,68.04,172.72,46.27
+580,276,3883.88,0,mex,25,16,mex,27,16,married,7500-10000,never,never,never,162.56,68.04,177.8,57.61
+581,285,3231.84,0,white,20,12,white,25,12,married,12500-15000,never,never,never,154.94,61.23,180.34,47.17
+582,236,1786.02,0,white,24,16,white,26,16,married,17500-20000,never,never,never,147.32,58.97,167.64,44.91
+583,268,2806.6,2,black,32,12+some college,black,33,12,married,17500-20000,yes now,still,5-9,160.02,86.18,185.42,56.25
+584,283,3316.89,1,white,22,12,mix,23,8-<12,married,2500-5000,yes now,still,20-29,165.1,81.65,180.34,64.41
+585,279,3005.05,3,white,29,12,white,32,12+some college,married,5000-7500,yes now,still,1-4,160.02,77.11,175.26,56.7
+586,246,2806.6,2,asian,35,12+trade,asian,40,12,married,#N/A,never,never,never,157.48,63.5,167.64,48.08
+587,266,2041.16,0,white,25,8-<12,white,29,12,married,10000-12500,yes now,still,20-29,167.64,77.11,182.88,90.72
+588,285,2749.9,2,asian,35,12+some college,asian,33,12+some college,married,7500-10000,yes now,still,30-39,154.94,61.23,165.1,50.8
+589,264,3005.05,5,white,41,12,white,42,12+some college,married,17500-20000,until pregnancy,during preg,1-4,162.56,63.5,175.26,51.71
+590,225,2579.8,1,white,18,8-<12,white,24,12+some college,married,2500-5000,yes now,still,1-4,172.72,63.5,172.72,53.07
+591,269,3316.89,0,asian,28,16,white,30,16,married,under 2500,never,never,never,154.94,88.45,190.5,44.91
+592,284,3316.89,1,white,25,16,mix,34,12,married,5000-7500,yes now,still,20-29,167.64,79.38,180.34,80.29
+593,291,3175.14,3,black,23,8-<12,black,24,8-<12,married,2500-5000,never,never,never,167.64,74.84,170.18,65.77
+594,270,3175.14,1,asian,29,16,asian,40,16,married,5000-7500,never,never,never,154.94,65.77,170.18,56.25
+595,290,3685.44,1,white,19,12,white,21,12,married,15000-17500,yes now,still,1-4,165.1,74.84,175.26,55.79
+596,265,3231.84,1,white,23,12,white,25,12,married,12500-15000,yes now,still,5-9,170.18,77.11,180.34,58.97
+597,283,3005.05,2,black,24,12+some college,mix,31,12+some college,married,2500-5000,until pregnancy,during preg,20-29,160.02,63.5,172.72,53.98
+598,260,2381.36,0,white,20,12,white,20,8-<12,married,5000-7500,yes now,still,5-9,162.56,74.84,185.42,47.17
+599,268,3175.14,0,white,25,16,white,30,16,married,17500-20000,until pregnancy,during preg,20-29,149.86,77.11,167.64,46.72
+600,267,2948.35,7,black,30,12+trade,black,33,8-<12,married,#N/A,never,never,never,160.02,77.11,180.34,81.65
+601,294,3685.44,4,white,32,12,white,36,12,married,10000-12500,yes now,still,1-4,160.02,72.57,180.34,49.9
+602,254,2012.81,2,black,19,8-<12,black,24,8-<12,married,#N/A,yes now,still,1-4,154.94,65.77,172.72,65.77
+603,270,2324.66,2,black,21,8-<12,black,29,12+some college,married,2500-5000,yes now,still,5-9,165.1,79.38,180.34,68.04
+604,280,3373.59,0,mex,21,12+trade,white,22,8-<12,married,12500-15000,never,never,never,162.56,54.43,165.1,58.06
+605,289,3515.34,0,white,21,12+trade,white,22,12+some college,married,7500-10000,yes now,still,20-29,170.18,73.94,182.88,65.77
+606,292,3912.23,1,white,25,12+trade,white,26,16,married,2500-5000,yes now,still,1-4,165.1,77.11,175.26,58.97
+607,276,2494.76,5,black,25,8-<12,black,35,8-<12,married,2500-5000,yes now,still,30-39,160.02,72.57,165.1,46.72
+608,241,3628.74,0,black,17,8-<12,black,20,12,married,5000-7500,never,never,never,162.56,62.6,172.72,57.15
+609,274,2834.95,2,mix,24,12+some college,mex,26,12+some college,married,17500-20000,once did not now,up to 1 yr,20-29,160.02,70.31,182.88,51.26
+610,271,3231.84,5,black,32,16,black,34,16,married,20000-22500,never,never,never,154.94,72.57,180.34,58.97
+611,269,2749.9,1,white,20,12,white,21,8-<12,married,7500-10000,yes now,still,10-14,165.1,75.75,187.96,62.14
+612,298,3572.04,1,mex,24,<8,white,38,8-<12,married,#N/A,never,never,never,154.94,88.45,180.34,50.8
+613,275,3458.64,0,white,20,12+trade,white,22,8-<12,married,#N/A,once did not now,up to 1 yr,20-29,165.1,77.11,182.88,57.61
+614,274,3288.54,1,white,21,12,white,23,12,married,5000-7500,yes now,still,10-14,157.48,62.14,180.34,49.9
+615,260,2381.36,0,white,37,16,white,41,16,married,unknown,once did not now,10+ yr,20-29,167.64,86.18,187.96,63.5
+616,291,3940.58,1,black,24,12,black,27,12,married,5000-7500,never,never,never,165.1,86.18,185.42,72.57
+617,273,2920,6,black,36,8-<12,black,40,<8,married,5000-7500,yes now,still,5-9,165.1,97.52,190.5,71.67
+618,299,3175.14,1,white,24,8-<12,white,31,8-<12,married,12500-15000,yes now,still,20-29,170.18,78.02,187.96,65.77
+619,276,2721.55,2,white,33,16,asian,36,16,married,7500-10000,yes now,still,20-29,162.56,65.77,162.56,57.61
+620,281,2891.65,0,white,19,8-<12,white,22,8-<12,married,#N/A,yes now,still,20-29,170.18,79.83,180.34,61.23
+621,255,2749.9,0,black,22,12,black,25,12+some college,married,5000-7500,yes now,still,5-9,160.02,83.01,190.5,48.53
+622,297,3685.44,4,black,32,12,black,34,8-<12,married,20000-22500,never,never,never,147.32,70.31,175.26,58.97
+623,260,2749.9,0,white,25,16,white,32,16,married,12500-15000,yes now,still,20-29,160.02,83.91,180.34,52.16
+624,273,3288.54,4,white,31,16,white,31,16,married,2500-5000,never,never,never,154.94,70.31,170.18,54.43
+625,266,3231.84,1,asian,29,12,asian,36,12,married,17500-20000,never,never,never,162.56,75.75,175.26,51.26
+626,247,2466.41,0,black,18,8-<12,black,24,12+some college,married,#N/A,yes now,still,5-9,167.64,63.5,170.18,56.7
+627,281,3997.28,6,black,29,12,black,37,12,married,5000-7500,yes now,still,1-4,137.16,88.45,175.26,70.76
+628,283,4082.33,0,white,25,12,white,27,8-<12,married,15000-17500,once did not now,up to 2 yr,20-29,167.64,74.84,180.34,63.5
+629,273,3288.54,5,white,33,12+some college,white,34,16,married,15000-17500,yes now,still,20-29,167.64,83.91,180.34,58.97
+630,265,2126.21,1,white,21,8-<12,white,29,8-<12,married,5000-7500,yes now,still,20-29,165.1,68.04,170.18,46.72
+631,271,2806.6,4,black,39,8-<12,black,39,<8,married,#N/A,once did not now,up to 3 yr,20-29,175.26,83.91,175.26,68.49
+632,293,3345.24,1,white,21,12,white,24,12,married,10000-12500,never,never,never,160.02,77.11,172.72,46.72
+633,266,2749.9,4,black,24,8-<12,black,26,12,married,under 2500,never,never,never,157.48,58.97,162.56,49.44
+634,285,2296.31,2,black,19,8-<12,black,25,12,married,#N/A,yes now,still,10-14,160.02,72.57,170.18,68.04
+635,284,3827.18,0,white,19,12,white,24,12,married,5000-7500,never,never,never,152.4,68.04,185.42,43.09
+636,290,3231.84,0,white,21,12+some college,white,22,12,married,2500-5000,yes now,still,20-29,165.1,68.04,185.42,54.43
+637,288,3515.34,0,white,21,12+some college,white,22,16,married,#N/A,yes now,still,5-9,162.56,63.5,177.8,52.62
+638,262,3260.19,0,white,23,12,white,24,12+some college,married,#N/A,yes now,still,40-60,162.56,91.17,185.42,61.69
+639,244,3090.1,0,white,21,12+trade,white,22,12,married,7500-10000,yes now,still,20-29,160.02,63.5,167.64,46.27
+640,278,2920,2,white,30,8-<12,white,24,8-<12,married,2500-5000,yes now,still,20-29,152.4,82.55,180.34,39.46
+641,276,3345.24,1,mex,34,12+some college,white,37,16,married,7500-10000,never,never,never,162.56,77.11,#VALUE!,52.62
+642,290,3600.39,2,white,27,12+some college,white,42,16,married,17500-20000,once did not now,10+ yr,1-4,165.1,63.5,167.64,54.88
+643,270,3742.13,3,black,27,12,black,35,8-<12,married,7500-10000,once did not now,up to 1 yr,1-4,165.1,90.72,175.26,57.15
+644,275,3203.49,0,white,27,16,white,32,12+some college,married,10000-12500,never,never,never,152.4,86.18,182.88,45.36
+645,265,3628.74,1,white,24,16,white,24,16,married,7500-10000,never,never,never,170.18,77.11,185.42,54.43
+646,291,3685.44,4,white,30,12,white,30,16,married,7500-10000,yes now,still,5-9,165.1,81.65,177.8,68.04
+647,281,3543.69,0,white,21,12+some college,white,27,16,married,2500-5000,never,never,never,165.1,74.84,180.34,49.9
+648,297,3316.89,4,white,38,12+some college,white,34,8-<12,married,15000-17500,never,never,never,165.1,78.02,172.72,58.51

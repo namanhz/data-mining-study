@@ -48,14 +48,15 @@ const CHAPTERS = {
 dat &lt;- data.frame(id = c(1,2,3), tuoi = c(30,45,19))
 
 # Từ Excel (package readxl)
+library(readxl)
 dat &lt;- read_excel("file.xlsx", sheet = 1)
 
 # Từ CSV
 dat &lt;- read.csv("file.csv", header = TRUE, sep = ",")
 
-# Từ SPSS/Stata (package haven)
+# Từ SPSS (package haven)
+library(haven)
 dat &lt;- read_spss("file.sav")
-dat &lt;- read_dta("file.dta")
 
 # Dữ liệu có sẵn
 data("mtcars")
@@ -66,16 +67,19 @@ data("iris")</pre></div>
 <pre>View(dat)        # Xem dạng bảng
 str(dat)         # Cấu trúc
 dim(dat)         # Kích thước (dòng x cột)
+nrow(dat); ncol(dat)
 names(dat)       # Tên cột
 head(dat, 10)    # 10 dòng đầu
+tail(dat, 5)     # 5 dòng cuối
 summary(dat)     # Thống kê mô tả</pre></div>
 
 <h4>Lưu dữ liệu</h4>
 <div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
-<pre>export(dat, "output.xlsx")            # rio package
-write_xlsx(dat, "output.xlsx")         # Excel (writexl)
-write_sav(dat, "output.sav")          # SPSS (haven)
-write_dta(dat, "output.dta")          # Stata (haven)</pre></div>`
+<pre>save(dat, file = "data.rda")           # File R
+library(writexl)
+write_xlsx(dat, "output.xlsx")         # Excel
+library(haven)
+write_sav(dat, "output.sav")           # SPSS</pre></div>`
       },
       {
         title: "Toán tử & Ký hiệu quan trọng",
@@ -144,15 +148,18 @@ top_n(dat, 10, col1)              # 10 lớn nhất</pre></div>`
 <pre># SẮP XẾP
 arrange(dat, col1)            # tăng dần
 arrange(dat, desc(col1))      # giảm dần
+arrange(dat, col1, desc(col2))# nhiều cột
 
 # TẠO BIẾN MỚI
 mutate(dat, bmi = weight / height^2)
-transmute(dat, bmi = weight / height^2)  # chỉ giữ biến mới
+mutate(dat, total = col1 + col2, avg = total / 2)
 mutate(dat, level = case_when(
   score &lt; 5  ~ "Low",
   score &lt; 8  ~ "Medium",
   TRUE       ~ "High"
 ))
+mutate(dat, new_col = col1*2, .keep = "all")
+mutate(dat, new_col = col1*2, .before = 2)
 
 # TỔNG HỢP
 summarise(dat, tb = mean(x, na.rm=TRUE), n = n())
@@ -161,11 +168,11 @@ summarise(dat, tb = mean(x, na.rm=TRUE), n = n())
 dat %&gt;%
   group_by(nhom) %&gt;%
   summarise(tb = mean(x, na.rm=TRUE),
-            tv = median(x, na.rm=TRUE)) %&gt;%
-  ungroup()
+            tv = median(x, na.rm=TRUE))
 
-# ĐẾM
-count(dat, col1)              # đếm theo nhóm</pre></div>
+# NHIỀU CỘT CÙNG LÚC
+summarise(dat, across(c(col1, col2), list(mean)))
+summarise(dat, across(everything(), list(mean)))</pre></div>
 <div class="alert alert-warn"><span class="alert-icon">⚠️</span>Nếu dữ liệu có NA, thêm <code>na.rm = TRUE</code> vào hàm thống kê!</div>
 <h4>Các hàm thống kê</h4>
 <table class="kv-table">
@@ -175,9 +182,8 @@ count(dat, col1)              # đếm theo nhóm</pre></div>
 <tr><td><code>sd()</code>, <code>var()</code></td><td>Độ lệch chuẩn, Phương sai</td></tr>
 <tr><td><code>min()</code>, <code>max()</code></td><td>Nhỏ nhất, Lớn nhất</td></tr>
 <tr><td><code>n()</code></td><td>Số quan sát</td></tr>
-<tr><td><code>n_distinct()</code></td><td>Số giá trị duy nhất</td></tr>
 <tr><td><code>sum()</code></td><td>Tổng</td></tr>
-<tr><td><code>first()</code>, <code>last()</code>, <code>nth()</code></td><td>Phần tử đầu/cuối/thứ n</td></tr>
+<tr><td><code>first()</code>, <code>last()</code></td><td>Giá trị đầu/cuối</td></tr>
 </table>`
       }
     ]
@@ -207,14 +213,7 @@ full_join(d1, d2, by = "key")   # giữ tất cả</pre></div>
 <tr><td><code>full_join</code></td><td>Tất cả từ cả hai</td></tr>
 </table>`
       },
-      {
-        title: "Filtering Joins",
-        icon: "🔎",
-        html: `<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
-<pre># Filtering joins (không thêm cột mới)
-semi_join(d1, d2, by = "key")   # giữ dòng d1 match d2
-anti_join(d1, d2, by = "key")   # giữ dòng d1 KHÔNG match d2</pre></div>`
-      },
+
       {
         title: "Set Operations & Bind",
         icon: "🔄",
@@ -239,34 +238,31 @@ bind_cols(d1, d2)    # nối cột (cùng số dòng!)</pre></div>`
     mode: "theory",
     cards: [
       {
-        title: "pivot_longer, pivot_wider",
+        title: "gather, spread",
         icon: "🔀",
         html: `<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
-<pre># PIVOT_LONGER – cột → dòng (wide → long)
-pivot_longer(dat, cols = col1:colN,
-  names_to = "key", values_to = "value")
+<pre># GATHER – chuyển cột thành dòng (wide → long)
+gather(dat, tên_cột_key, tên_cột_value, cột1, cột2, ...)
+# VD: gather(diemthi, mon, diem, van, ngoaingu, toan)
 
-# PIVOT_WIDER – dòng → cột (long → wide)
-pivot_wider(dat, names_from = key_col,
-  values_from = value_col)</pre></div>`
+# SPREAD – chuyển dòng thành cột (long → wide)
+spread(dat, cột_key, cột_value)</pre></div>`
       },
       {
-        title: "separate, unite, replace_na, fill",
+        title: "separate, unite, gsub",
         icon: "✂️",
         html: `<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
 <pre># SEPARATE – tách 1 cột thành nhiều
-separate(dat, col, into = c("a","b"),
-  sep = "-", convert = TRUE)
+separate(dat, col, into = c("col1","col2"),
+  sep = "-", remove = TRUE)
 
 # UNITE – gộp nhiều cột thành 1
-unite(dat, col = "new", col1, col2, sep = "_")
+unite(dat, col = "tên_mới", col1, col2,
+  sep = "_", remove = TRUE)
 
-# REPLACE_NA – thay thế NA
-dat %&gt;% replace_na(list(col1 = 0, col2 = "unknown"))
-
-# FILL – điền NA theo hướng
-dat %&gt;% fill(col1, .direction = "down")
-dat %&gt;% fill(col1, .direction = "up")</pre></div>`
+# GSUB – thay thế ký tự
+gsub("old", "new", dat$col)
+# VD: dat$week &lt;- gsub("wk", "", dat$week)</pre></div>`
       }
     ]
   },
@@ -301,49 +297,52 @@ tabular(col1 + 1 ~ col2 + 1)    # có tổng</pre></div>`
         title: "ggplot2 – Đồ thị",
         icon: "📊",
         html: `<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
-<pre># Cấu trúc: ggplot(data, aes(...)) + geom_...()
+<pre># Cấu trúc cơ bản
+ggplot(data, aes(x = col_x, y = col_y)) +
+  geom_loại() +          # biểu đồ
+  labs() +                # nhãn
+  theme_minimal()         # hình nền
 
 # Biểu đồ cột
 ggplot(dat, aes(x = cut)) +
   geom_bar(fill = "steelblue") +
-  labs(title = "Title", x = "X", y = "Y")
-ggplot(dat, aes(x = name, y = value)) +
-  geom_col()                        # cột với giá trị y
+  labs(title = "Tần số", x = "Cut", y = "Count")
 
-# Phân tán (scatter) + đường xu hướng
-ggplot(dat, aes(x = col1, y = col2)) +
-  geom_point(alpha = 0.5) +
-  geom_smooth(method = "lm")         # hồi quy tuyến tính
-  # geom_smooth(method = "loess")    # đường cong
-
-# Đường (line)
-ggplot(dat, aes(x = year, y = value)) +
-  geom_line()
+# Phân tán (scatter)
+ggplot(dat, aes(x = poptotal, y = popdensity)) +
+  geom_point(color = "red", alpha = 0.5) +
+  labs(title = "Scatter Plot")
 
 # Boxplot theo nhóm
-ggplot(dat, aes(x = group, y = value)) +
-  geom_boxplot(fill = "lightblue")
+ggplot(dat, aes(x = state, y = percelderlypoverty)) +
+  geom_boxplot(fill = "lightblue") +
+  labs(title = "Boxplot theo bang")
 
 # Histogram
 ggplot(dat, aes(x = price)) +
-  geom_histogram(bins = 30)
+  geom_histogram(bins = 30, fill = "coral")
 
-# Lưu đồ thị
-ggsave("plot.png")
+# Chia nhỏ đồ thị (facet)
+ggplot(dat, aes(x = value)) +
+  geom_histogram() +
+  facet_wrap(~ group)
 
-# Tương tác: ggplotly(p)  # package plotly</pre></div>
-<h4>Layers ggplot2</h4>
-<table class="kv-table">
-<tr><th>Layer</th><th>Chức năng</th></tr>
-<tr><td><code>aes(x, y, color, fill, size, shape, alpha)</code></td><td>Ánh xạ dữ liệu</td></tr>
-<tr><td><code>geom_*()</code></td><td>Loại biểu đồ</td></tr>
-<tr><td><code>facet_wrap(~ var)</code></td><td>Chia nhỏ theo 1 biến</td></tr>
-<tr><td><code>facet_grid(var_y ~ var_x)</code></td><td>Chia theo 2 biến</td></tr>
-<tr><td><code>labs()</code></td><td>Tiêu đề, nhãn</td></tr>
-<tr><td><code>theme_minimal()</code>, <code>theme_bw()</code>, <code>theme_classic()</code></td><td>Hình nền</td></tr>
-<tr><td><code>coord_flip()</code></td><td>Đổi trục X ↔ Y</td></tr>
-<tr><td><code>ggsave()</code></td><td>Lưu đồ thị</td></tr>
-</table>`
+# Tương tác (plotly)
+library(plotly)
+ggplotly(p)  # p là ggplot object</pre></div>
+<h4>Đồ thị cơ bản (plot)</h4>
+<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
+<pre>plot(dat$x, dat$y, type = "p", main = "Title")
+hist(dat$x)
+boxplot(dat$x)
+barplot(table(dat$x))
+pie(table(dat$x))</pre></div>
+<h4>Đồ thị tương quan</h4>
+<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
+<pre>library(ggcorrplot)
+ggcorrplot(cor(dat), method = "circle",
+  type = "upper", lab = TRUE,
+  colors = c("blue", "white", "red"))</pre></div>`
       }
     ]
   },
@@ -405,27 +404,50 @@ ggsave("plot.png")
         icon: "💻",
         html: `<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
 <pre># KIỂM TRA
-is.na(dat)                     # ma trận TRUE/FALSE
-sum(is.na(dat))                # tổng số NA
-any(is.na(dat))                # có NA không?
-mean(is.na(dat))               # tỷ lệ NA
-colSums(is.na(dat))            # đếm NA theo cột
+anyNA(dat)                     # Có NA không?
+is.na(dat)                     # Ma trận TRUE/FALSE
+sum(is.na(dat))                # Tổng số NA
+colSums(is.na(dat))            # Số NA theo cột
+rowSums(is.na(dat))            # Số NA theo dòng
 
-# ĐỒ THỊ
-vis_miss(dat)                  # visdat package
-aggr(dat, numbers=TRUE, prop=FALSE,
-  sortVars=TRUE)               # VIM package
+# ĐỒ THỊ (visdat)
+library(visdat)
+vis_dat(dat)
+vis_miss(dat)
+
+# ĐỒ THỊ (VIM)
+library(VIM)
+aggr(dat, numbers=TRUE, prop=FALSE, sortVars=TRUE)
+matrixplot(dat)
+marginplot(dat[c("var1", "var2")])
+
+# KIỂM ĐỊNH MCAR (naniar)
+library(naniar)
+mcar_test(dat)   # H0: MCAR, H1: MAR
 
 # XÓA
-na.omit(dat)                   # xóa dòng có NA
-drop_na(dat, col1)             # xóa NA ở 1 cột
+na.omit(dat)                   # Xóa dòng có NA
+drop_na(dat)                   # Tương tự (tidyr)
+drop_na(dat, col1)             # Xóa NA ở 1 cột
+dat[colSums(is.na(dat)) == 0]  # Xóa cột có NA
 
-# THAY THẾ THỦ CÔNG
-dat$x[is.na(dat$x)] &lt;- mean(dat$x, na.rm=TRUE)
+# THAY THẾ bằng trung bình/trung vị
+dat %&gt;% mutate(col1 = case_when(
+  is.na(col1) ~ mean(col1, na.rm = TRUE),
+  TRUE ~ col1
+))
 
-# THAY THẾ NÂNG CAO (package mice)
-mice(dat, method = "...")      # tạo imputation
-complete(mice_obj)             # lấy data đã thay thế</pre></div>`
+# Package mice
+library(mice)
+complete(mice(dat, method = "mean"))       # Trung bình
+complete(mice(dat, method = "sample"))     # Hot-deck
+complete(mice(dat, method = "norm.predict")) # Hồi quy
+complete(mice(dat, method = "cart"))        # Cây quyết định
+complete(mice(dat, method = "rf"))          # Rừng ngẫu nhiên
+
+# Package VIM
+library(VIM)
+hotdeck(dat)                               # Hot-deck</pre></div>`
       }
     ]
   },
@@ -450,31 +472,35 @@ complete(mice_obj)             # lấy data đã thay thế</pre></div>`
         title: "Code R – Xác định Outlier",
         icon: "🔬",
         html: `<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
-<pre># BOXPLOT (phương pháp IQR)
-boxplot(dat$x)
-bp &lt;- boxplot.stats(dat$x)
-bp$out                        # giá trị outlier
+<pre># Z-SCORE (mean ± 3*sd)
+LB &lt;- mean(dat$x) - 3 * sd(dat$x)
+UB &lt;- mean(dat$x) + 3 * sd(dat$x)
+filter(dat, x &lt; LB | x &gt; UB)
 
-# Tính thủ công IQR
-Q1 &lt;- quantile(dat$x, 0.25)
-Q3 &lt;- quantile(dat$x, 0.75)
-iqr &lt;- IQR(dat$x)
-LB &lt;- Q1 - 1.5 * iqr
-UB &lt;- Q3 + 1.5 * iqr
-which(dat$x &lt; LB | dat$x &gt; UB)  # vị trí outlier
-dat[dat$x &lt; LB | dat$x &gt; UB, ]  # dòng outlier
+# HAMPEL FILTER (median ± 3*mad)
+LB &lt;- median(dat$x) - 3 * mad(dat$x)
+UB &lt;- median(dat$x) + 3 * mad(dat$x)
+filter(dat, x &lt; LB | x &gt; UB)
 
-# Z-SCORE (mean ± 3*sd)
-LB &lt;- mean(dat$x) - 3*sd(dat$x)
-UB &lt;- mean(dat$x) + 3*sd(dat$x)
-dat[dat$x &lt; LB | dat$x &gt; UB, ]</pre></div>
-<h4>Chuẩn hóa dữ liệu</h4>
+# BOXPLOT
+bp &lt;- boxplot(dat$x)
+bp$out   # Giá trị đột xuất
+
+# Histogram
+hist(dat$x)</pre></div>
+<h4>Kiểm định thống kê</h4>
 <div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
-<pre># Standardization (Z-score)
-scale(dat$x, center=TRUE, scale=TRUE)
+<pre># Grubbs (package outliers)
+library(outliers)
+grubbs.test(dat$x, type = 10)  # 1 outlier, 1 phía
+grubbs.test(dat$x, type = 11)  # 1 outlier, 2 phía
 
-# Min-Max (thủ công)
-(dat$x - min(dat$x)) / (max(dat$x) - min(dat$x))</pre></div>`
+# Dixon (mẫu nhỏ &lt; 25-30)
+dixon.test(dat$x)
+
+# Rosner (package EnvStats, mẫu lớn &gt; 20)
+library(EnvStats)
+rosnerTest(dat$x, k = 3, alpha = 0.05)</pre></div>`
       }
     ]
   },
@@ -641,18 +667,19 @@ bind_rows(band, band_instruments2)</pre></div>`
         solution: `<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
 <pre>library(tidyr); library(dplyr)
 data("billboard")
-bb &lt;- billboard %&gt;%
-  pivot_longer(cols = wk1:wk76,
-    names_to = "week", values_to = "rank") %&gt;%
+bb_long &lt;- billboard %&gt;%
+  gather(week, rank, wk1:wk76) %&gt;%
   drop_na(rank) %&gt;%
   arrange(rank)
-bb$week &lt;- gsub("wk", "", bb$week)
-bb &lt;- separate(bb, date.entered,
+bb_long$week &lt;- gsub("wk", "", bb_long$week)
+bb_long &lt;- separate(bb_long, date.entered,
   into = c("year","month","day"), sep = "-")
-bb &lt;- bb %&gt;% mutate(month = as.numeric(month),
-  quarter = case_when(month&lt;=3~1, month&lt;=6~2,
-    month&lt;=9~3, TRUE~4))
-bb %&gt;% group_by(artist, track) %&gt;%
+bb_long &lt;- bb_long %&gt;%
+  mutate(month = as.numeric(month)) %&gt;%
+  mutate(quarter = case_when(
+    month &lt;= 3 ~ 1, month &lt;= 6 ~ 2,
+    month &lt;= 9 ~ 3, TRUE ~ 4))
+bb_long %&gt;% group_by(artist, track) %&gt;%
   summarise(avg_rank = mean(rank)) %&gt;%
   arrange(avg_rank)</pre></div>`
       }
@@ -729,6 +756,1006 @@ midwest %&gt;% mutate(level_poverty = case_when(
 midwest %&gt;% group_by(state) %&gt;%
   summarise(m=mean(popasian,na.rm=T),
             med=median(popasian,na.rm=T))</pre></div>`
+      }
+    ]
+  },
+
+  // ============ THEORY: TUẦN 9-13 ============
+  t9: {
+    title: "Phân cụm (Clustering)",
+    icon: "🧩",
+    badge: "Tuần 9",
+    mode: "theory",
+    cards: [
+      {
+        title: "Khái niệm & Phân loại",
+        icon: "🎯",
+        html: `<p><strong>Phân cụm</strong> = học <em>không giám sát</em>, chia quan sát thành các cụm sao cho trong cụm giống nhau, khác cụm khác nhau.</p>
+<table class="compare-table">
+<tr><th>Nhóm</th><th>Thuật toán</th><th>Đặc điểm</th></tr>
+<tr><td>Phân cấp</td><td><code>hclust</code></td><td>Cây dendrogram, không cần chọn k trước</td></tr>
+<tr><td>Phân hoạch</td><td><code>kmeans</code>, <code>pam</code>, <code>clara</code></td><td>Cần chọn k, tối ưu khoảng cách tới tâm</td></tr>
+<tr><td>Dữ liệu định tính</td><td><code>kmodes</code></td><td>Thay mean bằng mode</td></tr>
+</table>
+<h4>Chọn số cụm k</h4>
+<table class="kv-table">
+<tr><th>Phương pháp</th><th>Nguyên tắc</th></tr>
+<tr><td>Elbow (WSS)</td><td>Chọn k tại điểm "gập khuỷu"</td></tr>
+<tr><td>Silhouette</td><td>Max silhouette trung bình (càng gần 1 càng tốt)</td></tr>
+<tr><td>Gap statistic</td><td>So sánh WSS với dữ liệu ngẫu nhiên</td></tr>
+</table>`
+      },
+      {
+        title: "Phân cụm phân cấp (Hierarchical)",
+        icon: "🌲",
+        html: `<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
+<pre># Bước 1: Ma trận khoảng cách
+d &lt;- dist(dat)           # Euclidean mặc định
+
+# Bước 2: Cây phân cấp
+hc &lt;- hclust(d)          # method="complete" mặc định
+plot(hc)                 # dendrogram
+
+# Đồ thị đẹp hơn
+library(ggdendro)
+library(ape)
+ggdendrogram(hc)
+ggdendrogram(hc, rotate = TRUE)
+
+# Bước 3: Cắt cây thành k cụm
+clus3 &lt;- cutree(hc, k = 3)
+clus3                    # vector nhãn cụm
+
+# Tô màu cây
+colors &lt;- c("red","blue","green","yellow")
+plot(as.phylo(hc), tip.color = colors[clus3],
+     label.offset = 1, cex = 0.7)
+plot(as.phylo(hc), tip.color = colors[clus3],
+     type = "fan")       # hình tròn
+
+# Gán cụm vào dữ liệu + tổng hợp
+library(dplyr)
+dat_cl &lt;- bind_cols(as.data.frame(clus3), dat)
+dat_cl %&gt;% group_by(clus3) %&gt;%
+  summarise(across(everything(), mean))</pre></div>`
+      },
+      {
+        title: "K-means",
+        icon: "🎯",
+        html: `<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
+<pre>library(factoextra)
+df &lt;- scale(dat)              # chuẩn hóa z-score trước
+
+# CHỌN K TỐI ƯU
+fviz_nbclust(df, kmeans, method = "wss") +
+  labs(subtitle = "Elbow method")
+fviz_nbclust(df, kmeans, method = "silhouette") +
+  labs(subtitle = "Silhouette")
+fviz_nbclust(df, kmeans, method = "gap_stat",
+             nstart = 25, nboot = 50) +
+  labs(subtitle = "Gap statistic")
+
+# CHẠY K-MEANS (giả sử k = 3)
+set.seed(123)
+km &lt;- kmeans(df, centers = 3, nstart = 25)
+km$centers        # tâm cụm
+km$cluster        # nhãn cụm
+km$withinss       # WSS từng cụm
+km$tot.withinss   # tổng WSS
+km$iter           # số vòng lặp
+
+# ĐỒ THỊ
+fviz_cluster(km, df)
+fviz_cluster(km, df, ellipse.type = "norm")
+
+# GẮN CỤM VÀO DỮ LIỆU
+dat_cl &lt;- bind_cols(as.data.frame(km$cluster), dat)
+dat_cl %&gt;% group_by(\`km$cluster\`) %&gt;%
+  summarise(across(everything(), mean))
+
+# ĐÁNH GIÁ CHẤT LƯỢNG
+library(cluster)
+sl &lt;- silhouette(km$cluster, dist(df))
+fviz_silhouette(sl)</pre></div>
+<div class="alert alert-warn"><span class="alert-icon">⚠️</span>Luôn <code>scale()</code> trước k-means để tránh biến có đơn vị lớn chi phối khoảng cách.</div>`
+      },
+      {
+        title: "PAM, CLARA, K-modes",
+        icon: "🔷",
+        html: `<h4>PAM (Partitioning Around Medoids)</h4>
+<p>Thay tâm (mean) bằng <strong>medoid</strong> (điểm thực trong dữ liệu) → bền với đột xuất.</p>
+<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
+<pre>library(fpc); library(cluster); library(factoextra)
+df &lt;- scale(dat)
+pam3 &lt;- pam(df, k = 3, metric = "euclidean", stand = FALSE)
+pam3$medoids      # các điểm đại diện
+pam3$clustering   # nhãn cụm</pre></div>
+<h4>CLARA (Clustering Large Applications)</h4>
+<p>PAM cho dữ liệu lớn — lấy mẫu rồi áp dụng PAM.</p>
+<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
+<pre>library(cluster)
+clarax &lt;- clara(dat[1:4], k = 3)
+print(clarax)
+plot(dat, col = clarax$cluster)</pre></div>
+<h4>K-modes (dữ liệu định tính)</h4>
+<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
+<pre>library(klaR)
+cl &lt;- kmodes(dat_cat, modes = 4,
+             iter.max = 200, weighted = FALSE, fast = TRUE)
+cl$modes     # các mode đại diện
+cl$size      # cỡ mỗi cụm
+cl$cluster   # nhãn cụm</pre></div>`
+      }
+    ]
+  },
+
+  t10: {
+    title: "Luật kết hợp (Association Rules)",
+    icon: "🛒",
+    badge: "Tuần 11",
+    mode: "theory",
+    cards: [
+      {
+        title: "Khái niệm & độ đo",
+        icon: "📐",
+        html: `<p>Tìm <strong>quy luật dạng X ⇒ Y</strong> trong giao dịch (ví dụ: <em>mua bỉm ⇒ mua bia</em>).</p>
+<table class="kv-table">
+<tr><th>Độ đo</th><th>Công thức</th><th>Ý nghĩa</th></tr>
+<tr><td>Support</td><td>P(X ∩ Y)</td><td>Tỷ lệ giao dịch chứa cả X và Y</td></tr>
+<tr><td>Confidence</td><td>P(Y | X) = sup(X∪Y)/sup(X)</td><td>Khi có X thì có Y với xác suất bao nhiêu</td></tr>
+<tr><td>Lift</td><td>conf / sup(Y)</td><td>&gt;1: X,Y tương quan; =1: độc lập; &lt;1: đẩy nhau</td></tr>
+</table>
+<h4>Thuật toán</h4>
+<table class="compare-table">
+<tr><th></th><th style="color:var(--accent-blue)">Apriori</th><th style="color:var(--accent-green)">FP-Growth</th><th style="color:var(--accent-orange)">Eclat</th></tr>
+<tr><td>Ý tưởng</td><td>Sinh ứng viên lặp</td><td>Cây FP-Tree</td><td>Tập giao dịch dạng dọc</td></tr>
+<tr><td>Tốc độ</td><td>Chậm với DB lớn</td><td>Nhanh</td><td>Nhanh cho tập dày đặc</td></tr>
+</table>`
+      },
+      {
+        title: "Code R – Apriori",
+        icon: "💻",
+        html: `<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
+<pre>library(arules)
+
+# ĐỌC GIAO DỊCH (mỗi dòng = 1 giao dịch, items cách nhau dấu phẩy)
+trans &lt;- read.transactions("file.csv",
+                           format = "basket",
+                           sep = ",",
+                           rm.duplicates = FALSE)
+summary(trans)
+itemFrequencyPlot(trans, topN = 10)
+
+# CHẠY APRIORI
+rules &lt;- apriori(trans,
+  parameter = list(minlen = 1, support = 0.1, confidence = 0.3),
+  control = list(verbose = FALSE))
+
+# XEM LUẬT (sắp xếp theo lift)
+inspect(sort(rules, by = "lift"))
+
+# LỌC LUẬT THỪA (dư thừa nếu có luật con đạt conf tương đương)
+redundant &lt;- is.redundant(rules, measure = "confidence")
+rule1 &lt;- rules[!redundant]
+inspect(rule1)
+
+# CHỈ XEM LUẬT DẪN ĐẾN 1 ITEM CỤ THỂ (ví dụ: COVID-19)
+rules2 &lt;- apriori(trans,
+  parameter = list(minlen = 1, support = 0.1, confidence = 0.3),
+  appearance = list(rhs = c("COVID-19"), default = "lhs"),
+  control = list(verbose = FALSE))
+inspect(sort(rules2, by = "lift"))</pre></div>`
+      },
+      {
+        title: "FP-Growth & Eclat",
+        icon: "🌿",
+        html: `<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
+<pre># FP-GROWTH (package rCBA, yêu cầu Java)
+library(rCBA); library(rJava)
+rules3 &lt;- rCBA::fpgrowth(trans,
+  support = 0.1, confidence = 0.3, maxLength = 5,
+  consequent = NULL, verbose = TRUE, parallel = FALSE)
+
+# ECLAT (IT-Tree) – chỉ tìm itemset phổ biến, không sinh luật
+library(arules)
+its &lt;- eclat(trans, parameter = list(supp = 0.1, maxlen = 5))
+inspect(sort(its, by = "support"))</pre></div>`
+      }
+    ]
+  },
+
+  t11: {
+    title: "Khai phá mẫu tuần tự",
+    icon: "🧬",
+    badge: "Tuần 11",
+    mode: "theory",
+    cards: [
+      {
+        title: "Khái niệm & ứng dụng",
+        icon: "🔎",
+        html: `<p><strong>Mẫu tuần tự (Sequential pattern)</strong> = chuỗi sự kiện xảy ra theo <em>thứ tự thời gian</em> lặp ở nhiều đối tượng.</p>
+<p>Khác luật kết hợp: quan tâm <strong>thứ tự</strong> giữa các item (X → Y, không phải X ∧ Y).</p>
+<h4>Ứng dụng</h4>
+<table class="kv-table">
+<tr><th>Lĩnh vực</th><th>Ví dụ</th></tr>
+<tr><td>Bán lẻ / TMĐT</td><td>Giỏ hàng theo thời gian, gợi ý sản phẩm</td></tr>
+<tr><td>Y tế</td><td>Chuỗi triệu chứng/điều trị, phân tích DNA</td></tr>
+<tr><td>Giáo dục</td><td>Lộ trình học tập của sinh viên</td></tr>
+<tr><td>Tài chính</td><td>Giao dịch gian lận thẻ, chuỗi giá chứng khoán</td></tr>
+</table>
+<h4>Khái niệm</h4>
+<table class="kv-table">
+<tr><th>Khái niệm</th><th>Mô tả</th></tr>
+<tr><td>sequenceID</td><td>ID đối tượng (vd: bệnh nhân)</td></tr>
+<tr><td>eventID</td><td>Thời điểm / thứ tự sự kiện</td></tr>
+<tr><td>size</td><td>Số item trong 1 sự kiện</td></tr>
+<tr><td>Support</td><td>Tỷ lệ đối tượng chứa mẫu</td></tr>
+</table>`
+      },
+      {
+        title: "Code R – SPADE",
+        icon: "💻",
+        html: `<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
+<pre>library(arules)
+library(arulesSequences)
+library(dplyr)
+
+# Đọc dữ liệu dạng transactions cho chuỗi
+seqs &lt;- read_baskets("medical_seq.txt",
+                     info = c("sequenceID", "eventID", "size"))
+
+# SPADE: support = 0.1 → mẫu xuất hiện ở ≥10% đối tượng
+s1 &lt;- cspade(seqs,
+  parameter = list(support = 0.1, maxsize = 1, maxlen = 4),
+  control   = list(verbose = TRUE))
+
+# Chuyển sang data.frame để xem
+s1_df &lt;- as(s1, "data.frame")
+s1_df &lt;- s1_df[order(-s1_df$support), ]
+head(s1_df, 50)</pre></div>
+<div class="alert alert-info"><span class="alert-icon">ℹ️</span><strong>maxsize</strong>: số item tối đa 1 sự kiện; <strong>maxlen</strong>: độ dài tối đa của chuỗi.</div>`
+      }
+    ]
+  },
+
+  t12: {
+    title: "Phân loại (Classification)",
+    icon: "🎯",
+    badge: "Tuần 13",
+    mode: "theory",
+    cards: [
+      {
+        title: "Quy trình phân loại",
+        icon: "🔁",
+        html: `<p><strong>Phân loại</strong> = học <em>có giám sát</em>, dự đoán biến mục tiêu (nhãn hoặc số).</p>
+<p><span class="tag tag-blue">Tiền xử lý</span> → <span class="tag tag-purple">Chia train/test</span> → <span class="tag tag-green">Huấn luyện + Tune</span> → <span class="tag tag-orange">Dự đoán</span> → <span class="tag tag-pink">Đánh giá</span></p>
+<h4>Chia tập dữ liệu</h4>
+<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
+<pre>library(caret); library(dplyr)
+set.seed(123)
+# Hold-out 70:30 (phân tầng theo nhãn)
+idx &lt;- createDataPartition(dat$Class, p = 0.7, list = FALSE)
+train &lt;- slice(dat, idx)
+test  &lt;- slice(dat, -idx)
+
+# K-fold CV
+ctrl &lt;- trainControl(method = "cv", number = 5)
+# Repeated CV
+ctrl &lt;- trainControl(method = "repeatedcv", number = 5, repeats = 3)
+# LOOCV
+ctrl &lt;- trainControl(method = "LOOCV")</pre></div>
+<h4>Thuật toán chính (gói caret)</h4>
+<table class="kv-table">
+<tr><th>method=</th><th>Thuật toán</th></tr>
+<tr><td><code>"knn"</code></td><td>K-nearest neighbour</td></tr>
+<tr><td><code>"rpart"</code></td><td>Cây quyết định CART</td></tr>
+<tr><td><code>"C5.0"</code></td><td>C5.0</td></tr>
+<tr><td><code>"rf"</code></td><td>Random forest</td></tr>
+<tr><td><code>"svmLinear"</code></td><td>SVM tuyến tính</td></tr>
+</table>`
+      },
+      {
+        title: "KNN – K Nearest Neighbours",
+        icon: "👥",
+        html: `<p>Dự đoán nhãn dựa vào <strong>k điểm gần nhất</strong> theo khoảng cách Euclidean. Yêu cầu <strong>chuẩn hóa</strong> trước.</p>
+<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
+<pre>library(caret); library(class)
+
+# CÁCH 1: package class (cần tự tách x/y)
+x_train &lt;- train[-5]; y_train &lt;- train$Species
+x_test  &lt;- test[-5];  y_test  &lt;- test$Species
+model_knn &lt;- knn(train = x_train, test = x_test,
+                 cl = y_train, k = 5)
+
+# CÁCH 2: package caret (tự tune k)
+set.seed(123)
+best_knn &lt;- train(Species ~ ., data = train,
+  method     = "knn",
+  preProcess = c("center","scale"),
+  trControl  = trainControl(method = "cv", number = 5),
+  tuneLength = 10)                         # thử 10 giá trị k
+  # hoặc: tuneGrid = expand.grid(k = 1:10)
+best_knn
+best_knn$bestTune       # k tối ưu
+plot(best_knn)          # accuracy ~ k
+
+pred &lt;- predict(best_knn, test)
+confusionMatrix(table(test$Species, pred))</pre></div>
+<div class="alert alert-warn"><span class="alert-icon">⚠️</span>Nếu không truyền <code>trControl</code>, caret mặc định chạy <strong>bootstrap</strong> 25 lần.</div>`
+      },
+      {
+        title: "Cây quyết định (Decision Tree)",
+        icon: "🌳",
+        html: `<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
+<pre>library(rpart); library(rpart.plot); library(caret)
+
+# CÁCH 1: rpart trực tiếp
+dt &lt;- rpart(Species ~ ., data = train,
+            method = "class",           # "anova" nếu y là số
+            control = rpart.control(cp = 0))
+printcp(dt)
+plotcp(dt)                              # chọn cp tối ưu
+rpart.plot(dt, type = 5, extra = 104,
+           under = TRUE, cex = 0.8)
+
+# TIÊU CHUẨN DỪNG
+dt &lt;- rpart(y ~ ., data = train, method = "anova",
+  control = rpart.control(minsplit = 10,    # tối thiểu để chia
+                          minbucket = 3,    # tối thiểu ở lá
+                          maxdepth  = 5,    # độ sâu
+                          cp = 0.01))       # độ phức tạp
+
+# DỰ ĐOÁN + ĐÁNH GIÁ
+pred &lt;- predict(dt, test, type = "class")
+confusionMatrix(pred, test$Species)
+
+# CÁCH 2: caret (tự tune cp)
+dt2 &lt;- train(Species ~ ., data = train,
+  method    = "rpart",
+  trControl = trainControl(method = "cv", number = 10),
+  tuneLength = 10)
+rpart.plot(dt2$finalModel)
+
+# THUẬT TOÁN C5.0
+library(C50)
+m &lt;- C5.0(Species ~ ., data = train)
+plot(m)</pre></div>`
+      },
+      {
+        title: "Đánh giá mô hình",
+        icon: "📏",
+        html: `<h4>Biến mục tiêu định tính (phân loại)</h4>
+<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
+<pre>mean(pred == test$Class)                    # Accuracy
+confusionMatrix(table(test$Class, pred))
+# Trả về: Accuracy, Kappa, Sensitivity, Specificity,
+#         Precision, Recall, F1, NIR, p-value</pre></div>
+<table class="kv-table">
+<tr><th>Chỉ số</th><th>Ý nghĩa</th></tr>
+<tr><td>Accuracy</td><td>(TP+TN)/Tổng</td></tr>
+<tr><td>Sensitivity (Recall)</td><td>TP/(TP+FN) – nhận ra dương thật</td></tr>
+<tr><td>Specificity</td><td>TN/(TN+FP) – nhận ra âm thật</td></tr>
+<tr><td>NIR</td><td>Accuracy khi luôn đoán lớp lớn nhất</td></tr>
+<tr><td>p-value (Acc&gt;NIR)</td><td>H0: Acc≤NIR. p nhỏ ⇒ MH tốt hơn ngẫu nhiên</td></tr>
+</table>
+<h4>Biến mục tiêu định lượng (hồi quy)</h4>
+<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
+<pre>library(caret)
+mse  &lt;- mean((test$y - pred)^2)
+mae  &lt;- MAE(test$y, pred)
+rmse &lt;- RMSE(test$y, pred)
+cat("MSE:", mse, " MAE:", mae, " RMSE:", rmse)
+
+# Vẽ so sánh
+plot(test$y, col = "red", type = "l")
+lines(pred, col = "blue")
+legend("topright", legend = c("thực","dự đoán"),
+       fill = c("red","blue"), cex = 0.7)</pre></div>`
+      }
+    ]
+  },
+
+  // ============ PRACTICE: TUẦN 7-13 ============
+  p6: {
+    title: "BT: Tiền xử lý (Bài 9 Seminar)",
+    icon: "🩹",
+    badge: "2 bài / 10 câu",
+    mode: "practice",
+    exercises: [
+      {
+        num: "B1.1-3", color: "var(--accent-blue)",
+        title: "airquality – mô tả & kiểm tra NA",
+        task: `<strong>1)</strong> Mô tả các biến trong dữ liệu <code>airquality</code>.<br>
+<strong>2)</strong> Dữ liệu có NA không? Xác định số NA theo dòng, cột và tổng.<br>
+<strong>3)</strong> Mô tả NA bằng đồ thị. Xác định tỷ lệ NA ở mỗi biến.`,
+        solution: `<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
+<pre>library(dplyr); library(visdat); library(VIM); library(naniar)
+data("airquality")
+
+# 1) Mô tả
+str(airquality)
+summary(airquality)
+?airquality   # Ozone, Solar.R, Wind, Temp, Month, Day
+
+# 2) Kiểm tra NA
+anyNA(airquality)
+sum(is.na(airquality))             # tổng NA
+colSums(is.na(airquality))         # NA theo cột
+rowSums(is.na(airquality))         # NA theo dòng
+table(is.na(airquality))
+
+# 3) Đồ thị NA
+vis_dat(airquality)
+vis_miss(airquality)               # cho % NA mỗi cột
+aggr(airquality, numbers = TRUE, prop = TRUE,
+     sortVars = TRUE, sortCombs = TRUE)
+matrixplot(airquality)
+miss_var_summary(airquality)       # bảng % NA mỗi biến</pre></div>`
+      },
+      {
+        num: "B1.4-5", color: "var(--accent-purple)",
+        title: "airquality – MCAR test & các cách xử lý NA",
+        task: `<strong>4)</strong> Xác định cơ chế khuyết (MCAR hay MAR) bằng kiểm định Little.<br>
+<strong>5)</strong> Xử lý NA theo nhiều cách:<br>
+&nbsp;&nbsp;a) Xóa dòng chứa NA<br>
+&nbsp;&nbsp;b) Xóa cột chứa NA<br>
+&nbsp;&nbsp;c) Thay NA ở <strong>Ozone</strong> bằng 0<br>
+&nbsp;&nbsp;d) Thay NA ở <strong>Ozone</strong> bằng trung vị<br>
+&nbsp;&nbsp;e) Thay NA toàn bộ bằng trung bình từng biến (mice "mean")<br>
+&nbsp;&nbsp;f) Thay NA bằng giá trị ngẫu nhiên (hotdeck / mice "sample")<br>
+&nbsp;&nbsp;g) Thay NA bằng hồi quy thường & hồi quy ngẫu nhiên<br>
+&nbsp;&nbsp;h) Ozone ← mean, Solar.R ← hồi quy ngẫu nhiên`,
+        solution: `<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
+<pre>library(dplyr); library(tidyr); library(naniar)
+library(mice); library(VIM)
+
+# 4) MCAR test (H0: MCAR, H1: MAR)
+mcar_test(airquality)
+# p &lt; 0.05 ⇒ bác H0 ⇒ không MCAR (có thể MAR)
+
+# 5a) Xóa dòng có NA
+aq_5a &lt;- na.omit(airquality)
+aq_5a &lt;- drop_na(airquality)
+
+# 5b) Xóa cột có NA
+aq_5b &lt;- airquality[, colSums(is.na(airquality)) == 0]
+
+# 5c) Ozone NA ← 0
+aq_5c &lt;- airquality %&gt;% mutate(Ozone = case_when(
+  is.na(Ozone) ~ 0, TRUE ~ as.double(Ozone)))
+
+# 5d) Ozone NA ← median
+aq_5d &lt;- airquality %&gt;% mutate(Ozone = case_when(
+  is.na(Ozone) ~ median(Ozone, na.rm = TRUE),
+  TRUE ~ as.double(Ozone)))
+
+# 5e) Tất cả NA ← mean (mice)
+aq_5e &lt;- complete(mice(airquality, method = "mean",
+                       m = 1, printFlag = FALSE))
+
+# 5f) Tất cả NA ← ngẫu nhiên
+aq_5f1 &lt;- hotdeck(airquality)                      # VIM
+aq_5f2 &lt;- complete(mice(airquality, method = "sample",
+                         m = 1, printFlag = FALSE))
+
+# 5g) Hồi quy thường / hồi quy ngẫu nhiên
+aq_5g1 &lt;- complete(mice(airquality, method = "norm.predict",
+                        m = 1, printFlag = FALSE))
+aq_5g2 &lt;- complete(mice(airquality, method = "norm.nob",
+                        m = 1, printFlag = FALSE))
+
+# 5h) Ozone ← mean, Solar.R ← norm.nob
+meth &lt;- make.method(airquality)
+meth["Ozone"]   &lt;- "mean"
+meth["Solar.R"] &lt;- "norm.nob"
+aq_5h &lt;- complete(mice(airquality, method = meth,
+                       m = 1, printFlag = FALSE))</pre></div>`
+      },
+      {
+        num: "B1.6", color: "var(--accent-green)",
+        title: "airquality – trung bình theo tháng",
+        task: `<strong>6)</strong> Tính giá trị trung bình các biến <strong>Ozone, Solar.R, Wind, Temp</strong> theo từng tháng (bỏ qua NA).`,
+        solution: `<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
+<pre>library(dplyr)
+airquality %&gt;%
+  group_by(Month) %&gt;%
+  summarise(across(c(Ozone, Solar.R, Wind, Temp),
+                   ~ mean(.x, na.rm = TRUE)))</pre></div>`
+      },
+      {
+        num: "B2", color: "var(--accent-orange)",
+        title: "mtcars – xác định biến có outlier & chi tiết biến hp",
+        task: `<strong>1)</strong> Đọc dữ liệu <code>mtcars</code>.<br>
+<strong>2)</strong> Biến nào có giá trị đột xuất?<br>
+<strong>3)</strong> Xác định outlier của biến <strong>hp</strong> bằng:<br>
+&nbsp;&nbsp;a) boxplot<br>
+&nbsp;&nbsp;b) Z-score (mean ± 3·sd)<br>
+&nbsp;&nbsp;c) Kiểm định thống kê (Grubbs / Dixon / Rosner)`,
+        solution: `<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
+<pre>library(dplyr); library(outliers); library(EnvStats)
+data("mtcars")
+str(mtcars)
+
+# 2) Biến nào có outlier? – dùng boxplot tất cả cột số
+par(mfrow = c(3, 4))
+for (v in names(mtcars)) boxplot(mtcars[[v]], main = v)
+par(mfrow = c(1, 1))
+# Thường thấy: hp, wt, qsec, carb có outlier
+
+# 3a) Boxplot cho hp
+bp &lt;- boxplot(mtcars$hp, main = "hp")
+bp$out                                   # giá trị đột xuất
+mtcars[mtcars$hp %in% bp$out, ]          # xem xe nào
+
+# 3b) Z-score
+LB &lt;- mean(mtcars$hp) - 3 * sd(mtcars$hp)
+UB &lt;- mean(mtcars$hp) + 3 * sd(mtcars$hp)
+filter(mtcars, hp &lt; LB | hp &gt; UB)
+# Hampel (bền hơn): median ± 3·mad
+LB2 &lt;- median(mtcars$hp) - 3 * mad(mtcars$hp)
+UB2 &lt;- median(mtcars$hp) + 3 * mad(mtcars$hp)
+filter(mtcars, hp &lt; LB2 | hp &gt; UB2)
+
+# 3c) Kiểm định
+grubbs.test(mtcars$hp, type = 10)        # 1 outlier, 1 phía
+grubbs.test(mtcars$hp, type = 11)        # 2 outlier, 2 phía
+dixon.test(mtcars$hp[1:20])              # mẫu nhỏ &lt; 25
+rosnerTest(mtcars$hp, k = 3, alpha = 0.05)
+# p &lt; 0.05 ⇒ bác H0 "không outlier" ⇒ có outlier</pre></div>`
+      }
+    ]
+  },
+
+  p7: {
+    title: "BT: Phân cụm",
+    icon: "🧩",
+    badge: "4 bài",
+    mode: "practice",
+    exercises: [
+      {
+        num: "1", color: "var(--accent-blue)",
+        title: "USArrests – phân cụm phân cấp & cắt 3 cụm",
+        task: `Với <code>USArrests</code>: tính ma trận khoảng cách, chạy <code>hclust</code>, vẽ dendrogram (cả <code>plot</code> và <code>ggdendrogram</code>). Cắt 3 cụm, tô màu cây theo cụm (cả dạng phylo và dạng "fan"). Gắn cụm vào dữ liệu và tính trung bình 4 biến theo cụm.`,
+        solution: `<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
+<pre>library(datasets); library(dplyr)
+library(ggdendro); library(ape)
+data("USArrests")
+dat &lt;- USArrests
+
+# Khoảng cách + cây
+d  &lt;- dist(dat)
+hc &lt;- hclust(d)
+plot(hc)
+ggdendrogram(hc)
+ggdendrogram(hc, rotate = TRUE)
+
+# Cắt 3 cụm
+clus3 &lt;- cutree(hc, 3)
+clus3
+
+# Tô màu theo cụm
+colors &lt;- c("red", "blue", "green", "yellow")
+plot(as.phylo(hc), tip.color = colors[clus3],
+     label.offset = 1, cex = 0.7)
+plot(as.phylo(hc), tip.color = colors[clus3],
+     label.offset = 1, cex = 0.7, type = "fan")
+
+# Gắn cụm + TB theo cụm
+USArrests_cl &lt;- bind_cols(as.data.frame(clus3), USArrests)
+USArrests_cl %&gt;% group_by(clus3) %&gt;%
+  summarise(mean(Murder), mean(Assault),
+            mean(UrbanPop), mean(Rape))</pre></div>`
+      },
+      {
+        num: "2", color: "var(--accent-purple)",
+        title: "USArrests – K-means: chọn k tối ưu & đánh giá",
+        task: `Chuẩn hóa <code>USArrests</code>. Dùng <code>fviz_nbclust</code> với 3 phương pháp: <strong>Elbow, Silhouette, Gap statistic</strong> để chọn k. Chạy k-means với <strong>k=3</strong>, xem <code>centers</code>, <code>withinss</code>, <code>tot.withinss</code>, <code>iter</code>. Vẽ <code>fviz_cluster</code> (cả bình thường và ellipse="norm"). Tính TB 4 biến theo cụm. Đánh giá bằng silhouette.`,
+        solution: `<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
+<pre>library(factoextra); library(cluster); library(dplyr)
+df &lt;- scale(USArrests)
+
+# Chọn k
+fviz_nbclust(df, kmeans, method = "wss") +
+  labs(subtitle = "Elbow")
+fviz_nbclust(df, kmeans, method = "silhouette") +
+  labs(subtitle = "Silhouette")
+fviz_nbclust(df, kmeans, method = "gap_stat",
+             nstart = 25, nboot = 50) +
+  labs(subtitle = "Gap statistic")
+
+# K-means k=3
+set.seed(123)
+km &lt;- kmeans(df, centers = 3, nstart = 25)
+km$centers; km$withinss; km$tot.withinss; km$iter
+
+fviz_cluster(km, df)
+fviz_cluster(km, df, ellipse.type = "norm")
+
+# Gán cụm + TB theo cụm
+USArrests_cl &lt;- bind_cols(as.data.frame(km$cluster), USArrests)
+USArrests_cl %&gt;% group_by(\`km$cluster\`) %&gt;%
+  summarise(mean(Murder), mean(Assault),
+            mean(UrbanPop), mean(Rape))
+
+# Silhouette
+sl &lt;- silhouette(km$cluster, dist(df))
+fviz_silhouette(sl)
+
+# Cây phân cụm qua eclust
+hc_e &lt;- eclust(df, "hclust")
+fviz_dend(hc_e, rect = TRUE)</pre></div>`
+      },
+      {
+        num: "3", color: "var(--accent-cyan)",
+        title: "USArrests – PAM (3 & 4 cụm) và CLARA",
+        task: `<strong>PAM:</strong> phân cụm USArrests đã chuẩn hóa với <strong>k=3</strong> rồi <strong>k=4</strong>, xem medoids, gán cụm vào dữ liệu.<br>
+<strong>CLARA:</strong> phân cụm USArrests thành 3 cụm, vẽ scatter tô màu theo cụm.`,
+        solution: `<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
+<pre>library(fpc); library(factoextra); library(cluster)
+
+# PAM
+Arrest &lt;- na.omit(USArrests)
+Arrest &lt;- scale(Arrest)
+
+pam3 &lt;- pam(Arrest, 3, metric = "euclidean", stand = FALSE)
+print(pam3)
+pam3$medoids
+head(pam3$clustering)
+
+dd &lt;- cbind(Arrest, cluster = pam3$cluster)
+head(dd, 10)
+
+pam4 &lt;- pam(Arrest, 4, metric = "euclidean", stand = FALSE)
+print(pam4)
+pam4$medoids
+head(pam4$clustering)
+
+# CLARA
+USA_clara &lt;- USArrests
+clarax &lt;- clara(USA_clara[1:4], k = 3)
+print(clarax)
+plot(USA_clara, col = clarax$cluster)</pre></div>`
+      },
+      {
+        num: "4", color: "var(--accent-orange)",
+        title: "babies.csv – K-modes với dữ liệu định tính",
+        task: `Đọc <code>babies.csv</code>. Bỏ cột 1 (ID), đặt cột ID làm rowname. Chọn các cột định tính (4, 6, 7, 10-12). Chạy <code>kmodes</code> với <strong>4 cụm</strong> (iter.max=200, fast=TRUE). Xem <code>modes</code>, <code>size</code>. Gắn nhãn cụm vào dữ liệu.`,
+        solution: `<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
+<pre>library(klaR); library(scatterplot3d)
+# setwd("đường_dẫn_chứa_babies.csv")
+dat &lt;- read.csv("babies.csv", sep = ",")
+
+# Bỏ cột 1, làm rowname
+dat1 &lt;- dat[,-1]
+rownames(dat1) &lt;- dat[,1]
+
+# Chọn cột định tính
+dat2 &lt;- dat1[c(4, 6, 7, 10:12)]
+str(dat2)
+
+# K-modes 4 cụm
+set.seed(123)
+cl &lt;- kmodes(dat2, modes = 4, iter.max = 200,
+             weighted = FALSE, fast = TRUE)
+cl
+cl$modes        # các mode đại diện
+cl$size         # cỡ từng cụm
+
+# Gắn cụm
+dat3 &lt;- cbind(dat2, cluster = cl$cluster)
+colnames(dat3)[7] &lt;- "cluster"
+head(dat3)</pre></div>`
+      }
+    ]
+  },
+
+  p8: {
+    title: "BT: Luật kết hợp",
+    icon: "🛒",
+    badge: "3 câu",
+    mode: "practice",
+    exercises: [
+      {
+        num: "1", color: "var(--accent-blue)",
+        title: "benh_nhan_data – Apriori & lọc luật thừa",
+        task: `Đọc <code>benh_nhan_data.csv</code> dạng <strong>transactions</strong> (format="basket", sep=","). Xem summary & itemFrequencyPlot. Chạy <strong>Apriori</strong> với <em>minlen=1, support=0.1, confidence=0.3</em>. In luật theo lift giảm dần. Loại luật thừa (measure="confidence") và in lại.`,
+        solution: `<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
+<pre>library(arules)
+# setwd("đường_dẫn_chứa_benh_nhan_data.csv")
+trans &lt;- read.transactions("benh_nhan_data.csv",
+                           format = "basket",
+                           sep = ",",
+                           rm.duplicates = FALSE)
+summary(trans)
+itemFrequencyPlot(trans, topN = 15)
+
+# Apriori
+rules &lt;- apriori(trans,
+  parameter = list(minlen = 1, support = 0.1, confidence = 0.3),
+  control   = list(verbose = FALSE))
+inspect(sort(rules, by = "lift"))
+
+# Loại luật thừa
+redundant &lt;- is.redundant(rules, measure = "confidence")
+rule1     &lt;- rules[!redundant]
+inspect(rule1)</pre></div>`
+      },
+      {
+        num: "2", color: "var(--accent-green)",
+        title: "benh_nhan_data – chỉ xem luật dẫn tới COVID-19",
+        task: `Dùng tham số <code>appearance</code> để chỉ lấy các luật có <strong>rhs = "COVID-19"</strong> (default="lhs"). Sort theo lift.`,
+        solution: `<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
+<pre>rules2 &lt;- apriori(trans,
+  parameter  = list(minlen = 1, support = 0.1, confidence = 0.3),
+  appearance = list(rhs = c("COVID-19"), default = "lhs"),
+  control    = list(verbose = FALSE))
+inspect(sort(rules2, by = "lift"))</pre></div>`
+      },
+      {
+        num: "3", color: "var(--accent-orange)",
+        title: "FP-Growth & Eclat trên cùng dữ liệu",
+        task: `Chạy <strong>FP-Growth</strong> (package <code>rCBA</code>) với support=0.1, conf=0.3, maxLength=5.<br>
+Chạy <strong>Eclat</strong> (package <code>arules</code>) với supp=0.1, maxlen=5, in tập phổ biến theo support giảm dần.`,
+        solution: `<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
+<pre># FP-Growth (cần Java)
+library(rCBA); library(rJava)
+rules3 &lt;- rCBA::fpgrowth(trans,
+  support = as.numeric(0.1),
+  confidence = as.numeric(0.3),
+  maxLength = as.integer(5),
+  consequent = NULL,
+  verbose = TRUE, parallel = FALSE)
+
+# Eclat (IT-Tree)
+library(arules)
+its &lt;- eclat(trans, parameter = list(supp = 0.1, maxlen = 5))
+inspect(sort(its, by = "support"))</pre></div>`
+      }
+    ]
+  },
+
+  p9: {
+    title: "BT: Khai phá mẫu tuần tự",
+    icon: "🧬",
+    badge: "1 bài",
+    mode: "practice",
+    exercises: [
+      {
+        num: "1", color: "var(--accent-purple)",
+        title: "medical_seq.txt – SPADE tìm chuỗi y tế phổ biến",
+        task: `Đọc <code>medical_seq.txt</code> bằng <code>read_baskets</code> với info = (<em>sequenceID, eventID, size</em>). Chạy <strong>SPADE</strong> (<code>cspade</code>) với support=0.1, maxsize=1, maxlen=4. Chuyển kết quả sang data.frame, sắp xếp theo support giảm dần, in 50 chuỗi đầu.`,
+        solution: `<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
+<pre>library(arules)
+library(arulesSequences)
+library(dplyr)
+# setwd("đường_dẫn_chứa_medical_seq.txt")
+
+# Đọc dữ liệu
+patient_seqs &lt;- read_baskets("medical_seq.txt",
+  info = c("sequenceID", "eventID", "size"))
+
+# SPADE – support 0.1 = ≥10% bệnh nhân
+s1 &lt;- cspade(patient_seqs,
+  parameter = list(support = 0.1, maxsize = 1, maxlen = 4),
+  control   = list(verbose = TRUE))
+
+# Chuyển data.frame + sắp xếp
+s1_df &lt;- as(s1, "data.frame")
+s1_df &lt;- s1_df[order(-s1_df$support), ]
+
+print("Các chuỗi tuần tự y tế tìm thấy:")
+head(s1_df, 50)</pre></div>`
+      }
+    ]
+  },
+
+  p10: {
+    title: "BT: KNN (Bài 13)",
+    icon: "👥",
+    badge: "3 câu",
+    mode: "practice",
+    exercises: [
+      {
+        num: "B1.1-5", color: "var(--accent-blue)",
+        title: "GermanCredit – load, tiền xử lý, chia 80:20",
+        task: `<strong>1)</strong> Đọc <code>GermanCredit</code> (package <code>caret</code>).<br>
+<strong>2)</strong> Chọn <strong>300 quan sát đầu</strong> & <strong>10 biến đầu</strong>, gán vào <code>credit</code>.<br>
+<strong>3)</strong> Xác định cấu trúc dữ liệu.<br>
+<strong>4)</strong> Tiền xử lý: kiểm tra NA, kiểm tra outlier (boxplot), chuẩn hóa z-score (chỉ 7 biến số đầu).<br>
+<strong>5)</strong> Chia train/test theo tỷ lệ <strong>80:20</strong> (phân tầng theo Class).`,
+        solution: `<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
+<pre>library(caret); library(dplyr)
+
+# 1-2) Load + chọn 300 quan sát × 10 biến
+data("GermanCredit")
+credit &lt;- GermanCredit %&gt;%
+  slice(1:300) %&gt;%
+  select(1:10)
+
+# 3) Cấu trúc
+str(credit)
+
+# 4a) NA
+anyNA(credit)
+colSums(is.na(credit))
+
+# 4b) Outlier – boxplot tất cả biến số
+boxplot(credit)
+
+# 4c) Chuẩn hóa z-score (7 biến số đầu)
+credit1      &lt;- preProcess(credit[1:7], method = c("center","scale"))
+credit_final &lt;- predict(credit1, credit)
+head(credit_final)
+
+# 5) Chia 80:20
+set.seed(123)
+idx      &lt;- createDataPartition(credit_final$Class, p = 0.8, list = FALSE)
+training_set &lt;- slice(credit_final,  idx)
+test_set     &lt;- slice(credit_final, -idx)</pre></div>`
+      },
+      {
+        num: "B1.6-8", color: "var(--accent-purple)",
+        title: "GermanCredit – KNN + dự đoán + đánh giá",
+        task: `<strong>6)</strong> Phân loại theo <strong>KNN</strong> với biến <strong>Class</strong>, thử 10 giá trị k nhỏ nhất. Dùng 2 cách: <em>repeated CV 5-fold × 3 lần</em> và <em>bootstrap mặc định</em>. In <code>bestTune</code> và <code>plot</code>. Loại bỏ biến <code>Telephone</code>, <code>ForeignWorker</code> khỏi công thức.<br>
+<strong>7)</strong> Dự đoán Class trên tập test.<br>
+<strong>8)</strong> Đánh giá: accuracy thủ công + <code>confusionMatrix</code>.`,
+        solution: `<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
+<pre>library(caret)
+
+# --- CÁCH 1: Repeated CV (5-fold × 3 lần) ---
+ctrl1 &lt;- trainControl(method = "repeatedcv", number = 5, repeats = 3)
+
+set.seed(123)
+best_knn &lt;- train(Class ~ . - Telephone - ForeignWorker,
+                  data      = training_set,
+                  method    = "knn",
+                  trControl = ctrl1,
+                  na.action = na.omit,
+                  tuneLength = 10)
+best_knn
+plot(best_knn)
+best_knn$bestTune
+
+# 7) Dự đoán
+pred &lt;- predict(best_knn, test_set)
+pred
+
+# 8) Đánh giá
+mean(pred == test_set$Class)        # accuracy thủ công
+confusionMatrix(table(test_set$Class, pred))
+# H0: Accuracy ≤ NIR; H1: Accuracy &gt; NIR
+# p-value nhỏ ⇒ MH tốt hơn đoán ngẫu nhiên
+
+# --- CÁCH 2: Bootstrap mặc định (bỏ trControl) ---
+set.seed(123)
+best_knn2 &lt;- train(Class ~ . - Telephone - ForeignWorker,
+                   data      = training_set,
+                   method    = "knn",
+                   na.action = na.omit,
+                   tuneLength = 10)
+best_knn2; plot(best_knn2); best_knn2$bestTune
+pred2 &lt;- predict(best_knn2, test_set)
+confusionMatrix(table(test_set$Class, pred2))</pre></div>`
+      },
+      {
+        num: "B2", color: "var(--accent-green)",
+        title: "Boston – KNN hồi quy cho biến medv",
+        task: `Với <code>Boston</code> (package <code>MASS</code>): kiểm tra NA, chia train/test 70:30. Chạy <strong>KNN</strong> (tuneLength=10, preProcess z-score) cho biến <strong>medv</strong> (định lượng). Xem k tốt nhất. Dự đoán và tính <strong>MSE, MAE, RMSE</strong>.`,
+        solution: `<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
+<pre>library(MASS); library(caret); library(dplyr)
+data("Boston")
+anyNA(Boston)
+
+# Chia 70:30
+set.seed(123)
+idx &lt;- createDataPartition(Boston$medv, p = 0.7, list = FALSE)
+training_set &lt;- slice(Boston,  idx)
+test_set     &lt;- slice(Boston, -idx)
+
+# KNN hồi quy
+set.seed(123)
+best_knn &lt;- train(medv ~ ., data = training_set,
+  method     = "knn",
+  preProcess = c("center","scale"),
+  na.action  = na.omit,
+  tuneLength = 10)
+best_knn
+best_knn$bestTune
+plot(best_knn)
+
+# Dự đoán + đánh giá
+pred &lt;- predict(best_knn, test_set)
+mse  &lt;- mean((test_set$medv - pred)^2)
+mae  &lt;- MAE(test_set$medv,  pred)
+rmse &lt;- RMSE(test_set$medv, pred)
+cat("MSE:", mse, " MAE:", mae, " RMSE:", rmse)
+
+# Đồ thị so sánh
+plot(test_set$medv, col = "red", type = "l")
+lines(pred, col = "blue")
+legend("topright",
+       legend = c("original-medv","predicted"),
+       fill = c("red","blue"), cex = 0.7)</pre></div>`
+      }
+    ]
+  },
+
+  p11: {
+    title: "BT: Cây quyết định (Bài 13)",
+    icon: "🌳",
+    badge: "3 câu",
+    mode: "practice",
+    exercises: [
+      {
+        num: "1", color: "var(--accent-blue)",
+        title: "iris – tiền xử lý & chia 70:30",
+        task: `<strong>1)</strong> Đọc <code>iris</code>, nêu cấu trúc.<br>
+<strong>2)</strong> Tiền xử lý: kiểm tra NA; (nếu cần) chuẩn hóa 4 biến số.<br>
+<strong>3)</strong> Chia train/test theo tỷ lệ <strong>70:30</strong> phân tầng theo Species.`,
+        solution: `<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
+<pre>library(caret); library(dplyr)
+data("iris")
+
+# 1) Cấu trúc
+str(iris)
+summary(iris)
+
+# 2) Tiền xử lý
+anyNA(iris)                          # không có NA
+# (Tùy chọn) chuẩn hóa 4 biến số – cây không cần nhưng bài yêu cầu:
+iris_scaled        &lt;- iris
+iris_scaled[,-5]   &lt;- scale(iris[,-5])
+
+# 3) Chia 70:30
+set.seed(123)
+idx &lt;- createDataPartition(iris$Species, p = 0.7, list = FALSE)
+training_set &lt;- slice(iris,  idx)
+test_set     &lt;- slice(iris, -idx)</pre></div>`
+      },
+      {
+        num: "2", color: "var(--accent-green)",
+        title: "iris – xây cây quyết định (rpart, cp=0)",
+        task: `<strong>4)</strong> Xây cây phân loại cho <strong>Species</strong> bằng <code>rpart</code> với <em>method="class", cp=0</em>. In <code>print</code>, <code>summary</code>, <code>plotcp</code>. Vẽ cây đẹp bằng <code>rpart.plot</code> (type=2, extra=101, under=TRUE, cex=0.8).`,
+        solution: `<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
+<pre>library(rpart); library(rpart.plot)
+
+DT &lt;- rpart(Species ~ ., data = training_set,
+            method = "class", cp = 0)
+DT
+
+print(DT)
+summary(DT)
+plotcp(DT)                          # biểu đồ chọn cp tối ưu
+
+rpart.plot(DT, type = 2, extra = 101,
+           under = TRUE, cex = 0.8)</pre></div>`
+      },
+      {
+        num: "3", color: "var(--accent-orange)",
+        title: "iris – dự đoán, đánh giá & cách 2 bằng caret",
+        task: `<strong>5)</strong> Dự đoán Species trên tập test (<code>type="class"</code>), in <code>confusionMatrix</code>.<br>
+<strong>Cách 2:</strong> dùng <code>caret::train</code> method="rpart", trControl=cv(10), tuneLength=10, preProcess z-score.`,
+        solution: `<div class="code-block"><div class="code-header"><span class="code-lang">R</span><button class="code-copy-btn">Copy</button></div>
+<pre>library(caret)
+
+# 5) Dự đoán + đánh giá
+pred &lt;- predict(DT, test_set, type = "class")
+pred
+confusionMatrix(table(test_set$Species, pred))
+
+# --- CÁCH 2: dùng caret ---
+set.seed(123)
+DT2 &lt;- train(Species ~ ., data = training_set,
+  method     = "rpart",
+  trControl  = trainControl(method = "cv", number = 10),
+  tuneLength = 10,
+  preProcess = c("center","scale"),
+  na.action  = na.pass)
+DT2
+rpart.plot(DT2$finalModel)
+
+pred2 &lt;- predict(DT2, test_set)
+confusionMatrix(table(test_set$Species, pred2))</pre></div>`
       }
     ]
   }

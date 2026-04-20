@@ -1,647 +1,1290 @@
-# 📚 ÔN THI GIỮA KỲ - KHAI PHÁ DỮ LIỆU (Data Mining)
+# 📚 ÔN TẬP KHAI PHÁ DỮ LIỆU (Data Mining) – Tuần 1 → 13
 
-> **Môn học**: Những nguyên lý cơ bản của Khai phá dữ liệu  
-> **Giảng viên**: TS Trần Thị Nga – Khoa Thống kê, ĐH KTQD  
-> **Phạm vi ôn tập**: Tuần 1–7 (4 buổi lý thuyết + 4 buổi bài tập)
+> **Môn học**: Những nguyên lý cơ bản của Khai phá dữ liệu
+> **Giảng viên**: TS Trần Thị Nga – Khoa Thống kê, ĐH KTQD
+> **Phạm vi**: Tuần 1–13 (Lý thuyết + Bài tập code R)
+
+> ⚠️ **QUY TẮC**: Tất cả câu lệnh trong file này CHỈ lấy từ slide bài giảng (`B_Tuan *.pdf`) và từ các file `.R` của giảng viên (`2026 - Mua xuan/*.R`) cộng `bai 13.R`. Không sử dụng thư viện/hàm ngoài phạm vi đó.
 
 ---
 
 ## 📋 MỤC LỤC
 
-| Phần | Nội dung | Slide gốc |
-|------|----------|------------|
-| 1 | R cơ bản & dplyr | Tuần 1 (LT) + Tuần 2 (BT) |
-| 2 | dplyr nâng cao (join) + tidyr | Tuần 3 (LT) + Bài 6 (BT) |
-| 3 | Bảng & Đồ thị (table, ggplot2) | Tuần 3 (LT) + Bài 7 (BT) |
-| 4 | Tổng hợp dplyr + tidyr + ggplot2 | Bài 4 + Bài 7 (BT) |
-| 5 | Giới thiệu Khai phá dữ liệu | Tuần 5 (LT) |
-| 6 | Tiền xử lý dữ liệu | Tuần 7 (LT) |
-| 7 | Tổng hợp các dạng bài thi | Tất cả |
+| Phần | Nội dung | Nguồn |
+|------|----------|--------|
+| 0 | Thiết lập môi trường | Tuần 1 |
+| 1 | R cơ bản & Nhập/xuất dữ liệu | Tuần 1 |
+| 2 | dplyr – 1 bộ dữ liệu | Tuần 1 |
+| 3 | dplyr – 2 bộ dữ liệu (JOIN) | Tuần 3 |
+| 4 | tidyr – Chỉnh hình dữ liệu | Tuần 3 |
+| 5 | Lập bảng thống kê | Tuần 3 |
+| 6 | Đồ thị (plot, ggplot2, plotly, gganimate) | Tuần 3 |
+| 7 | Giới thiệu Khai phá Dữ liệu | Tuần 5 |
+| 8 | Tiền xử lý dữ liệu (Missing + Outlier) | Tuần 7 |
+| 9 | Phân cụm (Clustering) | Tuần 9 |
+| 10 | Luật kết hợp (Association Rules) | Tuần 11 |
+| 11 | Khai phá mẫu tuần tự | Tuần 11 |
+| 12 | Phân loại (Classification) | Tuần 13 |
+| 13 | Bài tập mẫu có lời giải | Bài 1–13 |
+| 14 | Checklist ôn tập | — |
 
 ---
 
-# PHẦN 1: R CƠ BẢN & GÓI DPLYR
+# PHẦN 0: THIẾT LẬP MÔI TRƯỜNG
 
-## 1.1. Kiến thức nền tảng R
+```r
+rm(list = ls())                      # xoá môi trường làm việc
+getwd()                              # xem đường dẫn hiện tại
+setwd("D:/path/to/folder")            # đổi đường dẫn
 
-### Cấu trúc dữ liệu trong R
+install.packages("dplyr")            # cài package
+install.packages("dplyr", dependencies = TRUE)
+library(dplyr)                       # gọi package
+
+help(mean)                           # xem help
+?mean                                # tương đương
+data()                               # liệt kê dataset có sẵn
+```
+
+## Toán tử / ký hiệu
+
+| Nhóm | Ký hiệu |
+|------|---------|
+| Gán | `<-`, `=`, `Alt -` |
+| So sánh | `==`, `!=`, `<`, `>`, `<=`, `>=` |
+| Logic | `&` (AND), `|` (OR), `!` (NOT) |
+| Số học | `+`, `-`, `*`, `/`, `^`, `%%` (dư), `%/%` (nguyên) |
+| Pipe (dplyr/magrittr) | `%>%` (Ctrl+Shift+M), `%<>%`, `%T>%`, `%$%` |
+| Truy cập | `$` (vd: `mtcars$mpg`) |
+| Ghi chú | `#` |
+
+---
+
+# PHẦN 1: R CƠ BẢN
+
+## 1.1. Cấu trúc dữ liệu
 
 | Kiểu | Mô tả | Ví dụ |
-|------|--------|-------|
+|------|-------|-------|
 | `vector` | Dãy giá trị cùng kiểu | `c(1, 2, 3)` |
-| `data.frame` | Bảng 2 chiều (cột khác kiểu OK) | `data.frame(x=1:3, y=c("a","b","c"))` |
-| `matrix` | Ma trận 2 chiều (cùng kiểu) | `matrix(1:6, nrow=2)` |
-| `list` | Chứa nhiều kiểu khác nhau | `list(a=1, b="hello")` |
+| `data.frame` | Bảng 2 chiều (cột khác kiểu OK) | `data.frame(x = 1:3, y = c("a","b","c"))` |
+| `matrix` | Ma trận 2 chiều (cùng kiểu) | `matrix(1:6, nrow = 2)` |
+| `list` | Chứa nhiều kiểu khác nhau | `list(a = 1, b = "hi")` |
 
-### Kiểu biến
+## 1.2. Kiểu biến & Chuyển đổi
 
-| Kiểu | Hàm kiểm tra | Hàm chuyển đổi |
-|------|--------------|----------------|
-| Số nguyên | `is.integer()` | `as.numeric()` |
-| Số thập phân | `is.numeric()` | `as.numeric()` |
-| Ký tự | `is.character()` | `as.character()` |
-| Logic | `is.logical()` | `as.logical()` |
-| Phân loại | `is.factor()` | `as.factor()` |
+| Kiểu | Hàm chuyển đổi |
+|------|----------------|
+| Số | `as.numeric(x)` |
+| Ký tự | `as.character(x)` |
+| Logic | `as.logical(x)` |
+| Phân loại (factor) | `as.factor(x)` |
 
-### Nhập dữ liệu
+## 1.3. Nhập dữ liệu
+
+### Trực tiếp
 
 ```r
-# Nhập trực tiếp
-dat <- data.frame(
-  id = c(1, 2, 3),
-  tuoi = c(30, 45, 19),
-  chitieu = c(2300, 8300, 4500)
+# Cách 1: ghép vector vào data.frame
+namsinh   <- c(89, 70, 93, 93, 89, 92, 59, 94, 54, 69)
+tienluong <- c(3250, 6960, 1100, 1100, 6140, 1400, 7500, 9120, 1020, 2760)
+dat1 <- data.frame(namsinh, tienluong)
+
+# Cách 2: tạo trực tiếp
+dat2 <- data.frame(
+  id = c(1, 2, 3, 4, 5),
+  tuoi = c(30, 45, 19, 50, 39),
+  chitieu = c(2300, 8300, 4500, 3400, 5600)
 )
 
-# Từ file Excel (package readxl)
-library(readxl)
-dat <- read_excel("file.xlsx", sheet = 1)
+# Cách 3: nhập qua cửa sổ Editor
+dat3 <- edit(data.frame())
+```
 
-# Từ CSV
-dat <- read.csv("file.csv", header = TRUE, sep = ",")
+### Dataset có sẵn
 
-# Từ SPSS (package haven)
-library(haven)
-dat <- read_spss("file.sav")
-
-# Dữ liệu có sẵn trong R
+```r
 data("mtcars")
 data("iris")
+data("airquality")
+data("sleep")
+data("USArrests")
+data("Boston", package = "MASS")
+data("GermanCredit", package = "caret")
+load(file = "data.rda")
 ```
 
-### Xem thông tin dữ liệu
+### Từ file Excel (`readxl`)
 
 ```r
-View(dat)           # Xem toàn bộ (cửa sổ mới)
-str(dat)            # Cấu trúc dữ liệu
-dim(dat)            # Số dòng x cột
-nrow(dat); ncol(dat)
-names(dat)          # Tên các cột
-head(dat, 10)       # 10 dòng đầu
-tail(dat, 5)        # 5 dòng cuối
-summary(dat)        # Thống kê mô tả
-summary(dat$biến)   # Thống kê 1 biến
+library(readxl)
+dat4 <- read_excel("mtcars.xlsx",
+  sheet = 1,                  # hoặc tên sheet, hoặc NULL
+  range = NULL,               # hoặc "A1:D20"
+  col_names = TRUE)
 ```
 
-### Lưu dữ liệu
+### Từ file CSV (base)
 
 ```r
-save(dat, file = "data.rda")                          # File R
-library(writexl)
-write_xlsx(dat, "output.xlsx")                        # Excel
+dat6 <- read.csv("mtcars_CSV.csv",
+  header = TRUE,
+  sep = ";",                  # hoặc ","
+  dec = ".")                  # hoặc ","
+```
+
+### Từ file SPSS / Stata (`haven`)
+
+```r
 library(haven)
-write_sav(dat, "output.sav")                          # SPSS
+dat5 <- read_sav("mtcars.sav")
+dat5 <- read_spss("mtcars.sav", col_select = 1:3)
+dat5 <- read_dta("mtcars.dta")
+```
+
+## 1.4. Xem thông tin dữ liệu
+
+```r
+View(dat)                   # cửa sổ bảng
+str(dat)                    # cấu trúc
+dim(dat)                    # (dòng, cột)
+nrow(dat); ncol(dat)
+names(dat)                  # tên cột
+head(dat, 10)               # 10 dòng đầu
+tail(dat, 5)                # 5 dòng cuối
+summary(dat)                # thống kê mô tả
+summary(dat$mpg)            # 1 biến
+mtcars <- edit(mtcars)       # sửa trực tiếp
+```
+
+## 1.5. Lưu dữ liệu
+
+```r
+save(dat5, file = "mtcars111.rda")
+
+library(writexl)
+write_xlsx(mtcars, "huan.xlsx", col_names = TRUE, format_headers = TRUE)
+write_xlsx(list(sheet1 = mtcars, sheet2 = iris), "combined.xlsx")
+
+library(haven)
+write_sav(dat5, "output.sav")
+write_dta(dat5, "output.dta")
 ```
 
 ---
 
-## 1.2. Gói dplyr – Xử lý 1 bộ dữ liệu
+# PHẦN 2: GÓI DPLYR – XỬ LÝ 1 BỘ DỮ LIỆU
 
-> **Cấu trúc chung**: `verb(data, ...)`  
-> **Toán tử pipe**: `%>%` (Ctrl+Shift+M) — nối các lệnh thành chuỗi
+> **Cấu trúc chung**: `verb(data, …)`. Có thể nối bằng `%>%`.
 
-### 1.2.1. Đổi tên cột/dòng
+## 2.1. Đổi tên
 
 ```r
-# rename (dplyr)
-rename(dat, "tên_mới" = "tên_cũ")
+library(dplyr)
+rename(mtcars, miles.per.galons = mpg)
+rename(mtcars, C1 = mpg, C2 = cyl, C3 = disp)
 
-# colnames
-colnames(dat)[2] <- "tên_mới"
-colnames(dat) <- c("col1", "col2", "col3")
+colnames(mtcars)[c(1, 2)] <- c("so.km", "so.xy.lanh")
+colnames(mtcars)[c(1, 2)] <- c("mpg", "cyl")
 
-# rownames
 rownames(dat) <- dat[, 1]
 ```
 
-### 1.2.2. Lọc dữ liệu
+## 2.2. Chọn cột & lọc dòng
 
 ```r
-# SELECT – chọn cột
-select(dat, col1, col2)         # chọn cột
-select(dat, col1:col3)          # cột liên tiếp
-select(dat, -col1)              # bỏ cột
-select(dat, !col1)              # tương tự
+# SELECT
+select(mtcars, 1:3)
+select(mtcars, 1, 5)
+select(mtcars, c(1, 3, 5))
+mtcars[-c(4:11)]                  # bỏ cột 4-11
 
-# FILTER – lọc dòng theo điều kiện
-filter(dat, tuoi > 30)
-filter(dat, tuoi > 30 & chitieu < 5000)
-filter(dat, tuoi > 30 | chitieu > 8000)
+# FILTER
+filter(mtcars, mpg > 25)
+filter(mtcars, mpg > 20 & cyl == 6)
+filter(mtcars, mpg > 20 & mpg < 30)
 
-# DISTINCT – xóa trùng lặp
-distinct(dat)                   # toàn bộ
-distinct(dat, col1, .keep_all = TRUE)  # theo 1 cột, giữ cột khác
-
-# SAMPLE – lấy mẫu ngẫu nhiên
-sample_n(dat, 5)                        # lấy 5 quan sát
-sample_frac(dat, 0.3)                   # lấy 30%
-sample_n(dat, 5, replace = TRUE)        # chọn hoàn lại
-
-# SLICE – chọn theo vị trí
-slice(dat, 1:10)                        # 10 dòng đầu
-slice(dat, -c(1:5))                     # bỏ 5 dòng đầu
-slice_max(dat, col1, n = 5)             # 5 giá trị lớn nhất
-slice_min(dat, col1, n = 5)             # 5 giá trị nhỏ nhất
-
-# TOP_N
-top_n(dat, 10, col1)                    # 10 lớn nhất theo col1
+# DISTINCT
+distinct(mtcars, cyl, .keep_all = FALSE)
+distinct(mtcars, cyl, .keep_all = TRUE)
+distinct(mtcars, cyl, am, .keep_all = TRUE)
 ```
 
-### 1.2.3. Sắp xếp
+## 2.3. Lấy mẫu ngẫu nhiên
 
 ```r
-arrange(dat, col1)              # tăng dần
-arrange(dat, desc(col1))        # giảm dần
-arrange(dat, col1, desc(col2))  # tăng theo col1, giảm theo col2
+sample_frac(mtcars, 0.2, replace = TRUE)
+sample_n(mtcars, 5, replace = TRUE)
 ```
 
-### 1.2.4. Tạo biến mới (mutate)
+## 2.4. Chọn theo vị trí
 
 ```r
-# Tạo biến đơn giản
-mutate(dat, bmi = weight / height^2)
+slice(mtcars, 5:10)
+slice(mtcars, -(31:32))              # bỏ dòng
+slice_max(mtcars, mpg, n = 5, with_ties = TRUE)
+slice_max(mtcars, cyl, n = 5, with_ties = FALSE)
+slice_min(mtcars, mpg, n = 5, with_ties = TRUE)
 
-# Nhiều biến
-mutate(dat,
-  total = col1 + col2,
-  avg = total / 2
-)
-
-# Với điều kiện (case_when)
-mutate(dat, level = case_when(
-  score < 5  ~ "Low",
-  score < 8  ~ "Medium",
-  TRUE       ~ "High"
-))
-
-# Tùy chọn
-mutate(dat, new_col = col1*2, .keep = "all")    # giữ tất cả cột
-mutate(dat, new_col = col1*2, .keep = "used")   # chỉ giữ cột tham gia
-mutate(dat, new_col = col1*2, .before = 2)      # đặt cột mới ở vị trí 2
+top_n(mtcars, 10, mpg)
+top_frac(mtcars, 0.1, mpg)
+bottom_n(mtcars, 5, mpg)
+bottom_frac(mtcars, 0.1, mpg)
 ```
 
-### 1.2.5. Tổng hợp (summarise)
+## 2.5. Sắp xếp
 
 ```r
-# Tính 1 hàm
-summarise(dat, mean_x = mean(col1, na.rm = TRUE))
-
-# Nhiều hàm
-summarise(dat,
-  tb = mean(col1, na.rm = TRUE),
-  tv = median(col1, na.rm = TRUE),
-  sd = sd(col1, na.rm = TRUE),
-  n  = n()
-)
-
-# Theo nhóm (group_by + summarise)
-dat %>%
-  group_by(nhom) %>%
-  summarise(
-    tb = mean(col1, na.rm = TRUE),
-    tv = median(col1, na.rm = TRUE)
-  )
-
-# Nhiều cột cùng lúc
-summarise(dat, across(c(col1, col2), list(mean)))
-summarise(dat, across(everything(), list(mean)))
+arrange(mtcars, cyl, mpg)
+arrange(mtcars, desc(cyl), mpg)
 ```
 
-### Các hàm thống kê phổ biến
+## 2.6. Tạo biến mới (mutate, case_when, transmute)
 
-| Hàm | Mô tả |
-|-----|--------|
-| `mean()` | Trung bình |
-| `median()` | Trung vị |
-| `sd()` | Độ lệch chuẩn |
-| `var()` | Phương sai |
-| `min()`, `max()` | Giá trị nhỏ/lớn nhất |
+```r
+mutate(mtcars, km = 1.7 * mpg, .after = 1)
+
+mutate(mtcars, phanloai = case_when(
+  mpg < 20                  ~ 1,
+  mpg >= 20 & mpg < 30      ~ 2,
+  mpg >= 30                 ~ 3
+), .after = 1)
+
+mutate(mtcars, phanloai = case_when(
+  mpg < 20                  ~ "Muc tieu thu thap",
+  mpg >= 20 & mpg < 30      ~ "Muc tieu thu trung binh",
+  mpg >= 30                 ~ "Muc tieu thu cao"
+), .after = 1)
+
+# Tùy chọn .keep / .before / .after
+mutate(dat, new = x * 2, .keep = "all")         # giữ tất cả cột
+mutate(dat, new = x * 2, .keep = "used")        # chỉ cột tham gia
+mutate(dat, new = x * 2, .before = 2)           # chèn vị trí 2
+
+# transmute: chỉ giữ cột mới
+transmute(iris, sepal = Sepal.Length + Sepal.Width)
+```
+
+## 2.7. Tổng hợp (summarise)
+
+```r
+summarise(mtcars, mean(mpg), median(mpg), mean(disp), n())
+summarise(mtcars, "tieu thu trung binh" = mean(mpg), median(mpg), mean(disp), n())
+
+# Nhiều hàm, nhiều cột
+summarise(mtcars, across(.cols = c(1, 3, 5), list(mean, median, var)))
+summarise(mtcars, across(everything(), list(mean)))
+```
+
+### Hàm tóm tắt phổ biến
+
+| Hàm | Ý nghĩa |
+|-----|---------|
+| `mean(x)` | Trung bình |
+| `median(x)` | Trung vị |
+| `sd(x)`, `var(x)` | Độ lệch chuẩn, phương sai |
+| `min(x)`, `max(x)` | Nhỏ nhất, lớn nhất |
+| `sum(x)` | Tổng |
 | `n()` | Số quan sát |
-| `first()`, `last()` | Giá trị đầu/cuối |
-| `sum()` | Tổng |
+| `n_distinct(x)` | Số giá trị khác nhau |
+| `first(x)`, `last(x)`, `nth(x, k)` | Giá trị đầu/cuối/thứ k |
+| `IQR(x)` | Khoảng tứ phân vị |
 
-> ⚠️ Nếu dữ liệu có NA, thêm `na.rm = TRUE` vào trong hàm!
+> ⚠️ Nếu có NA thì thêm `na.rm = TRUE` vào hàm thống kê.
 
----
-
-## 1.3. Gói dplyr – Xử lý 2 bộ dữ liệu (JOIN)
-
-### Ghép theo cột (JOIN – cần biến chung "key")
+## 2.8. Gom nhóm (group_by)
 
 ```r
-# inner_join: chỉ giữ quan sát chung
-inner_join(dat1, dat2, by = "key")
+# Cách 1: gán trung gian
+moi <- group_by(mtcars, cyl)
+summarise(moi, mean(mpg), mean(disp))
 
-# left_join: giữ tất cả quan sát từ dat1
-left_join(dat1, dat2, by = "key")
+# Cách 2: pipe
+mtcars %>%
+  group_by(cyl) %>%
+  summarise(mean(mpg), mean(disp))
 
-# right_join: giữ tất cả quan sát từ dat2
-right_join(dat1, dat2, by = "key")
-
-# full_join: giữ tất cả từ cả hai
-full_join(dat1, dat2, by = "key")
+ungroup(iris)
 ```
 
-### Ghép theo dòng (SET operations – cùng cấu trúc cột)
+## 2.9. Đếm & xếp hạng
 
 ```r
-intersect(dat1, dat2)   # dòng chung
-union(dat1, dat2)       # tất cả dòng (bỏ trùng)
-setdiff(dat1, dat2)     # dòng có trong dat1, không có dat2
-```
+count(iris, Species, wt = Sepal.Length)
 
-### Nối đơn giản (không kiểm tra điều kiện)
-
-```r
-bind_rows(dat1, dat2)   # nối dòng
-bind_cols(dat1, dat2)   # nối cột (phải cùng số dòng)
+# Window functions (cheatsheet)
+dense_rank(x); min_rank(x); percent_rank(x); row_number(x); ntile(x, 4); cume_dist(x)
+lead(x); lag(x); between(x, a, b)
+cumall(x); cumany(x); cummean(x); cumsum(x); cummax(x); cummin(x); cumprod(x)
+pmax(x, y); pmin(x, y)
 ```
 
 ---
 
-# PHẦN 2: GÓI TIDYR – CHỈNH HÌNH DỮ LIỆU
+# PHẦN 3: GÓI DPLYR – GHÉP 2 BỘ DỮ LIỆU
 
-## 2.1. Các lệnh cơ bản
+## 3.1. Mutating joins (cần biến chung `key`)
+
+```r
+inner_join(d1, d2, by = "key")      # chỉ giữ quan sát chung
+left_join(d1, d2, by = "key")       # giữ tất cả d1
+right_join(d1, d2, by = "key")      # giữ tất cả d2
+full_join(d1, d2, by = "key")       # giữ tất cả hai
+
+# Filtering joins
+semi_join(d1, d2, by = "key")       # giữ d1 có mặt trong d2
+anti_join(d1, d2, by = "key")       # giữ d1 không có trong d2
+```
+
+## 3.2. Set operations (cùng cấu trúc cột)
+
+```r
+intersect(d1, d2)           # dòng chung
+union(d1, d2)               # tất cả (bỏ trùng)
+setdiff(d1, d2)             # trong d1 không có trong d2
+```
+
+## 3.3. Nối đơn giản
+
+```r
+bind_rows(d1, d2)           # nối dòng
+bind_cols(d1, d2)           # nối cột (phải cùng số dòng)
+```
+
+---
+
+# PHẦN 4: GÓI TIDYR – CHỈNH HÌNH DỮ LIỆU
 
 ```r
 library(tidyr)
 
-# GATHER – chuyển cột thành dòng (wide → long)
-gather(dat, tên_cột_key, tên_cột_value, cột1, cột2, ...)
-# VD: gather(diemthi, mon, diem, van, ngoaingu, toan)
+# GATHER – wide → long
+gather(diemthi, mon, diem, van, ngoaingu, toan)
 
-# SPREAD – chuyển dòng thành cột (long → wide)
-spread(dat, cột_key, cột_value)
+# SPREAD – long → wide
+spread(pollution, size, amount)
 
-# UNITE – gộp nhiều cột thành 1
-unite(dat, col = "tên_mới", col1, col2, sep = "_", remove = TRUE)
+# UNITE – gộp cột
+unite(dat, col = "ten_moi", col1, col2, sep = "_", remove = TRUE)
 
-# SEPARATE – tách 1 cột thành nhiều cột
-separate(dat, col, into = c("col1", "col2"), sep = "-", remove = TRUE)
+# SEPARATE – tách 1 cột
+separate(storms, date, into = c("y", "m", "d"), sep = "-", remove = TRUE)
 
-# GSUB – thay thế ký tự
-gsub("old", "new", dat$col)
-# VD: dat$week <- gsub("wk", "", dat$week)  # xóa "wk"
+# GSUB – thay ký tự
+gsub("wk", "", dat$week)
+
+# DROP_NA – xóa dòng có NA (sẽ gặp lại ở Phần 8)
+drop_na(dat)
+drop_na(dat, col1)
 ```
 
 ---
 
-# PHẦN 3: BẢNG & ĐỒ THỊ
+# PHẦN 5: LẬP BẢNG THỐNG KÊ
 
-## 3.1. Lập bảng
-
-### Lệnh table (cơ bản)
+## 5.1. `table` + tần suất (base)
 
 ```r
-# Bảng tần số 1 chiều
-table(dat$col)
+# Bảng tần số
+a <- table(mtcars$cyl)
+addmargins(a)
 
-# Bảng 2 chiều
-tab <- table(dat$col1, dat$col2)
+# Bảng tỷ trọng (%)
+100 * prop.table(a)
+round(100 * prop.table(a), 2)
+addmargins(100 * prop.table(a))
 
-# Thêm tổng
-addmargins(tab)
-
-# Bảng tần suất
-prop.table(tab)           # tỷ lệ chung
-prop.table(tab, 1)        # tỷ lệ theo dòng
-prop.table(tab, 2)        # tỷ lệ theo cột
-round(100 * prop.table(tab), 2)  # phần trăm, 2 chữ số
+# Bảng 2/3 chiều
+b <- table(mtcars$cyl, mtcars$vs)
+addmargins(b)
+prop.table(b)
+prop.table(b, 1)             # theo dòng
+prop.table(b, 2)             # theo cột
+addmargins(prop.table(b, 2))
+table(mtcars$cyl, mtcars$vs, mtcars$am)
 ```
 
-### Lệnh tabular (package tables)
+## 5.2. `tabular` (package `tables`)
 
 ```r
 library(tables)
-# Cấu trúc: tabular(dòng ~ cột)
-tabular(col1 ~ 1)                        # tần số
-tabular(col1 ~ Percent())                # tần suất
-tabular(col1 ~ 1 + Percent())            # cả hai
-tabular(col1 * col2 ~ 1)                 # phân tổ kết hợp
-tabular(col1 + 1 ~ col2 + 1)             # có tổng
+# Cú pháp: tabular(dòng ~ cột), dùng + (cộng), * (phân tổ kết hợp), 1 (tần số)
+tabular(as.factor(mtcars$cyl) ~ 1)
+tabular(as.factor(mtcars$cyl) + 1 ~ 1)                       # có tổng
+tabular(as.factor(mtcars$cyl) ~ Percent())
+tabular(as.factor(mtcars$cyl) + 1 ~ 1 + Percent())
+tabular(as.factor(mtcars$am) + 1 ~ as.factor(mtcars$cyl) + 1 + Percent())
+tabular(as.factor(mtcars$am) * as.factor(mtcars$gear) + 1 ~
+        as.factor(mtcars$cyl) + 1 + Percent())
 
 # Lưu bảng
 write.csv.tabular(bang, file = "output.csv")
 ```
 
-### Phân tích tương quan
+## 5.3. Hệ số tương quan
 
 ```r
-cor(dat, method = "pearson")  # hoặc "kendall", "spearman"
+cor(mtcars, method = "pearson")
+cor(mtcars, method = "kendal")
+cor(mtcars, method = "spearman")
 
 library(Hmisc)
-a <- rcorr(as.matrix(dat))
-a$r   # Hệ số tương quan
-a$P   # P-value
-a$n   # Số quan sát
-```
-
-## 3.2. Vẽ đồ thị
-
-### Lệnh plot (cơ bản)
-
-```r
-plot(dat$x, dat$y, type = "p", main = "Title", xlab = "X", ylab = "Y")
-hist(dat$x)
-boxplot(dat$x)
-barplot(table(dat$x))
-pie(table(dat$x))
-```
-
-### Package ggplot2
-
-```r
-library(ggplot2)
-
-# Cấu trúc cơ bản
-ggplot(data, aes(x = col_x, y = col_y)) +
-  geom_loại() +          # biểu đồ
-  labs() +                # nhãn
-  theme_minimal()         # hình nền
-
-# Biểu đồ cột
-ggplot(dat, aes(x = cut)) +
-  geom_bar(fill = "steelblue") +
-  labs(title = "Tần số chất lượng cắt", x = "Cut", y = "Count")
-
-# Biểu đồ phân tán
-ggplot(dat, aes(x = poptotal, y = popdensity)) +
-  geom_point(color = "red", alpha = 0.5) +
-  labs(title = "Scatter Plot")
-
-# Boxplot theo nhóm
-ggplot(dat, aes(x = state, y = percelderlypoverty)) +
-  geom_boxplot(fill = "lightblue") +
-  labs(title = "Boxplot theo bang")
-
-# Histogram
-ggplot(dat, aes(x = price)) +
-  geom_histogram(bins = 30, fill = "coral")
-
-# Chia nhỏ đồ thị (facet)
-ggplot(dat, aes(x = value)) +
-  geom_histogram() +
-  facet_wrap(~ group)
-
-# Tương tác (plotly)
-library(plotly)
-ggplotly(p)  # p là ggplot object
-```
-
-### Đồ thị tương quan
-
-```r
-library(ggcorrplot)
-ggcorrplot(cor(dat),
-  method = "circle",
-  type = "upper",
-  lab = TRUE,
-  colors = c("blue", "white", "red"))
+a <- rcorr(as.matrix(mtcars))
+a$r                         # hệ số tương quan
+a$n                         # số quan sát
+a$P                         # p-value
 ```
 
 ---
 
-# PHẦN 4: KHAI PHÁ DỮ LIỆU – LÝ THUYẾT (Tuần 5)
+# PHẦN 6: ĐỒ THỊ
 
-## 4.1. Khái niệm
+## 6.1. Base R
 
-**Khai phá dữ liệu** = Hệ thống các phương pháp áp dụng cho CSDL lớn, phức tạp để loại bỏ yếu tố ngẫu nhiên, khám phá mẫu/mô hình, quy luật tiềm ẩn.
+```r
+hist(mtcars$mpg)
+boxplot(mtcars$mpg)
+plot(mtcars$cyl, mtcars$mpg)
+plot(mtcars$wt, mtcars$mpg,
+     abline(lm(mtcars$mpg ~ mtcars$wt, data = mtcars), col = "blue"))
+dotchart(mtcars$mpg,
+  main = "Biểu đồ điểm", xlab = "tan so", ylab = "so luong")
 
-- Là lĩnh vực **liên ngành**: CSDL + Thống kê + Thuật toán + Máy học + Trực quan hóa
+b <- table(mtcars$cyl)
+pie(b)
+barplot(b)
+```
 
-## 4.2. Quy trình khai phá dữ liệu
+## 6.2. ggplot2
+
+> **Cấu trúc**: `ggplot(data) + aes(...) + geom_*() + labs() + theme_*()`
+
+```r
+library(ggplot2)
+mtcars$cyl <- as.factor(mtcars$cyl)
+mtcars$am  <- as.factor(mtcars$am)
+
+# Cột (bar)
+ggplot(mtcars) +
+  aes(cyl) +
+  geom_bar(col = "black", fill = "BLUE") +
+  labs(title = "BIỂU ĐỒ CỘT",
+       x = "số xy lanh", y = "số lượng xe",
+       caption = "Nguồn: cục Thống kê")
+
+# 2 biến – cộng dồn / xếp chồng / tỷ trọng
+ggplot(mtcars) + aes(cyl, fill = am) + geom_bar(position = "dodge")
+ggplot(mtcars) + aes(cyl, fill = am) + geom_bar(position = "stack")
+ggplot(mtcars) + aes(cyl, fill = am) + geom_bar(position = "fill")
+
+# Scatter + hồi quy
+ggplot(mtcars) +
+  aes(mpg, qsec) +
+  geom_point() + geom_smooth()
+
+ggplot(mtcars) +
+  aes(mpg, hp) +
+  geom_point(aes(color = cyl)) +
+  geom_smooth(method = lm, col = "red", alpha = 0.2)
+
+# Mật độ
+ggplot(mtcars) + aes(mpg, fill = am)  + geom_density(alpha = 0.2)
+ggplot(mtcars) + aes(hp,  fill = cyl) + geom_density(alpha = 0.4)
+
+# Boxplot
+ggplot(mtcars) + aes(cyl, mpg) +
+  geom_boxplot(fill = "blue") +
+  labs(title = "Boxplot", x = "So xy lanh", y = "so luong xe")
+```
+
+### Cấu trúc đầy đủ của ggplot
+
+Layers (ngăn bằng `+`): `aes`, `geom_*`, `facet_*`, `stat_*`, `coord_*`, `scale_*`, `theme_*`, `theme()`, `labs()`.
+
+```r
+# theme + facet
+ggplot(dat, aes(value)) + geom_histogram() + facet_wrap(~ group)
+theme(legend.position = "top")   # "bottom"/"right"/"left"
+```
+
+## 6.3. `ggcorrplot`
+
+```r
+library(ggcorrplot)
+ggcorrplot(cor(mtcars),
+  method = "circle",            # hoặc "square"
+  type = "upper",               # "lower" / "full"
+  lab = TRUE,
+  lab_size = 3,
+  legend.title = "Corr",
+  colors = c("blue", "white", "red"),
+  outline.color = "gray",
+  hc.order = FALSE)
+```
+
+## 6.4. Đồ thị tương tác & động
+
+```r
+library(plotly)
+c <- ggplot(mtcars) + aes(cyl) + geom_bar()
+ggplotly(c)
+
+library(gganimate); library(gifski); library(png)
+c + transition_states(vs)
+
+ggplot(mtcars) +
+  aes(x = mpg, y = hp, size = drat, color = wt) +
+  geom_point() +
+  transition_states(cyl, transition_length = 1) +
+  shadow_mark() +
+  shadow_trail()
+
+# transition_time(biến), transition_reveal(biến), anim_save("out.gif")
+```
+
+---
+
+# PHẦN 7: GIỚI THIỆU KHAI PHÁ DỮ LIỆU (Tuần 5 – LT)
+
+**Khai phá dữ liệu (Data Mining)** = hệ thống phương pháp áp dụng cho CSDL lớn, phức tạp để loại bỏ yếu tố ngẫu nhiên, khám phá mẫu/mô hình, quy luật tiềm ẩn. Là lĩnh vực **liên ngành**: CSDL + Thống kê + Thuật toán + Máy học + Trực quan hóa.
+
+## Quy trình KDD
 
 ```
 Dữ liệu vào → Tiền xử lý → Khai phá dữ liệu → Đánh giá mô hình → Tri thức
 ```
 
-## 4.3. Phân loại kỹ thuật KPDL
+## Phân loại kỹ thuật
 
 | Loại | Phương pháp | Học |
 |------|-------------|-----|
 | **Mô tả** | Phân cụm (Clustering) | Không giám sát |
 | | Luật kết hợp (Association Rules) | Không giám sát |
-| | Phát hiện bất thường (Anomaly) | Cả hai |
+| | Phát hiện bất thường | Cả hai |
 | **Dự đoán** | Phân loại (Classification) | Có giám sát |
 | | Hồi quy (Regression) | Có giám sát |
 | | Dãy số thời gian | Có giám sát |
 
-## 4.4. Dữ liệu được khai phá
+## Dữ liệu
 
-| Dữ liệu có cấu trúc | Dữ liệu phi cấu trúc |
-|-----------------------|----------------------|
-| Bảng, dòng, cột | Hình ảnh, video, email, văn bản |
-| ~20% dữ liệu doanh nghiệp | ~80% dữ liệu doanh nghiệp |
-| Dễ lưu trữ, quản lý | Phức tạp hơn |
+| Có cấu trúc | Phi cấu trúc |
+|-------------|--------------|
+| Bảng / dòng / cột | Hình ảnh, video, email, văn bản |
+| ~20% dữ liệu DN | ~80% dữ liệu DN |
+
+**Thuật toán phổ biến** (theo slide): Regression, Decision Trees/Rules, Clustering, Visualization, Random Forests, K-Nearest Neighbours, Time Series, Ensemble Methods, Text Mining, PCA, Boosting, Neural Networks / Deep Learning, Gradient Boosted Machines, Anomaly Detection, CNN, SVM.
 
 ---
 
-# PHẦN 5: TIỀN XỬ LÝ DỮ LIỆU (Tuần 7)
+# PHẦN 8: TIỀN XỬ LÝ DỮ LIỆU (Tuần 7)
 
-## 5.1. Tổng quan
+4 kỹ thuật: **Tích hợp → Làm sạch → Chuyển đổi → Rút gọn**. Chất lượng dữ liệu: Kịp thời, Đầy đủ, Chính xác, Nhất quán, Tin cậy, Diễn giải được.
 
-4 kỹ thuật tiền xử lý: **Tích hợp** → **Làm sạch** → **Chuyển đổi** → **Rút gọn**
+## 8.1. Cơ chế khuyết thiếu
 
-Chất lượng dữ liệu: Kịp thời, Đầy đủ, Chính xác, Nhất quán, Tin cậy, Diễn giải được.
+| Cơ chế | Phân phối | Liên quan đến | Xử lý |
+|--------|-----------|--------------|-------|
+| **MCAR** | Ngẫu nhiên | Không biến nào | Loại bỏ / Thay thế |
+| **MAR** | Phi ngẫu nhiên | Biến khác | Thay thế (chuyên sâu) |
+| **MNAR** | Phi ngẫu nhiên | Chính biến có NA | Thu thập thêm |
 
-## 5.2. Xử lý dữ liệu khuyết thiếu (Missing Data)
+Mẫu NA: Univariate / Monotone / General.
 
-### Cơ chế khuyết thiếu
-
-| Cơ chế | Phân phối | Khả năng dự báo | Xử lý |
-|--------|-----------|-----------------|-------|
-| **MCAR** (hoàn toàn ngẫu nhiên) | Ngẫu nhiên | Không | Loại bỏ hoặc thay thế |
-| **MAR** (ngẫu nhiên) | Phi ngẫu nhiên | Có (từ biến khác) | Thay thế, phương pháp chuyên sâu |
-| **MNAR** (không ngẫu nhiên) | Phi ngẫu nhiên | Không | Thu thập thêm dữ liệu |
-
-### Code R – Kiểm tra missing
+## 8.2. Phát hiện NA
 
 ```r
-anyNA(dat)                    # Có NA không?
-is.na(dat)                    # Ma trận TRUE/FALSE
-sum(is.na(dat))               # Tổng số NA
-colSums(is.na(dat))           # Số NA theo cột
-rowSums(is.na(dat))           # Số NA theo dòng
-
-# Đồ thị (visdat)
-library(visdat)
-vis_dat(dat)
-vis_miss(dat)
-
-# Đồ thị (VIM)
-library(VIM)
-aggr(dat, numbers = TRUE, prop = FALSE, sortVars = TRUE)
-matrixplot(dat)
-marginplot(dat[c("var1", "var2")])
-
-# Kiểm định MCAR (naniar)
-library(naniar)
-mcar_test(dat)   # H0: MCAR, H1: MAR
+anyNA(attenu)
+is.na(attenu)
+is.na(attenu$event)
+sum(is.na(attenu))
+table(is.na(attenu))
+colSums(is.na(attenu))
+rowSums(is.na(attenu))
 ```
 
-### Code R – Xử lý missing
+## 8.3. Đồ thị NA
 
 ```r
-# 1. Xóa
-na.omit(dat)                              # Xóa dòng có NA
-drop_na(dat)                              # Tương tự (tidyr)
-drop_na(dat, col1)                        # Xóa NA ở 1 cột
-dat[colSums(is.na(dat)) == 0]             # Xóa cột có NA
+library(visdat)
+vis_dat(attenu)
+vis_miss(attenu)
 
-# 2. Thay thế bằng trung bình/trung vị
-dat %>% mutate(col1 = case_when(
-  is.na(col1) ~ mean(col1, na.rm = TRUE),
-  TRUE ~ col1
+library(plotly)
+ggplotly(vis_dat(attenu))
+
+library(VIM)
+aggr(attenu, numbers = TRUE, prop = TRUE, sortVars = TRUE, sortCombs = TRUE)
+summary(aggr(attenu, numbers = TRUE, prop = TRUE, sortVars = TRUE, sortCombs = TRUE))
+matrixplot(attenu)
+marginplot(attenu[c("station", "event")], numbers = TRUE, cex.numbers = 0.6)
+```
+
+## 8.4. Kiểm định cơ chế khuyết
+
+```r
+library(naniar)
+mcar_test(attenu)            # H0: MCAR ; H1: MAR
+```
+
+## 8.5. Xử lý NA
+
+### Xóa
+
+```r
+na.omit(dat)
+drop_na(dat)                 # tidyr
+drop_na(dat, col1)
+dat[colSums(is.na(dat)) == 0]     # bỏ cột có NA
+```
+
+### Thay bằng giá trị cố định
+
+```r
+# Cách 1: dplyr
+library(dplyr)
+mutate(attenu, station = case_when(
+  is.na(station) ~ mean(station, na.rm = TRUE),
+  TRUE ~ station
 ))
 
-# Package mice
+# Cách 2: mice
 library(mice)
-complete(mice(dat, method = "mean"))       # Trung bình
-complete(mice(dat, method = "sample"))     # Ngẫu nhiên (hot-deck)
-complete(mice(dat, method = "norm.predict")) # Hồi quy
-complete(mice(dat, method = "norm.nob"))   # Hồi quy ngẫu nhiên
-complete(mice(dat, method = "cart"))        # Cây quyết định
-complete(mice(dat, method = "rf"))          # Rừng ngẫu nhiên
+complete(mice(attenu, method = "mean"))
+```
 
-# Package VIM
-library(VIM)
-hotdeck(dat)                               # Hot-deck
+### Thay ngẫu nhiên
 
-# 3. Hồi quy tự viết
-model <- lm(y ~ x, data = dat)
+```r
+complete(mice(attenu, method = "sample"))
+hotdeck(attenu)              # VIM
+```
+
+### Hồi quy
+
+```r
+# Tự viết (slide)
+mo_moi <- lm(y ~ x, data = dat)
+summary(mo_moi)
 dat %>% mutate(y = case_when(
-  is.na(y) ~ predict(model, .),
+  is.na(y) ~ predict(mo_moi, .),
   TRUE ~ y
 ))
+
+# mice
+complete(mice(attenu, method = "norm.predict"))   # hồi quy thường
+complete(mice(attenu, method = "norm.nob"))       # hồi quy ngẫu nhiên
+complete(mice(attenu, method = "cart"))           # cây quyết định
+complete(mice(attenu, method = "rf"))             # rừng ngẫu nhiên
 ```
 
-## 5.3. Dữ liệu nhiễu vs Dữ liệu đột xuất (Outlier)
+## 8.6. Dữ liệu nhiễu vs Đột xuất (Outlier)
 
-| | Dữ liệu nhiễu (Noise) | Dữ liệu đột xuất (Outlier) |
-|-|------------------------|-----------------------------|
+| | Nhiễu (Noise) | Đột xuất (Outlier) |
+|-|---------------|--------------------|
 | Bản chất | Không phải giá trị thực | Có thể là giá trị thực |
-| Ảnh hưởng | Overfit mô hình | Tạo lỗi nhưng không sai lệch |
+| Ảnh hưởng | Overfit | Tăng phương sai |
 | Phân phối | Theo phân phối dữ liệu | Không theo phân phối |
 
-### Code R – Xác định Outlier
+### Z-score (mean ± 3·sd)
 
 ```r
-# Z-score
-LB <- mean(dat$x) - 3 * sd(dat$x)
-UB <- mean(dat$x) + 3 * sd(dat$x)
-filter(dat, x < LB | x > UB)
+LB <- mean(sleep$BodyWgt) - 3 * sd(sleep$BodyWgt)
+UB <- mean(sleep$BodyWgt) + 3 * sd(sleep$BodyWgt)
+filter(sleep, BodyWgt < LB | BodyWgt > UB)
+```
 
-# Hampel filter
+### Hampel (median ± 3·mad)
+
+```r
 LB <- median(dat$x) - 3 * mad(dat$x)
 UB <- median(dat$x) + 3 * mad(dat$x)
 filter(dat, x < LB | x > UB)
+```
 
-# Boxplot
-bp <- boxplot(dat$x)
-bp$out   # Giá trị đột xuất
+### Đồ thị
 
-# Histogram
-hist(dat$x)
+```r
+hist(sleep$BodyWgt)
+dtbox <- boxplot(sleep$BodyWgt)
+dtbox$out                                    # các giá trị đột xuất
+```
 
-# Kiểm định (package outliers)
+### Kiểm định
+
+```r
 library(outliers)
-grubbs.test(dat$x, type = 10)        # Grubbs (1 outlier, 1 phía)
-grubbs.test(dat$x, type = 11)        # Grubbs (1 outlier, 2 phía)
-dixon.test(dat$x)                     # Dixon (mẫu nhỏ < 25-30)
+grubbs.test(sleep$BodyWgt, type = 10)        # 1 outlier, 1 phía
+grubbs.test(sleep$BodyWgt, type = 11)        # 1 outlier, 2 phía
+# options: opposite = FALSE/TRUE, two.sided = FALSE/TRUE
 
-# Kiểm định Rosner (package EnvStats, mẫu lớn > 20)
+small_sample <- sleep$BodyWgt[1:20]
+dixon.test(small_sample, type = 11)          # mẫu nhỏ
+
 library(EnvStats)
+rosnerTest(sleep$Gest)
 rosnerTest(dat$x, k = 3, alpha = 0.05)
 ```
 
 ---
 
-# PHẦN 6: TỔNG HỢP CÁC DẠNG BÀI TẬP & HƯỚNG DẪN GIẢI
+# PHẦN 9: PHÂN CỤM (Tuần 9)
 
-## 📝 DẠNG 1: Nhập & Xem dữ liệu (Tuần 2 – Bài 1, 2)
+## 9.1. Khái niệm
 
-**Đề mẫu**: Nhập bảng dữ liệu vào dataframe, kiểm tra, lưu file.
+**Phân cụm** = học **không giám sát**, chia quan sát thành các cụm sao cho trong cụm giống nhau, khác cụm khác nhau.
+
+Nhóm thuật toán:
+- **Phân cấp (Hierarchical)**: AGNES (agglomerative), DIANA (divisive). Linkage: centroid, single, average, complete, radius, diameter.
+- **Phân hoạch**: K-means (Hartigan-Wong 1979, McQueen 1967, Lloyd 1957/1982), K-medoids/PAM (Kaufmann & Rousseeuv 1987), CLARA (1990), CLARANS (Ng & Han 1994).
+- **Dữ liệu định tính**: K-modes.
+
+**Khoảng cách**: Euclid, Manhattan, Minkowski, Pearson, Chebychev, Cosine Similarity.
+
+**Chọn số cụm k**: Elbow (WSS), Silhouette, Gap-statistic (Bootstrap).
+
+## 9.2. Phân cụm phân cấp (hclust)
 
 ```r
-# Bài 1 (Tuần 2): Nhập data product
-product <- data.frame(
-  ProdID = c("P01", "P02", "P03", "P04"),
-  Category = c("Electronics", "Fashion", "Electronics", "Food"),
-  Price_Level = c("High", "Medium", "Low", "Medium")
-)
-product                 # xem trong console
-library(writexl)
-write_xlsx(product, "bai1.xlsx")
+library(datasets)
+data("USArrests")
+dat <- USArrests
+d  <- dist(dat)              # ma trận khoảng cách
+hc <- hclust(d)
+plot(hc)                     # dendrogram
 
-# Bài 2 (Tuần 2): Dữ liệu iris
-data("iris")
-str(iris)
-head(iris, 10)
-tail(iris, 10)
-bai2 <- iris %>%
-  select(Sepal.Length, Species) %>%
-  rename(chieu_dai_canh = Sepal.Length, loai_hoa = Species)
-summary(bai2$chieu_dai_canh)
-write_xlsx(bai2, "bai2.xlsx")
+library(ggdendro)
+library(ape)
+ggdendrogram(hc)
+ggdendrogram(hc, rotate = TRUE)
+
+# Cắt cây thành k cụm
+clus3 <- cutree(hc, 3)
+clus3
+
+# Tô màu theo cụm
+colors <- c("red", "blue", "green", "yellow")
+plot(as.phylo(hc), tip.color = colors[clus3], label.offset = 1, cex = 0.7)
+plot(as.phylo(hc), tip.color = colors[clus3], label.offset = 1, cex = 0.7, type = "fan")
+
+# Gán cụm vào dữ liệu
+library(dplyr)
+b <- as.data.frame(clus3)
+USArrests_cl <- bind_cols(b, USArrests)
+USArrests_cl %>%
+  group_by(clus3) %>%
+  summarise(mean(Murder), mean(Assault), mean(UrbanPop), mean(Rape))
+```
+
+## 9.3. K-means
+
+```r
+library(factoextra)
+df <- scale(USArrests)       # chuẩn hóa z-score
+
+# Chọn k tối ưu
+fviz_nbclust(df, kmeans, method = "wss") + labs(subtitle = "Elbow method")
+fviz_nbclust(df, kmeans, method = "silhouette") + labs(subtitle = "Silhouette")
+fviz_nbclust(df, kmeans, nstart = 25, method = "gap_stat", nboot = 50) +
+  labs(subtitle = "Gap statistic method")
+
+# Chạy k-means
+km <- kmeans(df, 3, nstart = 25)
+km
+km$centers
+km$withinss
+km$tot.withinss
+km$iter
+
+# Đồ thị
+fviz_cluster(km, df)
+fviz_cluster(km, df, ellipse.type = "norm")
+
+# Cây phân cụm qua eclust
+hc_e <- eclust(df, "hclust")
+fviz_dend(hc_e, rect = TRUE)
+
+# Gán cụm + TB theo cụm
+library(cluster)
+a <- as.data.frame(km$cluster)
+USArrests_cl <- bind_cols(a, USArrests)
+USArrests_cl %>%
+  group_by(km$cluster) %>%
+  summarise(mean(Murder), mean(Assault), mean(UrbanPop), mean(Rape))
+
+# Đánh giá bằng silhouette
+sl <- silhouette(km$cluster, dist(df))
+fviz_silhouette(sl)
+```
+
+## 9.4. PAM (Partitioning Around Medoids)
+
+```r
+library(fpc); library(factoextra); library(cluster)
+Arrest <- USArrests
+Arrest <- na.omit(Arrest)
+Arrest <- scale(Arrest)
+
+pam3 <- pam(Arrest, 3, metric = "euclidean", stand = FALSE)
+print(pam3)
+pam3$medoids
+head(pam3$clustering)
+
+dd <- cbind(Arrest, cluster = pam3$cluster)
+head(dd, n = 10)
+
+# 4 cụm
+pam4 <- pam(Arrest, 4, metric = "euclidean", stand = FALSE)
+print(pam4)
+pam4$medoids
+head(pam4$clustering)
+```
+
+## 9.5. CLARA (cho dữ liệu lớn)
+
+```r
+library(cluster)
+USA_clara <- USArrests
+clarax <- clara(USA_clara[1:4], 3)
+print(clarax)
+plot(USA_clara, col = clarax$cluster)
+```
+
+## 9.6. K-modes (dữ liệu định tính)
+
+```r
+library(klaR)
+library(scatterplot3d)
+# setwd("D:/.../2026 - Mua xuan")
+dat <- read.csv("babies.csv", sep = ",")
+dat1 <- dat[, -1]
+rownames(dat1) <- dat[, 1]
+dat2 <- dat1[c(4, 6, 7, 10:12)]
+str(dat2)
+
+cl <- kmodes(dat2, 4, iter.max = 200, weighted = FALSE, fast = TRUE)
+cl
+cl$modes
+cl$size
+
+dat3 <- cbind(dat2, cl$cluster)
+colnames(dat3)[7] <- "cluster"
 ```
 
 ---
 
-## 📝 DẠNG 2: Lọc, sắp xếp, tổng hợp dplyr (Bài 4 – air-quality)
+# PHẦN 10: LUẬT KẾT HỢP (Tuần 11)
 
-**Đề mẫu**: Đọc air-quality.csv, select, filter, slice_max, group_by + summarise, mutate.
+## 10.1. Khái niệm
+
+- **Item**, **Itemset** (k-itemset), **Transaction**.
+- **Association rule**: A → B.
+- **Support** = n(X∪Y) / N
+- **Confidence** = n(X∪Y) / n(X)
+- **Lift** = Confidence / P(Y). Lift > 1: tương quan; = 1: độc lập; < 1: đẩy nhau.
+- **Frequent itemset**: support ≥ min_sup.
+- **Strong association rule**: support ≥ min_sup & confidence ≥ min_conf.
+
+**Thuật toán**: Apriori (Agrawal & Srikant, 1993), FP-tree / FP-Growth (Han 2000), IT-tree / Eclat (Zaki 1997).
+
+**Ví dụ**: Beer → Diaper (60%, 100%); Diaper → Beer (60%, 75%).
+
+## 10.2. Chuẩn bị dữ liệu
 
 ```r
-library(dplyr); library(readr); library(writexl)
+doituong$tenbien <- as.factor(doituong$tenbien)
+```
+
+## 10.3. Apriori (`arules`)
+
+```r
+library(arules)
+# setwd("D:/.../2026 - Mua xuan")
+trans <- read.transactions("benh_nhan_data.csv",
+                           format = "basket",
+                           sep = ",",
+                           rm.duplicates = FALSE)
+summary(trans)
+
+# Apriori đầy đủ tham số
+rules <- apriori(trans, control = list(verbose = FALSE),
+  parameter  = list(minlen = 1, support = 0.1, conf = 0.3))
+quality(rules) <- round(quality(rules), digits = 3)
+rules <- sort(rules, by = "lift")
+inspect(rules)
+# (slide): inspect(sort(rules, by = "lift"))
+
+# Loại luật thừa
+redundant <- is.redundant(rules, measure = "confidence")
+rule1 <- rules[!redundant]
+inspect(rule1)
+
+# Chỉ xem luật có RHS = COVID-19
+rules2 <- apriori(trans, control = list(verbose = FALSE),
+  parameter = list(minlen = 1, support = 0.1, conf = 0.3),
+  appearance = list(rhs = c("COVID-19"), default = "lhs"))
+inspect(sort(rules2, by = "lift"))
+```
+
+## 10.4. FP-Growth (`rCBA`)
+
+```r
+library(rCBA)
+library(rJava)
+rules3 <- rCBA::fpgrowth(trans,
+  support = as.numeric(0.1),
+  confidence = as.numeric(0.3),
+  maxLength = as.integer(5),
+  consequent = NULL,
+  verbose = TRUE, parallel = FALSE)
+```
+
+## 10.5. IT-tree / Eclat (`arules`)
+
+```r
+library(arules)
+rules <- eclat(trans, parameter = list(supp = 0.1, maxlen = 5))
+inspect(sort(rules, by = "support"))
+```
+
+---
+
+# PHẦN 11: KHAI PHÁ MẪU TUẦN TỰ (Tuần 11)
+
+## 11.1. Khái niệm
+
+- **Sequence** s = ⟨s₁ s₂ … s_n⟩ — các itemset sắp thứ tự theo thời gian.
+- **Length** = số event; **Size** = tổng số item.
+- **Support** = tỷ lệ đối tượng chứa chuỗi.
+- **Frequent sequential pattern**: support ≥ min_sup.
+- **Maximal sequential pattern**: không phải con của chuỗi phổ biến khác.
+- **GSP (Generalized Sequential Pattern)**: tương tự Apriori cho chuỗi.
+
+**Ứng dụng**: bán lẻ/TMĐT, y tế (DNA, triệu chứng), giáo dục (lộ trình học), tài chính (gian lận thẻ).
+
+## 11.2. SPADE (`arulesSequences`)
+
+```r
+library(arules)
+library(arulesSequences)
+library(dplyr)
+# setwd("D:/.../2026 - Mua xuan")
+
+# Đọc dữ liệu dạng transactions cho chuỗi
+patient_seqs <- read_baskets("medical_seq.txt",
+  info = c("sequenceID", "eventID", "size"))
+
+# Chạy SPADE: support = 0.1 → xuất hiện ở ≥ 10% đối tượng
+s1 <- cspade(patient_seqs,
+  parameter = list(support = 0.1, maxsize = 1, maxlen = 4),
+  control   = list(verbose = TRUE))
+
+# Chuyển sang data.frame + sắp xếp theo support
+s1_df <- as(s1, "data.frame")
+s1_df <- s1_df[order(-s1_df$support), ]
+print("Các chuỗi tuần tự y tế tìm thấy:")
+head(s1_df, 50)
+```
+
+---
+
+# PHẦN 12: PHÂN LOẠI (Tuần 13)
+
+## 12.1. Khái niệm
+
+**Phân loại** = học **có giám sát**, dự đoán biến mục tiêu (nhãn hoặc số). Thuật toán slide đề cập: K-Nearest Neighbor (KNN) – lazy learning; Decision Tree (CART, ID3, C4.5, C5.0, Chi-Square, Reduction in Variance) – eager learning; Random Forest; Support Vector Machine (SVM).
+
+### Các chỉ số tách (Decision Tree)
+
+- **CART (phân loại)**: Gini `G(i) = 1 − Σp(j|i)²`; `G_split = Σ(n_i/n)·G_i` (càng nhỏ càng tốt).
+- **CART (hồi quy)**: SDR, RMSE/SS/SSE/SSD.
+- **ID3/C4.5/C5.0**: Entropy, Gain, GainRatio, SplitINFO.
+
+### Tiêu chuẩn dừng / cắt tỉa
+
+- **Pre-pruning**: node thuần, giá trị giống nhau, số quan sát < ngưỡng, Gini/Entropy không cải thiện.
+- **Post-pruning**: Subtree replacement (bottom-up), Subtree raising (top-down).
+
+### KNN
+
+- Khoảng cách Euclid: `d(x,y) = √Σ(x_i − y_i)²`
+- Manhattan: `d(x,y) = Σ|x_i − y_i|`
+- Phân loại: nhãn đa số trong k hàng xóm.
+- Hồi quy: trung bình y của k hàng xóm.
+
+### Chỉ số đánh giá (slide)
+
+- **Accuracy** = (TP+TN)/Tổng ; **Error rate** = 1 − Accuracy
+- **Precision (PPV)** = TP/(TP+FP)
+- **Sensitivity / Recall** = TP/(TP+FN)
+- **Specificity** = TN/(TN+FP)
+- **NPV** = TN/(TN+FN)
+- **Kappa** = (Accuracy − Random) / (1 − Random)
+- **F1** = 2·Precision·Sensitivity / (Precision + Sensitivity)
+- **Lift (positive)** = (TP/(TP+FP)) / ((TP+FN)/Tổng)
+- Hồi quy: **MSE**, **MAE**, **RMSE**.
+
+## 12.2. Chuẩn bị: chia train/test + CV
+
+```r
+library(dplyr); library(caret)
+
+# Hold-out (phân tầng theo nhãn)
+training <- createDataPartition(iris$Species, p = 0.7, list = FALSE)
+training_set <- slice(iris, training)
+test_set     <- slice(iris, -training)
+
+# Chia x/y
+x_train <- training_set[-5]
+x_test  <- test_set[-5]
+y_train <- training_set$Species
+y_test  <- test_set$Species
+
+# trainControl
+ctrl  <- trainControl(method = "cv", number = 5)
+ctrl1 <- trainControl(method = "repeatedcv", number = 5, repeats = 3)
+
+# Chuẩn hóa z-score
+iris[, -5] <- scale(iris[, -5])
+
+# Hoặc qua preProcess (caret)
+credit1 <- preProcess(credit[1:7], method = c("center", "scale"))
+credit_final <- predict(credit1, credit)
+```
+
+## 12.3. KNN
+
+### Cách 1 – `class::knn`
+
+```r
+library(class)
+model_knn <- knn(train = x_train,
+                 test  = x_test,
+                 cl    = y_train,
+                 k     = 5)
+model_knn
+```
+
+### Cách 2 – `caret::train`
+
+```r
+# Hold-out (bootstrap mặc định khi không có trControl)
+best_knn <- train(Species ~ ., training_set,
+  method   = "knn",
+  tuneGrid = expand.grid(k = 1:10))
+best_knn
+plot(best_knn)
+
+# k-fold CV
+best_knn <- train(Species ~ ., training_set,
+  method    = "knn",
+  trControl = ctrl,
+  tuneGrid  = expand.grid(k = 3:10))
+best_knn
+best_knn$bestTune
+plot(best_knn)
+
+# Dữ liệu định lượng (Boston / medv) – repeated CV
+best_knn <- train(medv ~ ., training_set,
+  preProcess = c("center", "scale"),
+  method     = "knn",
+  trControl  = trainControl(method = "repeatedcv", number = 5, repeats = 3),
+  tuneGrid   = expand.grid(k = 3:15))
+
+# Hoặc thay tuneGrid bằng tuneLength
+best_knn <- train(Class ~ . - Telephone - ForeignWorker, training_set,
+  method     = "knn",
+  trControl  = trainControl(method = "repeatedcv", number = 5, repeats = 3),
+  na.action  = na.omit,
+  tuneLength = 10)
+```
+
+### Dự đoán + đánh giá
+
+```r
+# Cách 1: knn() trực tiếp
+model_knn <- knn(train = x_train, test = x_test,
+                 cl = y_train, k = best_knn$bestTune)
+
+# Cách 2: predict()
+pred <- predict(best_knn, test_set)
+pred
+
+# Phân loại
+mean(pred == test_set$Species)
+confusionMatrix(table(test_set$Species, pred))
+
+# Hồi quy (Boston)
+y_test <- test_set$medv
+mse  <- mean((y_test - pred)^2)
+mae  <- caret::MAE(y_test, pred)
+rmse <- caret::RMSE(y_test, pred)
+cat("MSE: ", mse, "MAE: ", mae, " RMSE: ", rmse)
+
+plot(y_test, col = "red", type = "l")
+lines(pred, col = "blue")
+legend("topright",
+       legend = c("original-medv", "predicted"),
+       fill = c("red", "blue"), cex = 0.7)
+```
+
+## 12.4. Cây quyết định
+
+### Cách 1 – caret
+
+```r
+library(rpart); library(rpart.plot); library(caret); library(class)
+training <- createDataPartition(iris$Species, p = 0.7, list = FALSE)
+training_set <- slice(iris, training)
+test_set     <- slice(iris, -training)
+
+ctrl <- trainControl(method = "cv", number = 5)
+
+caret_dt <- train(Species ~ ., training_set,
+  method    = "rpart",
+  trControl = ctrl,
+  tuneLength = 10)
+caret_dt
+rpart.plot(caret_dt$finalModel)
+```
+
+### Cách 2 – rpart trực tiếp
+
+```r
+dt <- rpart(Species ~ .,
+            training_set,
+            method  = "class",                  # "anova" nếu y là số
+            control = rpart.control(cp = 0))
+dt
+printcp(dt)
+plotcp(dt)
+rpart.plot(dt, type = 5, extra = 104, under = TRUE, cex = 1.7)
+# hoặc: rpart.plot(dt, type = 2, extra = 101, under = TRUE, cex = 0.8)
+
+# Dự đoán
+x_test <- test_set[-5]
+pred <- predict(dt, x_test, type = "class")
+confusionMatrix(pred, test_set$Species)
+```
+
+### Biến mục tiêu định lượng (anova)
+
+```r
+library(MASS)
+data("Boston")
+training_set <- slice(Boston, 1:400)
+test_set     <- slice(Boston, 401:506)
+
+dt <- rpart(medv ~ crim + age + lstat + ptratio,
+            training_set,
+            method = "anova")
+dt
+printcp(dt)
+plotcp(dt)
+rpart.plot(dt, type = 5, extra = 100, under = TRUE, cex = 0.8)
+
+# Cây đầy đủ (cp = 0)
+dt <- rpart(medv ~ crim + age + lstat + ptratio,
+            training_set,
+            method  = "anova",
+            control = rpart.control(cp = 0))
+rpart.plot(dt, type = 5, extra = 100, under = TRUE, cex = 0.7)
+
+# Tiêu chuẩn dừng
+dt <- rpart(medv ~ crim + age + lstat + ptratio,
+            training_set,
+            method  = "anova",
+            control = rpart.control(minsplit = 10,
+                                    minbucket = 3,
+                                    maxdepth  = 5))
+rpart.plot(dt, type = 5, extra = 100, under = TRUE, cex = 0.7)
+```
+
+### C5.0
+
+```r
+library(C50)
+data(iris)
+training <- createDataPartition(iris$Species, p = 0.7, list = FALSE)
+training_set <- slice(iris, training)
+test_set     <- slice(iris, -training)
+
+model <- C5.0(Species ~ ., training_set)
+plot(model)
+```
+
+---
+
+# PHẦN 13: BÀI TẬP MẪU CÓ LỜI GIẢI
+
+## 📝 Bài 1 — Nhập dữ liệu & iris (Tuần 2 Seminar)
+
+```r
+# (a) Tạo dataframe product
+product <- data.frame(
+  ProdID = c("P01", "P02", "P03", "P04"),
+  Category = c("Electronics", "Fashion", "Electronics", "Food"),
+  Price_Level = c("High", "Medium", "Low", "Medium"))
+product
+library(writexl)
+write_xlsx(product, "bai1.xlsx")
+
+# (b) iris – đổi tên & thống kê
+library(dplyr)
+data("iris")
+str(iris)
+head(iris, 10); tail(iris, 10)
+
+bai2 <- iris %>%
+  select(Sepal.Length, Species) %>%
+  rename(chieu_dai_canh = Sepal.Length,
+         loai_hoa = Species)
+summary(bai2$chieu_dai_canh)
+write_xlsx(bai2, "bai2.xlsx")
+```
+
+## 📝 Bài 2 — air-quality (Bài 4 Seminar)
+
+```r
+library(dplyr); library(writexl)
 air <- read.csv("air-quality.csv")
 
-# 1) Tạo dataframe chọn cột
+# 1) Chọn cột
 bai5 <- select(air, year, month, aqi, aqi_categ)
 
-# 2) Kiểm tra cấu trúc & NA
+# 2) Cấu trúc + NA
 str(bai5)
 colSums(is.na(bai5))
 
-# 3) 15 quan sát lớn/nhỏ nhất theo aqi
+# 3) 15 quan sát aqi lớn / nhỏ nhất
 slice_max(bai5, aqi, n = 15)
 slice_min(bai5, aqi, n = 15)
 
-# 4) Trung bình, trung vị aqi theo năm & tháng
+# 4) TB + trung vị aqi theo year, month
 bai5 %>%
   group_by(year, month) %>%
-  summarise(
-    aqi_mean = mean(aqi, na.rm = TRUE),
-    aqi_med  = median(aqi, na.rm = TRUE)
-  )
+  summarise(aqi_mean = mean(aqi, na.rm = TRUE),
+            aqi_med  = median(aqi, na.rm = TRUE))
 
 # 5) Số quan sát mỗi năm
 bai5 %>% group_by(year) %>% summarise(n = n())
 
-# 6) Thống kê mô tả aqi + bảng tần số aqi_categ
+# 6) Thống kê aqi + bảng tần số aqi_categ
 summary(bai5$aqi)
 table(bai5$aqi_categ)
 
-# 7) Tạo biến quarter, tính aqi theo quý
-bai5 <- bai5 %>%
-  mutate(quarter = case_when(
-    month <= 3  ~ 1,
-    month <= 6  ~ 2,
-    month <= 9  ~ 3,
-    TRUE        ~ 4
-  ), .after = year)
+# 7) Biến quarter + lưu Excel
+bai5 <- bai5 %>% mutate(quarter = case_when(
+  month <= 3 ~ 1, month <= 6 ~ 2,
+  month <= 9 ~ 3, TRUE ~ 4
+), .after = year)
 write_xlsx(bai5, "bai4.xlsx")
 
-quy_stats <- bai5 %>%
-  group_by(year, quarter) %>%
-  summarise(aqi_mean = mean(aqi, na.rm = TRUE),
-            aqi_med  = median(aqi, na.rm = TRUE))
-
-# 8) Quý 4 năm 2016
+# 8) Q4/2016
 q4_2016 <- filter(bai5, quarter == 4, year == 2016)
 nrow(q4_2016)
 table(q4_2016$aqi_categ)
 
-# 9) Tháng nào nhiều Unhealthy nhất
+# 9) Tháng Q4/2016 nhiều Unhealthy nhất
 q4_2016 %>%
   filter(aqi_categ == "Unhealthy") %>%
   group_by(month) %>%
@@ -649,266 +1292,547 @@ q4_2016 %>%
   arrange(desc(count))
 ```
 
----
-
-## 📝 DẠNG 3: Gapminder – group_by, mutate, percent_rank (Bài 4 – Bài 2)
+## 📝 Bài 3 — gapminder (Bài 4)
 
 ```r
 library(gapminder); library(dplyr)
-data("gapminder")
 
-# 1) Tuổi thọ & dân số TB theo châu lục
+# 1) TB tuổi thọ & dân số theo châu lục
 cau1 <- gapminder %>%
   group_by(continent) %>%
   summarise(mean_lifeExp = mean(lifeExp),
             mean_pop = mean(pop))
 
-# 2) Dữ liệu Việt Nam + tính GDP
+# 2) Việt Nam + GDP
 vn <- gapminder %>%
   filter(country == "Vietnam") %>%
   select(lifeExp, pop, gdpPercap, year) %>%
   mutate(GDP = pop * gdpPercap)
 
-# 3) Phân vị GDP năm 2007
-gdp_2007 <- gapminder %>%
+# 3) Năm 2007 – top/bottom 10% GDP
+g2007 <- gapminder %>%
   filter(year == 2007) %>%
-  mutate(percentile = percent_rank(gdpPercap))
-# Top 10% cao nhất
-gdp_2007 %>% filter(percentile >= 0.9) %>%
-  select(country, continent, gdpPercap, percentile)
-# Bottom 10%
-gdp_2007 %>% filter(percentile <= 0.1) %>%
-  select(country, continent, gdpPercap, percentile)
+  mutate(pct = percent_rank(gdpPercap))
+g2007 %>% filter(pct >= 0.9) %>%
+  select(country, continent, gdpPercap, pct)
+g2007 %>% filter(pct <= 0.1) %>%
+  select(country, continent, gdpPercap, pct)
 ```
 
----
-
-## 📝 DẠNG 4: Join 2 bộ dữ liệu (Bài 6)
+## 📝 Bài 4 — JOIN (Bài 6)
 
 ```r
 library(dplyr)
 data("band_instruments"); data("band_instruments2"); data("band_members")
 
-# So sánh các loại join
 inner_join(band_instruments, band_members, by = "name")
-left_join(band_instruments, band_members, by = "name")
+left_join(band_instruments,  band_members, by = "name")
 right_join(band_instruments, band_members, by = "name")
-full_join(band_instruments, band_members, by = "name")
+full_join(band_instruments,  band_members, by = "name")
 
-# Thêm dòng + đổi tên
+# Đổi tên + thêm dòng
 band <- band_instruments %>%
   rename(artist = name) %>%
   bind_rows(data.frame(artist = "Tom", plays = "bass"))
 
-# Set operations (cần cùng cấu trúc cột)
+# Set ops
 intersect(band, band_instruments2)
 union(band, band_instruments2)
 setdiff(band, band_instruments2)
 
-# Nối đơn giản
 bind_rows(band, band_instruments2)
-bind_cols(band, band_instruments2)  # cẩn thận số dòng!
+bind_cols(band, band_instruments2)
 ```
 
----
-
-## 📝 DẠNG 5: tidyr – billboard (Bài 6)
+## 📝 Bài 5 — billboard tidyr (Bài 6)
 
 ```r
 library(tidyr); library(dplyr)
 data("billboard")
 
-# 1) Cấu trúc
-str(billboard); dim(billboard)
-
-# 2) Đổi tên wk1 -> 1, lọc rank > 50
+# 2) Rename + filter
 bb <- billboard %>% rename("1" = wk1)
 bb %>% filter(`1` > 50) %>% nrow()
 
-# 3) Gather (wide → long)
+# 3-5) gather + drop_na + sort + gsub
 bb_long <- billboard %>%
   gather(week, rank, wk1:wk76) %>%
-  drop_na(rank)
-
-# 4) Sắp xếp tăng dần theo rank
-bb_long <- arrange(bb_long, rank)
-
-# 5) Xóa "wk" trong cột week
+  drop_na(rank) %>%
+  arrange(rank)
 bb_long$week <- gsub("wk", "", bb_long$week)
 
-# 6) Tách date.entered thành day, month, year
+# 6) separate
 bb_long <- separate(bb_long, date.entered,
   into = c("year", "month", "day"), sep = "-")
 
-# 7) Tạo biến quarter
+# 7) quarter
 bb_long <- bb_long %>%
   mutate(month = as.numeric(month)) %>%
   mutate(quarter = case_when(
-    month <= 3  ~ 1,
-    month <= 6  ~ 2,
-    month <= 9  ~ 3,
-    TRUE        ~ 4
-  ))
+    month <= 3 ~ 1, month <= 6 ~ 2,
+    month <= 9 ~ 3, TRUE ~ 4))
 
-# 8-9) Thứ hạng TB từng bài hát, sắp xếp
+# 8-9) Thứ hạng TB theo bài hát
 bb_long %>%
   group_by(artist, track) %>%
   summarise(avg_rank = mean(rank)) %>%
   arrange(avg_rank)
 ```
 
----
-
-## 📝 DẠNG 6: Bảng & Đồ thị – diamonds (Bài 7 – Bài 1)
+## 📝 Bài 6 — diamonds (Bài 7)
 
 ```r
 library(ggplot2); library(dplyr); library(tables); library(writexl)
 data("diamonds")
 
-# Bảng tần số cut (table)
-tab_cut <- table(diamonds$cut)
-tab_cut <- sort(tab_cut, decreasing = TRUE)
-
-# tabular
+# Bảng tần số cut
+sort(table(diamonds$cut), decreasing = TRUE)
+# tabular (cut đã là factor)
 tabular(cut ~ 1 + Percent(), data = diamonds)
 
 # Bảng chéo cut x color + tổng
-tab_cc <- table(diamonds$cut, diamonds$color)
-addmargins(tab_cc)
+addmargins(table(diamonds$cut, diamonds$color))
 
 # Xóa 53000 dòng đầu
 dia2 <- diamonds %>% slice(-(1:53000))
 table(dia2$cut, dia2$table)
 
-# Đồ thị cột tần số cut
+# Đồ thị cột cut
 ggplot(diamonds, aes(x = cut)) +
   geom_bar(fill = "steelblue") +
   labs(title = "Tần số chất lượng cắt", x = "Cut", y = "Count") +
   theme_minimal()
 ```
 
----
-
-## 📝 DẠNG 7: Bài tổng hợp – midwest (Bài 7 – Bài 2)
+## 📝 Bài 7 — midwest (Bài 7)
 
 ```r
 library(ggplot2); library(dplyr); library(tables)
-data("midwest")
 
-# 1) Lọc bang Indiana
+# 1-4) filter + select
 c1 <- filter(midwest, state == "IN")
-
-# 2) Lọc Ohio, popwhite 40k-85k
 c2 <- filter(midwest, state == "OH",
              popwhite >= 40000 & popwhite <= 85000)
-
-# 3) Chọn cột, sắp xếp
 c3 <- midwest %>%
   filter(state == "OH") %>%
   select(state, county, poptotal, popamerindian, percamerindian) %>%
   arrange(desc(popamerindian))
-head(c3, 1)  # Hạt nhiều thổ dân nhất
-
-# 4) Lọc MI, poverty > 10k, percprof > 12%
 c4 <- midwest %>%
   filter(state == "MI",
          poppovertyknown > 10000,
          percprof > 12) %>%
   select(state, county, poppovertyknown, percprof)
 
-# 5) Dân số nghèo TB theo bang, giảm dần
-midwest %>%
-  group_by(state) %>%
-  summarise(mean_poverty = mean(poppovertyknown)) %>%
-  arrange(desc(mean_poverty))
+# 5) TB nghèo theo bang
+midwest %>% group_by(state) %>%
+  summarise(m = mean(poppovertyknown)) %>%
+  arrange(desc(m))
 
-# 6) Chọn 10% mẫu + nối
-c6 <- sample_frac(midwest, 0.1, replace = FALSE)
-nrow(c6)
+# 6) sample 10% + bind
+c6 <- sample_frac(midwest, 0.1)
 combine <- bind_rows(c6, midwest)
 
-# 7) Xóa trùng
+# 7) distinct
 c72 <- distinct(combine)
 
 # 8) Đổi tên PID
 c82 <- rename(combine, `2` = PID)
 c82 <- rename(c82, PID = `2`)
 
-# 9-10) Bảng tần số & tần suất state
+# 9-10) bảng + chart state
 table(midwest$state)
 tabular(state ~ 1 + Percent(), data = midwest)
 ggplot(midwest, aes(x = state)) + geom_bar()
 
-# 11) Scatter plot poptotal vs popdensity
+# 11-12) scatter + boxplot
 ggplot(midwest, aes(x = poptotal, y = popdensity)) +
-  geom_point(alpha = 0.5) +
-  labs(title = "Tổng dân vs Mật độ")
-
-# 12) Boxplot percelderlypoverty theo state
+  geom_point(alpha = 0.5)
 ggplot(midwest, aes(x = state, y = percelderlypoverty)) +
   geom_boxplot(fill = "lightblue")
 
-# 13) Kiểm tra NA
-anyNA(midwest)
-colSums(is.na(midwest))
-
-# 14) Số quan sát mỗi bang
+# 13-14) NA + count theo bang
+anyNA(midwest); colSums(is.na(midwest))
 midwest %>% group_by(state) %>% summarise(n = n())
 
-# 15) Tạo biến level_poverty
-midwest %>%
-  mutate(level_poverty = case_when(
-    percbelowpoverty < 15 ~ "low",
-    percbelowpoverty <= 50 ~ "medium",
-    TRUE ~ "high"
-  )) %>%
+# 15) level_poverty
+midwest %>% mutate(level_poverty = case_when(
+  percbelowpoverty < 15 ~ "low",
+  percbelowpoverty <= 50 ~ "medium",
+  TRUE ~ "high")) %>%
   select(county, state, percamerindian, level_poverty) %>%
-  group_by(level_poverty) %>%
-  summarise(n = n())
+  group_by(level_poverty) %>% summarise(n = n())
 
-# 16) TB và TV popasian theo bang
-midwest %>%
-  group_by(state) %>%
-  summarise(
-    mean_asian = mean(popasian, na.rm = TRUE),
-    med_asian  = median(popasian, na.rm = TRUE)
-  )
+# 16) TB popasian theo bang
+midwest %>% group_by(state) %>%
+  summarise(m = mean(popasian, na.rm = TRUE),
+            med = median(popasian, na.rm = TRUE))
+```
+
+## 📝 Bài 8 — airquality + mtcars (Bài 9 Seminar – Tiền xử lý)
+
+```r
+library(dplyr); library(tidyr); library(visdat); library(VIM); library(naniar); library(mice)
+data("airquality")
+
+# 1) Mô tả
+str(airquality); summary(airquality)
+
+# 2) Kiểm tra NA
+anyNA(airquality)
+sum(is.na(airquality))
+colSums(is.na(airquality))
+rowSums(is.na(airquality))
+table(is.na(airquality))
+
+# 3) Đồ thị NA
+vis_dat(airquality)
+vis_miss(airquality)
+aggr(airquality, numbers = TRUE, prop = TRUE, sortVars = TRUE, sortCombs = TRUE)
+matrixplot(airquality)
+
+# 4) Kiểm định MCAR
+mcar_test(airquality)                   # H0: MCAR
+
+# 5a) Xóa dòng có NA
+na.omit(airquality)
+drop_na(airquality)
+
+# 5b) Xóa cột có NA
+airquality[colSums(is.na(airquality)) == 0]
+
+# 5c) Ozone NA ← 0
+mutate(airquality, Ozone = case_when(
+  is.na(Ozone) ~ 0, TRUE ~ as.numeric(Ozone)))
+
+# 5d) Ozone NA ← median
+mutate(airquality, Ozone = case_when(
+  is.na(Ozone) ~ median(Ozone, na.rm = TRUE),
+  TRUE ~ as.numeric(Ozone)))
+
+# 5e) Thay NA bằng mean (mice)
+complete(mice(airquality, method = "mean"))
+
+# 5f) Thay NA bằng giá trị ngẫu nhiên
+complete(mice(airquality, method = "sample"))
+hotdeck(airquality)
+
+# 5g) Hồi quy thường / hồi quy ngẫu nhiên
+complete(mice(airquality, method = "norm.predict"))
+complete(mice(airquality, method = "norm.nob"))
+
+# 6) TB theo tháng
+airquality %>%
+  group_by(Month) %>%
+  summarise(Ozone   = mean(Ozone,   na.rm = TRUE),
+            Solar.R = mean(Solar.R, na.rm = TRUE),
+            Wind    = mean(Wind,    na.rm = TRUE),
+            Temp    = mean(Temp,    na.rm = TRUE))
+
+# ----- mtcars outlier -----
+data("mtcars")
+str(mtcars)
+
+# 2) Biến nào có outlier – dùng boxplot
+boxplot(mtcars)                         # duyệt trực quan
+
+# 3a) Boxplot biến hp
+dtbox <- boxplot(mtcars$hp)
+dtbox$out
+filter(mtcars, hp %in% dtbox$out)
+
+# 3b) Z-score
+LB <- mean(mtcars$hp) - 3 * sd(mtcars$hp)
+UB <- mean(mtcars$hp) + 3 * sd(mtcars$hp)
+filter(mtcars, hp < LB | hp > UB)
+
+# 3c) Kiểm định
+library(outliers)
+grubbs.test(mtcars$hp, type = 10)
+grubbs.test(mtcars$hp, type = 11)
+dixon.test(mtcars$hp[1:20], type = 11)
+
+library(EnvStats)
+rosnerTest(mtcars$hp, k = 3, alpha = 0.05)
+```
+
+## 📝 Bài 9 — Phân cụm USArrests
+
+```r
+library(datasets); library(dplyr); library(ggdendro); library(ape)
+library(factoextra); library(cluster); library(fpc)
+data("USArrests")
+
+# Phân cụm phân cấp
+dat <- USArrests
+d  <- dist(dat)
+hc <- hclust(d)
+plot(hc); ggdendrogram(hc); ggdendrogram(hc, rotate = TRUE)
+
+clus3 <- cutree(hc, 3)
+colors <- c("red", "blue", "green", "yellow")
+plot(as.phylo(hc), tip.color = colors[clus3], label.offset = 1, cex = 0.7)
+plot(as.phylo(hc), tip.color = colors[clus3], label.offset = 1, cex = 0.7, type = "fan")
+
+USArrests_cl <- bind_cols(as.data.frame(clus3), USArrests)
+USArrests_cl %>% group_by(clus3) %>%
+  summarise(mean(Murder), mean(Assault), mean(UrbanPop), mean(Rape))
+
+# K-means
+df <- scale(USArrests)
+fviz_nbclust(df, kmeans, method = "wss") + labs(subtitle = "Elbow method")
+fviz_nbclust(df, kmeans, method = "silhouette") + labs(subtitle = "Silhouette")
+fviz_nbclust(df, kmeans, nstart = 25, method = "gap_stat", nboot = 50)
+
+km <- kmeans(df, 3, nstart = 25)
+km$centers; km$withinss; km$tot.withinss; km$iter
+fviz_cluster(km, df)
+fviz_cluster(km, df, ellipse.type = "norm")
+
+sl <- silhouette(km$cluster, dist(df))
+fviz_silhouette(sl)
+
+# PAM
+Arrest <- na.omit(USArrests); Arrest <- scale(Arrest)
+pam3 <- pam(Arrest, 3, metric = "euclidean", stand = FALSE)
+print(pam3); pam3$medoids; head(pam3$clustering)
+pam4 <- pam(Arrest, 4, metric = "euclidean", stand = FALSE)
+print(pam4); pam4$medoids
+
+# CLARA
+clarax <- clara(USArrests[1:4], 3)
+print(clarax)
+plot(USArrests, col = clarax$cluster)
+```
+
+## 📝 Bài 10 — Luật kết hợp `benh_nhan_data`
+
+```r
+library(arules)
+trans <- read.transactions("benh_nhan_data.csv",
+  format = "basket", sep = ",", rm.duplicates = FALSE)
+summary(trans)
+
+rules <- apriori(trans, control = list(verbose = FALSE),
+  parameter = list(minlen = 1, support = 0.1, conf = 0.3))
+inspect(sort(rules, by = "lift"))
+
+redundant <- is.redundant(rules, measure = "confidence")
+rule1 <- rules[!redundant]
+inspect(rule1)
+
+# RHS = COVID-19
+rules2 <- apriori(trans, control = list(verbose = FALSE),
+  parameter  = list(minlen = 1, support = 0.1, conf = 0.3),
+  appearance = list(rhs = c("COVID-19"), default = "lhs"))
+inspect(sort(rules2, by = "lift"))
+
+# Eclat
+rules <- eclat(trans, parameter = list(supp = 0.1, maxlen = 5))
+inspect(sort(rules, by = "support"))
+```
+
+## 📝 Bài 11 — Mẫu tuần tự `medical_seq`
+
+```r
+library(arules); library(arulesSequences); library(dplyr)
+
+patient_seqs <- read_baskets("medical_seq.txt",
+  info = c("sequenceID", "eventID", "size"))
+
+s1 <- cspade(patient_seqs,
+  parameter = list(support = 0.1, maxsize = 1, maxlen = 4),
+  control   = list(verbose = TRUE))
+
+s1_df <- as(s1, "data.frame")
+s1_df <- s1_df[order(-s1_df$support), ]
+print("Các chuỗi tuần tự y tế tìm thấy:")
+head(s1_df, 50)
+```
+
+## 📝 Bài 12 — Phân loại KNN (Bài 13)
+
+### Bài 12a – GermanCredit (phân loại)
+
+```r
+library(dplyr); library(caret)
+data("GermanCredit")
+
+# 1-3) Subset 300 × 10
+credit <- GermanCredit %>%
+  slice(1:300) %>%
+  select(1:10)
+str(credit)
+
+# 4) Tiền xử lý
+anyNA(credit)                                   # NA
+boxplot(credit)                                 # đột xuất
+credit1      <- preProcess(credit[1:7], method = c("center", "scale"))
+credit_final <- predict(credit1, credit)        # z-score
+
+# 5) Chia 80:20
+training <- createDataPartition(credit_final$Class, p = 0.8, list = FALSE)
+training_set <- slice(credit_final, training)
+test_set     <- slice(credit_final, -training)
+
+# 6) KNN – CV lặp lại 3 lần
+ctrl1 <- trainControl(method = "repeatedcv", number = 5, repeats = 3)
+best_knn <- train(Class ~ . - Telephone - ForeignWorker, training_set,
+                  method     = "knn",
+                  trControl  = ctrl1,
+                  na.action  = na.omit,
+                  tuneLength = 10)
+best_knn
+plot(best_knn)
+best_knn$bestTune
+
+# 7) Dự đoán
+pred <- predict(best_knn, test_set)
+
+# 8) Đánh giá
+mean(pred == test_set$Class)
+confusionMatrix(table(test_set$Class, pred))
+# H0: Accuracy ≤ NIR ; H1: Accuracy > NIR (xem p-value)
+
+# Cách 2: bootstrap (mặc định khi không truyền trControl)
+best_knn <- train(Class ~ . - Telephone - ForeignWorker, training_set,
+                  method     = "knn",
+                  na.action  = na.omit,
+                  tuneLength = 10)
+```
+
+### Bài 12b – Boston (hồi quy)
+
+```r
+library(MASS); library(caret); library(dplyr)
+data("Boston")
+anyNA(Boston)
+
+training <- createDataPartition(Boston$medv, p = 0.7, list = FALSE)
+training_set <- slice(Boston, training)
+test_set     <- slice(Boston, -training)
+
+best_knn <- train(medv ~ ., training_set,
+                  method     = "knn",
+                  preProcess = c("center", "scale"),
+                  na.action  = na.omit,
+                  tuneLength = 10)
+best_knn
+best_knn$bestTune
+
+pred <- predict(best_knn, test_set)
+mse  <- mean((test_set$medv - pred)^2)
+mae  <- caret::MAE(test_set$medv, pred)
+rmse <- caret::RMSE(test_set$medv, pred)
+cat("MSE:", mse, " MAE:", mae, " RMSE:", rmse)
+
+plot(test_set$medv, col = "red", type = "l")
+lines(pred, col = "blue")
+legend("topright",
+       legend = c("original-medv", "predicted"),
+       fill = c("red", "blue"), cex = 0.7)
+```
+
+## 📝 Bài 13 — Cây quyết định iris
+
+```r
+library(caret); library(dplyr); library(rpart); library(rpart.plot)
+data("iris")
+anyNA(iris)
+
+# Chia 70:30
+training <- createDataPartition(iris$Species, p = 0.7, list = FALSE)
+training_set <- slice(iris, training)
+test_set     <- slice(iris, -training)
+
+# Cách 1 – rpart trực tiếp (cây đầy đủ cp = 0)
+DT <- rpart(Species ~ ., training_set, method = "class", cp = 0)
+DT
+print(DT); summary(DT)
+plotcp(DT)
+rpart.plot(DT, type = 2, extra = 101, under = TRUE, cex = 0.8)
+
+pred <- predict(DT, test_set, type = "class")
+confusionMatrix(table(test_set$Species, pred))
+
+# Cách 2 – caret
+DT2 <- train(Species ~ ., data = training_set,
+             method     = "rpart",
+             trControl  = trainControl(method = "cv", number = 10),
+             tuneLength = 10,
+             preProcess = c("center", "scale"),
+             na.action  = na.pass)
+DT2
+rpart.plot(DT2$finalModel)
 ```
 
 ---
 
-# PHẦN 7: CHECKLIST ÔN TẬP NHANH
+# PHẦN 14: CHECKLIST ÔN TẬP
 
 ## ✅ Kỹ năng R cần thành thạo
 
-- [ ] Nhập dữ liệu trực tiếp (`data.frame`, `c()`) & từ file (`read_excel`, `read.csv`)
-- [ ] Xem thông tin (`str`, `dim`, `head`, `summary`)
-- [ ] Lưu dữ liệu (`write_xlsx`, `save`)
-- [ ] `select`, `filter`, `distinct`, `slice`, `sample_n/frac`
-- [ ] `arrange` (tăng/giảm dần)
-- [ ] `mutate` + `case_when`
-- [ ] `summarise` + `group_by` + `across`
-- [ ] Tất cả loại JOIN (`inner`, `left`, `right`, `full`)
-- [ ] Set operations (`intersect`, `union`, `setdiff`)
-- [ ] `bind_rows`, `bind_cols`
-- [ ] `gather`, `spread`, `unite`, `separate`, `gsub`
-- [ ] `table`, `prop.table`, `addmargins`, `tabular`
-- [ ] `ggplot` + `geom_bar/point/boxplot/histogram`
-- [ ] Kiểm tra & xử lý NA (`is.na`, `drop_na`, `mice`)
-- [ ] Xác định outlier (Z-score, Hampel, boxplot, Grubbs, Dixon, Rosner)
+### Tuần 1–3 (nền tảng)
+- [ ] Nhập dữ liệu (`data.frame`, `c()`, `read_excel`, `read.csv`, `read_sav`, `data()`, `load()`)
+- [ ] Xem/sửa/lưu (`View`, `str`, `dim`, `head`, `tail`, `summary`, `edit`, `save`, `write_xlsx`, `write_sav`, `write_dta`)
+- [ ] `select`, `filter`, `distinct`, `slice(_max/_min)`, `sample_n/frac`, `top_n/frac`, `bottom_n/frac`
+- [ ] `arrange` + `desc`
+- [ ] `mutate`, `transmute`, `case_when`
+- [ ] `summarise`, `group_by`, `across`, `everything`
+- [ ] JOIN: `inner_`, `left_`, `right_`, `full_`, `semi_`, `anti_`
+- [ ] Set ops: `intersect`, `union`, `setdiff`; `bind_rows`, `bind_cols`
+- [ ] tidyr: `gather`, `spread`, `unite`, `separate`, `gsub`, `drop_na`
+
+### Tuần 3 (Bảng & Đồ thị)
+- [ ] `table`, `addmargins`, `prop.table`
+- [ ] `tabular` (package `tables`)
+- [ ] `cor`, `rcorr`
+- [ ] Base: `hist`, `boxplot`, `plot`, `barplot`, `pie`, `dotchart`, `abline(lm(...))`
+- [ ] `ggplot` + `aes` + `geom_*` + `labs` + `theme_*`
+- [ ] `ggcorrplot`, `ggplotly`, `transition_*` + `shadow_*`
+
+### Tuần 7 (Tiền xử lý)
+- [ ] MCAR / MAR / MNAR
+- [ ] Phát hiện NA: `anyNA`, `is.na`, `colSums`, `rowSums`, `table(is.na())`
+- [ ] Đồ thị NA: `vis_dat`, `vis_miss`, `aggr`, `matrixplot`, `marginplot`
+- [ ] `mcar_test` (naniar)
+- [ ] Xử lý NA: `na.omit`, `drop_na`, `mutate + case_when`, `mice` (mean/sample/norm.predict/norm.nob/cart/rf), `hotdeck`, `lm + predict`
+- [ ] Outlier: Z-score, Hampel, `boxplot()$out`, `hist`, `grubbs.test`, `dixon.test`, `rosnerTest`
+
+### Tuần 9 (Phân cụm + Luật kết hợp + Mẫu tuần tự)
+- [ ] `dist`, `hclust`, `cutree`, `ggdendrogram`, `as.phylo`
+- [ ] `scale`, `fviz_nbclust` (wss/silhouette/gap_stat), `kmeans`, `fviz_cluster`, `eclust`, `fviz_dend`, `silhouette`, `fviz_silhouette`
+- [ ] `pam`, `clara`, `kmodes`
+- [ ] `read.transactions`, `apriori`, `inspect`, `sort`, `is.redundant`, `appearance=list(rhs=...)`
+- [ ] `rCBA::fpgrowth`, `eclat`
+- [ ] `read_baskets`, `cspade`
+
+### Tuần 13 (Phân loại)
+- [ ] `createDataPartition`, `slice`, `trainControl` (cv/repeatedcv), `preProcess`
+- [ ] KNN: `class::knn` + `caret::train(method="knn")` + `tuneGrid`/`tuneLength`
+- [ ] Decision Tree: `rpart` + `rpart.control`, `printcp`, `plotcp`, `rpart.plot`
+- [ ] C5.0
+- [ ] `predict`, `confusionMatrix`, `caret::MAE`, `caret::RMSE`
+- [ ] Hiểu các chỉ số: Accuracy, Sensitivity, Specificity, Kappa, F1, MSE/MAE/RMSE
 
 ## ✅ Lý thuyết cần nhớ
 
-- [ ] Định nghĩa Khai phá dữ liệu
-- [ ] Quy trình KPDL (4 bước)
-- [ ] Phân loại: Mô tả vs Dự đoán
-- [ ] Phân cụm vs Phân loại vs Luật kết hợp
-- [ ] Học có giám sát vs Không giám sát
-- [ ] 3 cơ chế missing: MCAR, MAR, MNAR
-- [ ] So sánh dữ liệu nhiễu vs đột xuất
-- [ ] Các phương pháp điền missing (single vs multiple imputation)
-- [ ] Ưu/nhược điểm từng phương pháp xử lý missing
+- [ ] KDD: 4 bước quy trình
+- [ ] Phân loại kỹ thuật: Mô tả vs Dự đoán
+- [ ] Có giám sát vs Không giám sát
+- [ ] 3 cơ chế missing (MCAR/MAR/MNAR)
+- [ ] So sánh nhiễu vs đột xuất
+- [ ] Đo khoảng cách: Euclid, Manhattan, Minkowski, Pearson, Chebychev, Cosine
+- [ ] Phân cụm: AGNES/DIANA, K-means, PAM, CLARA, K-modes
+- [ ] Linkage: centroid, single, average, complete, radius, diameter
+- [ ] Chọn k: Elbow, Silhouette, Gap-statistic
+- [ ] Luật kết hợp: Support, Confidence, Lift + 3 thuật toán (Apriori, FP-Growth, IT-tree/Eclat)
+- [ ] Mẫu tuần tự: length vs size, GSP, SPADE
+- [ ] Phân loại: KNN, Decision Tree (CART/ID3/C4.5/C5.0), Random Forest, SVM
+- [ ] Gini vs Entropy vs GainRatio
+- [ ] Pre-pruning vs Post-pruning
+- [ ] Hold-out vs k-fold CV
+- [ ] Confusion matrix: TP, TN, FP, FN
 
 ---
 
-> 💡 **Mẹo ôn thi**: Chạy lại TẤT CẢ code trong file này trên RStudio. Thay đổi tham số, thử sai để hiểu sâu hơn. Focus vào các dạng bài 2, 4, 5, 7 vì đó là dạng tổng hợp nhất!
+> 💡 **Mẹo**: Chạy lại TẤT CẢ code trong file này. Thay đổi tham số và dataset để hiểu sâu. Tập trung Bài mẫu 2, 5, 7, 8, 12, 13 vì là các dạng tổng hợp thường gặp.
